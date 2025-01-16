@@ -64,8 +64,8 @@
       <v-switch class="hidden-sm-and-up" @click="toggleTheme"
         :append-icon='icon == true ? "mdi-weather-night" : "mdi-white-balance-sunny"'></v-switch>
       <div style="width: 40%;" class="mr-4 hidden-md-and-up">
-        <!-- <v-select :item-title="title" item-value="value" v-model="this.lan" :items="this.item">
-        </v-select> -->
+        <v-select :item-title="title" item-value="value"  :items="this.item">
+        </v-select>
       </div><br>
 
 
