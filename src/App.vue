@@ -13,7 +13,7 @@
         <v-switch class="hidden-xs" @click="toggleTheme"
           :append-icon='icon == true ? "mdi-weather-night" : "mdi-white-balance-sunny" '></v-switch>
         <div style="width: 10%;" class="mr-4 hidden-sm">
-          <v-select :item-title="title" item-value="value" v-model="lan" :items="this.item">
+          <v-select :item-title="title" item-value="value" v-model="this.lan" :items="this.item">
           </v-select>
         </div>
       </v-toolbar>
@@ -89,6 +89,7 @@ export default {
         { title: "EN", value: 0 },
         { title: "AR", value: 1 },
       ],
+      lan:+localStorage.getItem("lan")
 
     }
   },
@@ -115,15 +116,12 @@ export default {
     if (!localStorage.getItem("lan")) {
       localStorage.setItem("lan", 0)
     }
-  }
-
+  },
 }
 
 </script>
 
 <script setup>
-
-
 import { useTheme } from 'vuetify'
 const theme = useTheme()
 let icon = true
@@ -131,7 +129,6 @@ function toggleTheme() {
   icon = !icon;
   theme.global.name.value = theme.global.current.value.dark ? 'light' : 'dark'
 }
-let lan= +localStorage.getItem("lan")
 </script>
 
 <style scoped>
