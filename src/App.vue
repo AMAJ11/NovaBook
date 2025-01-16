@@ -13,8 +13,8 @@
         <v-switch class="hidden-xs" @click="toggleTheme"
           :append-icon='icon == true ? "mdi-weather-night" : "mdi-white-balance-sunny" '></v-switch>
         <div style="width: 10%;" class="mr-4 hidden-sm">
-          <v-select :item-title="title" item-value="value" v-model="this.lan" :items="this.item">
-          </v-select>
+          <!-- <v-select :item-title="title" item-value="value" v-model="this.lan" :items="this.item">
+          </v-select> -->
         </div>
       </v-toolbar>
 
