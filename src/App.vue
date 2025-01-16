@@ -80,7 +80,7 @@ export default {
   name: 'App',
   created: function () {
   },
-  data: function () {
+  data() {
     return {
       icon: true,
       sw: false,
