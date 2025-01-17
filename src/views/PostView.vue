@@ -9,7 +9,7 @@
 
 
                   <v-text-field color="primary" variant="outlined" style="width:100%" ></v-text-field>
-                  <v-btn> <v-icon>mdi-magnify</v-icon> </v-btn>     
+                  <v-btn color="success"> <v-icon>mdi-magnify</v-icon> </v-btn>     
                </div>
                            
          </div>

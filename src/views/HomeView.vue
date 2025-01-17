@@ -1,5 +1,6 @@
 <template>
   <v-app>
+    <v-lazy>
     <div class="home pb-16 pt-10 pb-xl-0">
     <v-row style="width:99%" v-if="this.lan==0" class="pa-6 pt-10 px-3">
       <v-col lg="5"
@@ -10,14 +11,14 @@
             <h1 class="text-black text-h2" style="font-weight: 900 !important;"> Welcome to our blog </h1>
             <p class="text- text-orange-darken-3" style="font-size: 25px !important;font-weight: 600 !important;">
                Create new account to active with</p>
-            <v-btn @click="this.window++;this.email='';this.userName='';this.password='';this.Password1=''" variant="flat">You have acount?</v-btn>
+            <v-btn @click="this.window++;this.email='';this.userName='';this.password='';this.Password1=''" color="success" variant="flat">You have acount?</v-btn>
           </v-window-item>
           <v-window-item key="1" v-if="this.ff">
 
             <h1 class="text-black text-h2" style="font-weight: 900 !important;"> Welcome Come back</h1>
             <p class="text- text-orange-darken-3" style="font-size: 25px !important;font-weight: 600 !important;">Signin
               to active with</p>
-            <v-btn @click="this.window--;this.email='';this.userName='';this.password='';this.Password1=''" variant="flat">Dont have acount?</v-btn>
+            <v-btn @click="this.window--;this.email='';this.userName='';this.password='';this.Password1=''" color="success" variant="flat">Dont have acount?</v-btn>
           </v-window-item>
         </v-window>
       </v-col>
@@ -108,7 +109,7 @@
 
 
 
-      <v-row v-if="this.lan==1" class="pa-6 pt-6" >
+      <v-row v-if="this.lan==1" class="pa-6 pt-10" >
         <v-col lg="5"
         class="hidden-md-and-up"
         v-if="this.ff"
@@ -118,14 +119,14 @@
              <h1 class="text-black text-h2" style="font-weight: 900 !important;">أهلاً بكم في هذه المدونة </h1>
              <p class="text- text-orange-darken-3" style="font-size: 25px !important;font-weight: 600 !important;">
                قم بإنشاء حساب لتتمكن من التفاعل مع المقالات</p>
-             <v-btn @click="this.window++;this.email='';this.userName='';this.password='';this.Password1=''" variant="flat">هل تملك حسابا مسبقاً؟</v-btn>
+             <v-btn @click="this.window++;this.email='';this.userName='';this.password='';this.Password1=''" color="success" variant="flat">هل تملك حسابا مسبقاً؟</v-btn>
            </v-window-item>
            <v-window-item key="1">
  
              <h1 class="text-black text-h2" style="font-weight: 900 !important;"> أهلاً بعودتك</h1>
              <p class="text- text-orange-darken-3" style="font-size: 25px !important;font-weight: 600 !important;">سجل دخولك
                لتتمكن من التفاعل</p>
-             <v-btn @click="this.window--;this.email='';this.userName='';this.password='';this.Password1=''" variant="flat">لا تملك حساباً؟ أنشىء واحدا</v-btn>
+             <v-btn @click="this.window--;this.email='';this.userName='';this.password='';this.Password1=''" color="warning" variant="flat"></v-btn>
            </v-window-item>
          </v-window>
        </v-col>
@@ -216,14 +217,14 @@
              <h1 class="text-black text-h2" style="font-weight: 900 !important;">أهلاً بكم في هذه المدونة </h1>
              <p class="text- text-orange-darken-3" style="font-size: 25px !important;font-weight: 600 !important;">
                قم بإنشاء حساب لتتمكن من التفاعل مع المقالات</p>
-             <v-btn @click="this.window++;this.email='';this.userName='';this.password='';this.Password1=''" variant="flat">هل تملك حسابا مسبقاً؟</v-btn>
+             <v-btn @click="this.window++;this.email='';this.userName='';this.password='';this.Password1=''" color="success" variant="flat">هل تملك حسابا مسبقاً؟</v-btn>
            </v-window-item>
            <v-window-item key="1">
  
              <h1 class="text-black text-h2" style="font-weight: 900 !important;"> أهلاً بعودتك</h1>
              <p class="text- text-orange-darken-3" style="font-size: 25px !important;font-weight: 600 !important;">سجل دخولك
                لتتمكن من التفاعل</p>
-             <v-btn @click="this.window--;this.email='';this.userName='';this.password='';this.Password1=''" variant="flat">لا تملك حساباً؟ أنشىء واحدا</v-btn>
+             <v-btn @click="this.window--;this.email='';this.userName='';this.password='';this.Password1=''" color="success" variant="flat">لا تملك حساباً؟ أنشىء واحدا</v-btn>
            </v-window-item>
          </v-window>
        </v-col>
@@ -243,7 +244,7 @@
         <v-card> <h2 class="mb-10"> Type of file is not supported </h2><v-btn color="red" @click="this.err=false">close</v-btn> </v-card>
         
    </v-dialog>
-  </div></v-app>
+  </div></v-lazy></v-app>
   
 </template>
 

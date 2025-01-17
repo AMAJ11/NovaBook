@@ -127,7 +127,7 @@ const theme = useTheme()
 let icon = true
 function toggleTheme() {
   icon = !icon;
-  theme.global.name.value = theme.global.current.value.dark ? 'light' : 'dark'
+  theme.global.name.value = theme.global.current.value.dark ? 'myCustomLightTheme' : 'dark'
 }
 </script>
 
