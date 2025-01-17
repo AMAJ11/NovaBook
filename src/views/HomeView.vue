@@ -126,7 +126,7 @@
              <h1 class="text-black text-h2" style="font-weight: 900 !important;"> أهلاً بعودتك</h1>
              <p class="text- text-orange-darken-3" style="font-size: 25px !important;font-weight: 600 !important;">سجل دخولك
                لتتمكن من التفاعل</p>
-             <v-btn @click="this.window--;this.email='';this.userName='';this.password='';this.Password1=''" color="warning" variant="flat"></v-btn>
+             <v-btn @click="this.window--;this.email='';this.userName='';this.password='';this.Password1=''" color="success" variant="flat">لا تملك حسابا؟أنشئ واحداً</v-btn>
            </v-window-item>
          </v-window>
        </v-col>
