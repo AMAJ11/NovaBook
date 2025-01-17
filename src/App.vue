@@ -138,7 +138,7 @@ function toggleTheme() {
   cursor: pointer;
   font-size: 35px !important;
 }
-
+.bar{max-width:100%;}
 .sh:hover {
   rotate: 360deg;
 }

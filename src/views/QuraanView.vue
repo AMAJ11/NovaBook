@@ -1,5 +1,5 @@
 <template>
-    <div class="about" style="text-align: center; padding: 2%;">
+    <div class="about mt-md-16" style="text-align: center;">
       <v-alert color="grey"> ` و من جهلت نفسه قدره      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  رأى غيره منه ما لا يرى`  </v-alert>
       <v-row>
         <v-col class="" style="border: 2px dashed black;" cols="12" sm="12" md="10" lg="8">
@@ -538,12 +538,6 @@
   </script>
   
   <style scoped>
-  @media (max-width: 1000px) {
-     .about{padding-top:15% !important}
-  }
-  @media (max-width:350px) {
-    .about{padding-top:25% !important}
-  }
   @font-face {
     font-family: ff;
     src: url("../assets/Noto_Kufi_Arabic/NotoKufiArabic-VariableFont_wght.ttf")

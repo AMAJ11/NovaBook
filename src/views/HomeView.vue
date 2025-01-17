@@ -1,18 +1,18 @@
 <template>
-  
-  <div class="home pb-16 pt-10 pb-xl-0">
-    <v-row v-if="this.lan==0" class="pa-6 pt-10 px-3">
+  <v-app>
+    <div class="home pb-16 pt-10 pb-xl-0">
+    <v-row style="width:99%" v-if="this.lan==0" class="pa-6 pt-10 px-3">
       <v-col lg="5"
-       v-if="this.window !=2"
+       v-if="this.ff"
         style="margin:auto;backdrop-filter: blur(1px);min-height: 500px;display: flex;flex-direction: column;justify-content: center;align-items: flex-start;">
         <v-window v-model="window">
-          <v-window-item key="0">
+          <v-window-item v-if="this.ff" :key="0">
             <h1 class="text-black text-h2" style="font-weight: 900 !important;"> Welcome to our blog </h1>
             <p class="text- text-orange-darken-3" style="font-size: 25px !important;font-weight: 600 !important;">
                Create new account to active with</p>
             <v-btn @click="this.window++;this.email='';this.userName='';this.password='';this.Password1=''" variant="flat">You have acount?</v-btn>
           </v-window-item>
-          <v-window-item key="1">
+          <v-window-item key="1" v-if="this.ff">
 
             <h1 class="text-black text-h2" style="font-weight: 900 !important;"> Welcome Come back</h1>
             <p class="text- text-orange-darken-3" style="font-size: 25px !important;font-weight: 600 !important;">Signin
@@ -28,7 +28,7 @@
         style="border:2px solid white;backdrop-filter: blur(7px);text-align: center;padding:10px 25px;border-radius: 15px;margin:auto;display: flex;align-items: center;justify-content: center;" 
         lg="5" md="7" sm="12" cols="12">
         <v-window v-model="window" style="width:100%">
-          <v-window-item :value="0">
+          <v-window-item  :key="0" v-if="this.ff">
             <v-card class="mt-0" rounded="2">
               <v-form ref="form" @submit.prevent="submit" style="text-align: center;padding:3%">
                <v-text-field append-icon="mdi-account" :rules="this.usernamerule" v-model="this.firstname"
@@ -53,7 +53,7 @@
           </v-window-item>
 
 
-          <v-window-item :value="1" style="height:auto;">
+          <v-window-item :key="1" v-if="this.ff"  style="height:auto;">
             <v-card>
               <v-form ref="form1" @submit.prevent="login" style="padding:6%">
                 <v-text-field append-icon="mdi-email" class="mb-7" :rules="this.emailrule" v-model="this.email"
@@ -66,7 +66,7 @@
           </v-window-item>
 
 
-            <v-window-item :value="2" v-if="this.t" style="margin:auto">
+            <v-window-item :key="this.im" v-if="this.t" style="margin:auto">
               <v-avatar
              
                 color="grey"
@@ -111,7 +111,7 @@
       <v-row v-if="this.lan==1" class="pa-6 pt-6" >
         <v-col lg="5"
         class="hidden-md-and-up"
-        v-if="this.window !=2"
+        v-if="this.ff"
          style=" direction: rtl;;margin:auto;backdrop-filter: blur(1px);min-height: 500px;display: flex;flex-direction: column;justify-content: center;align-items: flex-start;">
          <v-window v-model="window">
            <v-window-item key="0">
@@ -134,7 +134,7 @@
           style="border:2px solid white;backdrop-filter: blur(7px);text-align: center;padding:10px 25px;border-radius: 15px;margin:auto;display: flex;align-items: center;justify-content: center;" 
           lg="5" md="7" sm="12" cols="12">
           <v-window v-model="window" style="width:100%">
-            <v-window-item :key="0">
+            <v-window-item v-if="this.ff" :key="0">
               <v-card class="mt-0" >
                 <v-form ref="form" @submit.prevent="submit" style="text-align: center;padding:3%">
                  <v-text-field append-icon="mdi-account" :rules="this.usernamerulea" v-model="this.firstname"
@@ -159,7 +159,7 @@
             </v-window-item>
   
   
-            <v-window-item :key="1" style="height:auto;">
+            <v-window-item v-if="this.ff" :key="1" style="height:auto;">
               <v-card>
                 <v-form ref="form1" @submit.prevent="login" style="padding:6%">
                   <v-text-field append-icon="mdi-email" class="mb-7" :rules="this.emailrulea" v-model="this.email"
@@ -243,7 +243,8 @@
         <v-card> <h2 class="mb-10"> Type of file is not supported </h2><v-btn color="red" @click="this.err=false">close</v-btn> </v-card>
         
    </v-dialog>
-  </div>
+  </div></v-app>
+  
 </template>
 
 <style scoped>
@@ -256,7 +257,7 @@
 }
 @media (max-width:1000px) {
   .home{
-    max-width:99%
+    max-width:100%
   }
 }
 .hv:hover{opacity: 1 !important;cursor: pointer;}
@@ -284,6 +285,7 @@ export default {
       date:null,
       lan:localStorage.getItem("lan"),
       t:false,
+      ff:true,
       passwordrule: [(Password) => {
         if (Password) {
           if (this.hasTextAndNumbers(Password) && Password && Password.length>=8) {
@@ -385,9 +387,15 @@ export default {
               console.log(obj)
               this.loading = false
             }, 2000);
-            this.t=true
-            this.window=2
+            this.im=0;
+          this.window=0;
+          this.ff=false
+          this.t=true;
+        
+          
           };
+                   
+          
           
           console.log(this.image);
           
@@ -437,6 +445,7 @@ export default {
     this.lan=lang;
   },
   watch:{
+   
     }
 };
 

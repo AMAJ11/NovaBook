@@ -1,21 +1,20 @@
 <template>
-   <div class="posts">
-      
-      <v-row class="mt-md-10">
-         <v-col cols="12">
-            <div class="land" style="min-height: 25vh;max-height: 100vh;display: flex;text-align: center;flex-direction: column;justify-content: center;align-items: center;">
-                  <div class="pa-5" style="backdrop-filter: blur(2px);"><h1 v-if="this.lan==0" class=" hidden-xs text-h1 text-orange" style="text-align: center;">WELCOME</h1>
-                     <h1 v-if="this.lan==0" class="text-h2 text-orange hidden-sm-and-up" style="text-align: center;">WELCOME</h1>
+   <v-app>
+         <div class="land mt-md-10" style="min-height: 25vh;max-height: 100vh;display: flex;text-align: center;flex-direction: column;justify-content: center;align-items: center;">
+               <div class="pa-5" style="backdrop-filter: blur(2px);"><h1 v-if="this.lan==0" class=" hidden-xs text-h1 text-orange" style="text-align: center;">WELCOME</h1>
+                  <h1 v-if="this.lan==0" class="text-h2 text-orange hidden-sm-and-up" style="text-align: center;">WELCOME</h1>
 
-                     <h1 v-if="this.lan==1" class=" hidden-xs text-h1 text-orange mb-3" style="text-align: center;">أهلا و سهلا</h1>
-                     <h1 v-if="this.lan==1" class="text-h2 text-orange hidden-sm-and-up mb-3" style="text-align: center;">أهلا و سهلا</h1>
+                  <h1 v-if="this.lan==1" class=" hidden-xs text-h1 text-orange mb-3" style="text-align: center;">أهلا و سهلا</h1>
+                  <h1 v-if="this.lan==1" class="text-h2 text-orange hidden-sm-and-up mb-3" style="text-align: center;">أهلا و سهلا</h1>
 
 
-                     <v-text-field color="primary" variant="outlined" style="width:100%" append-icon="mdi-magnify"></v-text-field>     
-                  </div>
-                              
-            </div>
-         </v-col>
+                  <v-text-field color="primary" variant="outlined" style="width:100%" ></v-text-field>
+                  <v-btn> <v-icon>mdi-magnify</v-icon> </v-btn>     
+               </div>
+                           
+         </div>
+      <v-row style="max-width:100%" >
+        
          <v-col cols="12" md="9">
             <v-row class="pa-8 pt-4 px-lg-16 px-md-16 px-sm-8 px-3  mb-6" style="max-width:1000px">
                <v-col cols="12" v-for="i in 4">
@@ -44,8 +43,8 @@
             </v-list>
          </v-col>
       </v-row>
-   </div>
 
+</v-app>
 
 </template>
 
