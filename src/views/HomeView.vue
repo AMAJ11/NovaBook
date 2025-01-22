@@ -111,20 +111,21 @@
 
 
 
-      <v-row v-if="this.lan==1" class="pa-6 pt-10" >
-        <v-col lg="5"
-        class="hidden-md-and-up"
+      <v-row v-if="this.lan==1" class="pa-6 pt-5" >
+        <v-col lg="5" md="7" sm="6"
+        class="hidden-sm-and-up"
         v-if="this.ff"
-         style=" direction: rtl;;margin:auto;backdrop-filter: blur(1px);min-height: 500px;display: flex;flex-direction: column;justify-content: center;align-items: flex-start;">
-         <v-window v-model="window">
-           <v-window-item key="0">
+         style=" direction: rtl;backdrop-filter: blur(1px);min-height: 500px;display: flex;flex-direction: column;justify-content: center;align-items: flex-start;">
+         <v-window v-model="window" >
+           <v-window-item key="0" >
+            <v-img style="" height="350px" width="400px" src="../assets/pic1.png"></v-img>
              <h1 class="text-h2" style="font-weight: 900 !important;">أهلاً بكم في هذه المدونة </h1>
              <p class="text- text-orange-darken-3" style="font-size: 25px !important;font-weight: 600 !important;">
                قم بإنشاء حساب لتتمكن من التفاعل مع المقالات</p>
              <v-btn @click="this.window++;this.email='';this.userName='';this.password='';this.Password1=''" color="success" variant="flat">هل تملك حسابا مسبقاً؟</v-btn>
            </v-window-item>
            <v-window-item key="1">
- 
+            <v-img style="" height="350px" width="400px" src="../assets/pic6.png"></v-img>
              <h1 class="text-h2" style="font-weight: 900 !important;"> أهلاً بعودتك</h1>
              <p class="text- text-orange-darken-3" style="font-size: 25px !important;font-weight: 600 !important;">سجل دخولك
                لتتمكن من التفاعل</p>
@@ -134,11 +135,11 @@
        </v-col>
  
         <v-col
-          style="border:2px solid white;backdrop-filter: blur(7px);text-align: center;padding:10px 25px;border-radius: 15px;margin:auto;display: flex;align-items: center;justify-content: center;" 
-          lg="5" md="7" sm="12" cols="12">
-          <v-window v-model="window" style="width:100%">
-            <v-window-item v-if="this.ff" :key="0">
-              <v-card class="mt-0" >
+          style="backdrop-filter: blur(7px);text-align: center;padding:10px 25px;border-radius: 15px;margin:auto;display: flex;align-items: center;justify-content: center;" 
+          lg="5" md="7" sm="6" >
+          <v-window v-model="window" style="width:100%" class="mt-5">
+            <v-window-item  v-if="this.ff" :key="0">
+              <v-card >
                 <v-form ref="form" @submit.prevent="submit" style="text-align: center;padding:3%">
                  <v-text-field append-icon="mdi-account" :rules="this.usernamerulea" v-model="this.firstname"
                     label="اسم المستخدم"></v-text-field>
@@ -207,23 +208,23 @@
   
           </v-window>
   
-  
-  
         </v-col>
-        <v-col lg="5"
-        class="hidden-sm-and-down"
+        
+        <v-col lg="5" md="5" sm="6"
+        class="hidden-xs"
         v-if="this.window !=2"
-         style=" direction: rtl;;margin:auto;backdrop-filter: blur(1px);min-height: 500px;display: flex;flex-direction: column;justify-content: center;align-items: flex-start;">
+         style=" direction: rtl;backdrop-filter: blur(1px);min-height: 500px;display: flex;flex-direction: column;">
          <v-window v-model="window">
            <v-window-item key="0">
-             <h1 class="text-black text-h2" style="font-weight: 900 !important;">أهلاً بكم في هذه المدونة </h1>
+            <v-img style="" height="300px" width="400px" src="../assets/pic1.png"></v-img>
+             <h1 class="text-h2" style="font-weight: 900 !important;">أهلاً بكم في هذه المدونة </h1>
              <p class="text- text-orange-darken-3" style="font-size: 25px !important;font-weight: 600 !important;">
                قم بإنشاء حساب لتتمكن من التفاعل مع المقالات</p>
              <v-btn @click="this.window++;this.email='';this.userName='';this.password='';this.Password1=''" color="success" variant="flat">هل تملك حسابا مسبقاً؟</v-btn>
            </v-window-item>
-           <v-window-item key="1">
- 
-             <h1 class="text-black text-h2" style="font-weight: 900 !important;"> أهلاً بعودتك</h1>
+           <v-window-item key="1" class="mt-4">
+            <v-img class="" src="../assets/pic6.png" width="400" height="300px"></v-img>
+             <h1 class="text-h2" style="font-weight: 900 !important;"> أهلاً بعودتك</h1>
              <p class="text- text-orange-darken-3" style="font-size: 25px !important;font-weight: 600 !important;">سجل دخولك
                لتتمكن من التفاعل</p>
              <v-btn @click="this.window--;this.email='';this.userName='';this.password='';this.Password1=''" color="success" variant="flat">لا تملك حساباً؟ أنشىء واحدا</v-btn>
