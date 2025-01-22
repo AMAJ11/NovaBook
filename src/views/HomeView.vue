@@ -2,20 +2,22 @@
   <v-app>
     <v-lazy>
     <div class="home pb-16 pt-10 pb-xl-0">
-    <v-row style="width:99%" v-if="this.lan==0" class="pa-6 pt-10 px-3">
-      <v-col lg="5"
+    <v-row style="width:99%" v-if="this.lan==0" class="pa-6 pt-5 px-3">
+      <v-col class="pl-8" lg="6" md="5" sm="6"
        v-if="this.ff"
-        style="margin:auto;backdrop-filter: blur(1px);min-height: 500px;display: flex;flex-direction: column;justify-content: center;align-items: flex-start;">
+        style="backdrop-filter: blur(1px);min-height: 500px;display: flex;flex-direction: column;justify-content: center;">
         <v-window v-model="window">
-          <v-window-item v-if="this.ff" :key="0">
-            <h1 class="text-black text-h2" style="font-weight: 900 !important;"> Welcome to our blog </h1>
-            <p class="text- text-orange-darken-3" style="font-size: 25px !important;font-weight: 600 !important;">
-               Create new account to active with</p>
-            <v-btn @click="this.window++;this.email='';this.userName='';this.password='';this.Password1=''" color="success" variant="flat">You have acount?</v-btn>
+          <v-window-item style="" v-if="this.ff" :key="0">
+                 <v-img style="" height="350px" width="400px" src="../assets/pic1.png"></v-img>
+                 <h1 class="text-h2" style="font-weight: 900 !important;"> Welcome to our blog </h1>
+                 <p class="text-orange-darken-3" style="font-size: 25px !important;font-weight: 600 !important;">
+                    Create new account to active with</p>
+               
+                 <v-btn @click="this.window++;this.email='';this.userName='';this.password='';this.Password1=''" color="success" variant="flat">You have acount?</v-btn>
           </v-window-item>
           <v-window-item key="1" v-if="this.ff">
-
-            <h1 class="text-black text-h2" style="font-weight: 900 !important;"> Welcome Come back</h1>
+<v-img class="mt-5" src="../assets/pic6.png" width="400" height="350px"></v-img>
+            <h1 class="text-h2" style="font-weight: 900 !important;"> Welcome Come back</h1>
             <p class="text- text-orange-darken-3" style="font-size: 25px !important;font-weight: 600 !important;">Signin
               to active with</p>
             <v-btn @click="this.window--;this.email='';this.userName='';this.password='';this.Password1=''" color="success" variant="flat">Dont have acount?</v-btn>
@@ -26,11 +28,11 @@
 
 
       <v-col
-        style="border:2px solid white;backdrop-filter: blur(7px);text-align: center;padding:10px 25px;border-radius: 15px;margin:auto;display: flex;align-items: center;justify-content: center;" 
-        lg="5" md="7" sm="12" cols="12">
-        <v-window v-model="window" style="width:100%">
+        style="backdrop-filter: blur(7px);text-align: center;padding:10px 25px;border-radius: 15px;margin:auto;display: flex;align-items: center;justify-content: center;" 
+        lg="5" md="7" sm="6" cols="12">
+        <v-window class="mt-5" v-model="window" style="width:100%">
           <v-window-item  :key="0" v-if="this.ff">
-            <v-card class="mt-0" rounded="2">
+            <v-card  rounded="2">
               <v-form ref="form" @submit.prevent="submit" style="text-align: center;padding:3%">
                <v-text-field append-icon="mdi-account" :rules="this.usernamerule" v-model="this.firstname"
                   label="username"></v-text-field>
@@ -116,14 +118,14 @@
          style=" direction: rtl;;margin:auto;backdrop-filter: blur(1px);min-height: 500px;display: flex;flex-direction: column;justify-content: center;align-items: flex-start;">
          <v-window v-model="window">
            <v-window-item key="0">
-             <h1 class="text-black text-h2" style="font-weight: 900 !important;">أهلاً بكم في هذه المدونة </h1>
+             <h1 class="text-h2" style="font-weight: 900 !important;">أهلاً بكم في هذه المدونة </h1>
              <p class="text- text-orange-darken-3" style="font-size: 25px !important;font-weight: 600 !important;">
                قم بإنشاء حساب لتتمكن من التفاعل مع المقالات</p>
              <v-btn @click="this.window++;this.email='';this.userName='';this.password='';this.Password1=''" color="success" variant="flat">هل تملك حسابا مسبقاً؟</v-btn>
            </v-window-item>
            <v-window-item key="1">
  
-             <h1 class="text-black text-h2" style="font-weight: 900 !important;"> أهلاً بعودتك</h1>
+             <h1 class="text-h2" style="font-weight: 900 !important;"> أهلاً بعودتك</h1>
              <p class="text- text-orange-darken-3" style="font-size: 25px !important;font-weight: 600 !important;">سجل دخولك
                لتتمكن من التفاعل</p>
              <v-btn @click="this.window--;this.email='';this.userName='';this.password='';this.Password1=''" color="success" variant="flat">لا تملك حسابا؟أنشئ واحداً</v-btn>
@@ -251,9 +253,7 @@
 <style scoped>
 .home {
   height: auto;
-  background-image: url("../assets/pexels-belle-co-99483-1000444.jpg");
-  background-size: cover;
-  background-position: center;
+min-height: 100vh;
   
 }
 @media (max-width:1000px) {
