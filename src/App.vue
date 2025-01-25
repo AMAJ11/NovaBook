@@ -18,7 +18,7 @@
         </div>
       </v-toolbar>
 
-      <v-toolbar class="hidden-sm-and-up" style="">
+      <v-toolbar class="hidden-sm-and-up" style="width:99%">
         <v-btn class="hidden-sm-and-up" to="/"> <v-icon>mdi-account</v-icon> </v-btn>
         <v-spacer></v-spacer>
         <v-btn class="hidden-sm-and-up" to="/about"><v-icon>mdi-help</v-icon></v-btn>
@@ -26,8 +26,6 @@
         <v-btn class="hidden-sm-and-up" to="/post"><v-icon>mdi-account</v-icon></v-btn>
         <v-spacer></v-spacer>
         <v-btn class="hidden-sm-and-up" to="/quraan"><v-icon>mdi-book</v-icon></v-btn>
-
-
       </v-toolbar>
 
 
@@ -56,7 +54,7 @@
     </v-app-bar>
     <!-- <v-system-bar class=""  style="height: 75px !important;padding-right: 10px;"> -->
     <v-toolbar class="px-7 pt-2 mt-16 hidden-md-and-up" color="orange-darken-3"
-      style="height: auto;padding-right: 10px;">
+      style="height: auto;padding-right: 10px;width:99%">
       <v-avatar style="translate: 0 -23px;" color="grey" rounded="10" size="60" class="mt-10">
         <img src="" alt="">
       </v-avatar>
@@ -67,8 +65,6 @@
         <v-select :item-title="title" :item-value="value" v-model="lan" :items="item">
         </v-select>
       </div><br>
-
-
     </v-toolbar>
   </v-layout>
   <router-view />
@@ -138,7 +134,7 @@ function toggleTheme() {
   cursor: pointer;
   font-size: 35px !important;
 }
-.bar{max-width:100%;}
+.bar{width:99% !important}
 .sh:hover {
   rotate: 360deg;
 }

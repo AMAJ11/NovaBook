@@ -22,7 +22,7 @@ const routes = [
   },
   {
     path: '/Profile',
-    name: 'QuraanView',
+    name: 'profch',
     component: ProfileCh
   },
   {

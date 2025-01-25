@@ -1,5 +1,5 @@
 <template>
-    <div class="about mt-md-16" style="text-align: center;">
+    <div class="about mt-md-16" style="text-align: center;width:97%">
       <v-alert color="grey"> ` و من جهلت نفسه قدره      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  رأى غيره منه ما لا يرى`  </v-alert>
       <v-row>
         <v-col class="" style="border: 2px dashed black;" cols="12" sm="12" md="10" lg="8">

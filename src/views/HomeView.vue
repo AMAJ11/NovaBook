@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <v-app class="app">
     <v-lazy>
       <div class="home pb-16 pt-10 pb-xl-0 hidden-xs">
         <v-row style="width:99%" v-if="this.lan == 0" class="pa-6 pt-5 px-3">
@@ -214,12 +214,12 @@
       
       </div>
 </v-lazy>
-      <div class="home pb-16 pt-10 pb-xl-0 hidden-sm-and-up">
-        <v-row v-if="this.lan==1 && !this.l">
+      <div class="px-5 hidden-sm-and-up" style="width:99%">
+        <v-row s v-if="this.lan==1 && !this.l">
           <v-col cols="12" style="direction: rtl;">
-            <v-img style="" height="350px" width="400px" src="../assets/pic6.png"></v-img>
-            <h1 class="text-h2" style="font-weight: 900 !important;"> أهلاً بعودتك</h1>
-            <p class="text- text-orange-darken-3" style="font-size: 25px !important;font-weight: 600 !important;">سجل
+            <v-img style="" height="250px" width="300px" src="../assets/pic6.png"></v-img>
+            <h1 class="text-h3" style="font-weight: 900 !important;"> أهلاً بعودتك</h1>
+            <p class="text-orange-darken-3" style="font-size: 20px !important;font-weight: 500 !important;">سجل
               دخولك
               لتتمكن من التفاعل</p>
            
@@ -239,9 +239,9 @@
         </div>
 
           <v-col cols="12" style="direction: rtl;">
-            <v-img style="" height="350px" width="400px" src="../assets/pic1.png"></v-img>
-            <h1 class="text-h2" style="font-weight: 900 !important;">أهلاً بكم في هذه المدونة </h1>
-            <p class="text- text-orange-darken-3" style="font-size: 25px !important;font-weight: 600 !important;">
+            <v-img style="" height="250px" width="300px" src="../assets/pic1.png"></v-img>
+            <h1 class="text-h3" style="font-weight: 900 !important;">أهلاً بكم في هذه المدونة </h1>
+            <p class="text-orange-darken-3" style="font-size: 20px !important;font-weight: 500 !important;">
               قم بإنشاء حساب لتتمكن من التفاعل مع المقالات</p>
           
               <v-card>
@@ -281,7 +281,7 @@
 <!--English start   -->
 <v-row v-if="this.lan==0">
   <v-col cols="12">
-    <v-img style="" height="350px" width="400px" src="../assets/pic6.png"></v-img>
+    <v-img style="" height="250px" width="300px" src="../assets/pic6.png"></v-img>
     <h1 class="text-h2" style="font-weight: 900 !important;"> welcome back</h1>
     <p class="text- text-orange-darken-3" style="font-size: 25px !important;font-weight: 600 !important;">Sign in to active with</p>
     
@@ -300,7 +300,7 @@
     <v-divider thickness="8"></v-divider>
   </div>
   <v-col cols="12">
-    <v-img style="" height="350px" width="400px" src="../assets/pic1.png"></v-img>
+    <v-img style="" height="250px" width="300px" src="../assets/pic1.png"></v-img>
     <h1 class="text-h2" style="font-weight: 900 !important;">Welcome to our BLOG</h1>
     <p class="text- text-orange-darken-3" style="font-size: 25px !important;font-weight: 600 !important;">
        Create account to active with
@@ -365,12 +365,16 @@
   .home {
     max-width: 100%
   }
+  
 }
-
+@media (max-width:700px) {
+  
+}
 .hv:hover {
   opacity: 1 !important;
   cursor: pointer;
 }
+
 </style>
 
 
