@@ -2,7 +2,7 @@
   <v-layout>
     <v-app-bar class="bar">
       <v-toolbar class="hidden-xs">
-        <v-btn to="/profile-setting" rounded="10" height="auto" :ripple="false" v-if="this.token" style="translate: 0 -20px;cursor: pointer" class="mt-10 mr-10 ml-5 hidden-sm-and-down">
+        <v-btn to="/profile-setting" rounded="10" height="auto" :ripple="false" v-if="token" style="translate: 0 -20px;cursor: pointer" class="mt-10 mr-10 ml-5 hidden-sm-and-down">
         <v-avatar router :to="{path:'/profile'}" color="grey" rounded="10" size="60" >
           <v-img to="/profile" src="./assets/home.jpg" cover></v-img>
        
@@ -57,9 +57,12 @@
     <!-- <v-system-bar class=""  style="height: 75px !important;padding-right: 10px;"> -->
     <v-toolbar class="px-7 pt-2 mt-16 hidden-md-and-up" color="orange-darken-3"
       style="height: auto;padding-right: 10px;width:99%">
-      <v-avatar style="translate: 0 -23px;" color="grey" rounded="10" size="60" class="mt-10">
-        <img src="" alt="">
-      </v-avatar>
+
+     <v-btn to="/profile-setting" rounded="10" height="auto" :ripple="false" v-if="this.token !='1'" style="translate: 0 -25px;cursor: pointer" class="pa-4 mt-10 mr-10 ml-5 ">
+        <v-avatar router :to="{path:'/profile'}" color="grey" rounded="10" size="60" >
+          <v-img to="/profile" src="./assets/home.jpg" cover></v-img>
+       
+        </v-avatar></v-btn>
       <v-spacer></v-spacer>
       <v-switch class="hidden-sm-and-up" @click="toggleTheme"
         :append-icon='icon == true ? "mdi-weather-night" : "mdi-white-balance-sunny"'></v-switch>
@@ -114,6 +117,9 @@ export default {
   mounted: function () {
     if (!localStorage.getItem("lan")) {
       localStorage.setItem("lan", 0)
+    }
+    if (!localStorage.getItem("token")) {
+      localStorage.setItem("token", "0")
     }
   },
 }
