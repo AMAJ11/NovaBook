@@ -198,4 +198,9 @@ if (this.image2) {
 .home {
     padding-top: 7%;
 }
+@media (max-width:800px) {
+    .home{
+        width:96%
+    }
+}
 </style>
