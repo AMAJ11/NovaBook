@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import PostView from '@/views/PostView.vue'
 import QuraanView from '@/views/QuraanView.vue'
+import ProfileCh from '@/views/ProfileCh.vue'
 
 const routes = [
   {
@@ -18,6 +19,11 @@ const routes = [
     path: '/quraan',
     name: 'QuraanView',
     component: QuraanView
+  },
+  {
+    path: '/Profile',
+    name: 'QuraanView',
+    component: ProfileCh
   },
   {
     path: '/about',
