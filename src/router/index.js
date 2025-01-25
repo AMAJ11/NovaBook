@@ -3,6 +3,7 @@ import HomeView from '../views/HomeView.vue'
 import PostView from '@/views/PostView.vue'
 import QuraanView from '@/views/QuraanView.vue'
 import ProfileCh from '@/views/ProfileCh.vue'
+import ProfileView from '@/views/ProfileView.vue'
 
 const routes = [
   {
@@ -24,6 +25,11 @@ const routes = [
     path: '/Profile',
     name: 'profch',
     component: ProfileCh
+  },
+  {
+    path: '/Profile-setting',
+    name: 'profileview',
+    component: ProfileView
   },
   {
     path: '/about',

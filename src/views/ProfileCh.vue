@@ -17,7 +17,13 @@
         </div>
       
       </v-row>
-      
+      <v-dialog style="width:50%" v-model="this.err">
+        <v-card>
+          <h2 class="mb-10"> Type of file is not supported </h2><v-btn color="red"
+            @click="this.err = false">close</v-btn>
+        </v-card>
+  
+      </v-dialog>
       
 
 
@@ -26,6 +32,7 @@
 <script>
   export default{
     data(){return{
+        err:false,
         image:null,
         token: localStorage.getItem("token")
     }},
@@ -37,7 +44,7 @@
           if (allowedTypes.includes(this.image.type)) {
             const objectURL = URL.createObjectURL(this.image);
             this.image = objectURL;
-          } 
+          } else { this.err = true; this.image = '' }
         }
       }
     },

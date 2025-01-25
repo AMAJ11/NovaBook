@@ -2,9 +2,11 @@
   <v-layout>
     <v-app-bar class="bar">
       <v-toolbar class="hidden-xs">
-        <v-avatar style="translate: 0 -20px;" color="grey" rounded="10" size="60" class="mt-10 mr-10 ml-5 hidden-sm-and-down">
-          <img src="" alt="">
-        </v-avatar>
+        <v-btn to="/profile-setting" rounded="10" height="auto" :ripple="false" v-if="this.token" style="translate: 0 -20px;cursor: pointer" class="mt-10 mr-10 ml-5 hidden-sm-and-down">
+        <v-avatar router :to="{path:'/profile'}" color="grey" rounded="10" size="60" >
+          <v-img to="/profile" src="./assets/home.jpg" cover></v-img>
+       
+        </v-avatar></v-btn>
         <v-btn class="hidden-xs" to="/"> <v-icon>mdi-account</v-icon> Signin/Signup</v-btn>
         <v-btn class="hidden-xs" to="/about"><v-icon>mdi-help</v-icon>About</v-btn>
         <v-btn class="hidden-xs" to="/post"><v-icon>mdi-post-outline</v-icon>posts</v-btn>
@@ -78,6 +80,7 @@ export default {
   },
   data() {
     return {
+      token:localStorage.getItem("token"),
       icon: true,
       sw: false,
       path: false,
