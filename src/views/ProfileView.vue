@@ -1,6 +1,9 @@
 <template>
     <div class="home">
-        <h1 class="ml-8">My Profile</h1>
+        <h1 class="ml-8" v-if="this.lan == 0">My Profile</h1>
+
+        <h1 class="mr-8" v-if="this.lan == 1" style="direction: rtl;">ملفي الشخصي</h1>
+
         <v-row v-if="this.lan == 0" class="px-6 px-sm-8 px-md-16 mt-6 pb-10">
 
             <v-col md="6" lg="6" sm="12" cols="12">
