@@ -7,7 +7,7 @@
         </v-avatar>
         <v-btn class="hidden-xs" to="/"> <v-icon>mdi-account</v-icon> Signin/Signup</v-btn>
         <v-btn class="hidden-xs" to="/about"><v-icon>mdi-help</v-icon>About</v-btn>
-        <v-btn class="hidden-xs" to="/post"><v-icon>mdi-account</v-icon>posts</v-btn>
+        <v-btn class="hidden-xs" to="/post"><v-icon>mdi-post-outline</v-icon>posts</v-btn>
         <v-btn class="hidden-xs" to="/quraan"><v-icon>mdi-book</v-icon>Quraan</v-btn>
         <v-spacer></v-spacer>
         <v-switch class="hidden-xs" @click="toggleTheme"
@@ -23,7 +23,7 @@
         <v-spacer></v-spacer>
         <v-btn class="hidden-sm-and-up" to="/about"><v-icon>mdi-help</v-icon></v-btn>
         <v-spacer></v-spacer>
-        <v-btn class="hidden-sm-and-up" to="/post"><v-icon>mdi-account</v-icon></v-btn>
+        <v-btn class="hidden-sm-and-up" to="/post"><v-icon>mdi-post-outline</v-icon></v-btn>
         <v-spacer></v-spacer>
         <v-btn class="hidden-sm-and-up" to="/quraan"><v-icon>mdi-book</v-icon></v-btn>
       </v-toolbar>

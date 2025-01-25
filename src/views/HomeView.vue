@@ -102,15 +102,7 @@
 
 
         <v-row style="width:99%" v-if="this.lan == 1" class="pa-6 pt-5">
-          <v-col lg="5" md="7" sm="6" class="hidden-sm-and-up" v-if="this.ff"
-            style=" direction: rtl;backdrop-filter: blur(1px);min-height: 500px;display: flex;flex-direction: column;justify-content: center;align-items: flex-start;">
-            <v-window v-model="window">
-              <v-window-item key="0">
-                    </v-window-item>
-              <v-window-item key="1">
-              </v-window-item>
-            </v-window>
-          </v-col>
+         
 
           <v-col
             style="backdrop-filter: blur(7px);text-align: center;padding:10px 25px;border-radius: 15px;margin:auto;display: flex;align-items: center;justify-content: center;"
@@ -157,7 +149,7 @@
               </v-window-item>
 
 
-              <v-window-item key="2" v-if="this.t" style="margin:auto">
+              <v-window-item :key="this.im" v-if="this.t" style="margin:auto">
                 <v-avatar color="grey" rounded="10" size="140" class="mt-10">
 
                   <v-img :src="this.image" cover></v-img>
@@ -177,7 +169,7 @@
 
           </v-col>
 
-          <v-col lg="5" md="5" sm="6" class="hidden-xs" v-if="this.window != 2"
+          <v-col lg="5" md="5" sm="6" class="hidden-xs" v-if="this.im != 0"
             style=" direction: rtl;backdrop-filter: blur(1px);min-height: 500px;display: flex;flex-direction: column;">
             <v-window v-model="window">
               <v-window-item key="0">
@@ -215,7 +207,7 @@
       </div>
 </v-lazy>
       <div class="px-5 hidden-sm-and-up" style="width:99%">
-        <v-row s v-if="this.lan==1 && !this.l">
+        <v-row s v-if="this.lan==1">
           <v-col cols="12" style="direction: rtl;">
             <v-img style="" height="250px" width="300px" src="../assets/pic6.png"></v-img>
             <h1 class="text-h3" style="font-weight: 900 !important;"> أهلاً بعودتك</h1>
@@ -383,6 +375,7 @@ export default {
   name: 'HomeView',
   data: function () {
     return {
+      im:null,
       window: 1,
       loading: false,
       firstname: '',
@@ -507,7 +500,6 @@ export default {
             this.window = 0;
             this.ff = false
             this.t = true;
-            this.l=true
             console.log(this.l)
           };
 
