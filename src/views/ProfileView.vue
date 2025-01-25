@@ -1,7 +1,7 @@
 <template>
     <div class="home">
         <h1 class="ml-8">My Profile</h1>
-        <v-row v-if="this.lan == 0" class="px-2 px-sm-8 px-md-16 mt-6 pb-10">
+        <v-row v-if="this.lan == 0" class="px-6 px-sm-8 px-md-16 mt-6 pb-10">
 
             <v-col md="6" lg="6" sm="12" cols="12">
                 <v-divider></v-divider>
