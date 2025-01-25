@@ -296,8 +296,9 @@
       </v-form>
     </v-card>
   </v-col>
-
-  <v-divider></v-divider>
+  <div class="mt-8" style="width:100%">            <h2 style="text-align:center;">OR</h2>
+    <v-divider thickness="8"></v-divider>
+  </div>
   <v-col cols="12">
     <v-img style="" height="350px" width="400px" src="../assets/pic1.png"></v-img>
     <h1 class="text-h2" style="font-weight: 900 !important;">Welcome to our BLOG</h1>
