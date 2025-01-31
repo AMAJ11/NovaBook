@@ -14,10 +14,10 @@
                 <v-textarea class="mt-4" label="post" prepend-icon="mdi-post-outline">
 
                 </v-textarea>
-                <v-file-input style="" class="bg-orange  mt-10" v-model="this.image" @change="onFileSelected"
+                <v-file-input style="border-radius: 12px !important;" class="bg-orange  mt-10 px-3 pt-1" v-model="this.image" @change="onFileSelected"
                     label="Post image" type="file" accept="image/*" placeholder="Pick an avatar"
                     append-icon="mdi-camera"></v-file-input>
-                <VBtn class="mt-4"> post </VBtn>
+                <v-btn class="mt-4" @click="console.log(this.image)"> post </v-btn>
             </v-col>
             <v-spacer></v-spacer>
             <v-col md="6" lg="4" sm="12" cols="12">
@@ -83,7 +83,7 @@
                 <v-textarea dir="rtl" class="mt-4" label="منشور" prepend-icon="mdi-post-outline">
 
                 </v-textarea>
-                <v-file-input style="" class="bg-orange  mt-10" v-model="this.image" @change="onFileSelected"
+                <v-file-input style="border-radius: 12px !important;" class="bg-orange  mt-10" v-model="this.image" @change="onFileSelected"
                     label="صورة المنشور" type="file" accept="image/*" placeholder="Pick an avatar"
                     append-icon="mdi-camera"></v-file-input>
                 <VBtn class="mt-4"> post </VBtn>
@@ -133,7 +133,7 @@
                             <v-file-input style="" class="bg-orange  mt-10" v-model="this.image2" @change="onFileSelected2"
                             label="صورة الحساب" type="file" accept="image/*" placeholder="Pick an avatar"
                             append-icon="mdi-camera"></v-file-input>
-                            <v-btn class="mt-4">تغيير</v-btn>
+                            <v-btn class="mt-4" @click="console.log(this.image2)">تغيير</v-btn>
                         </v-expansion-panel-text>
                     </v-expansion-panel>
 
@@ -178,6 +178,7 @@ export default {
                 if (allowedTypes.includes(this.image.type)) {
                     const objectURL = URL.createObjectURL(this.image);
                     this.image = objectURL;
+                    console.log(this.image)
                     this.t = true
                 }else { this.err = true; this.image = '' }
             }

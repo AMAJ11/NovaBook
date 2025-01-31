@@ -5,8 +5,7 @@
           <v-avatar color="grey" rounded="10" size="140" class="mt-10">
       
             <v-img :src="this.image" cover></v-img>
-            <v-sheet class="hv" style="right:60px;top:0;position: absolute;opacity: 0.4;"><v-icon
-                @click="this.image = ''">mdi-close</v-icon> </v-sheet>
+           
           </v-avatar>
           <v-file-input style="" class="bg-primary  mt-10" v-model="this.image"
             @change="onFileSelected" label="Avatar" type="file" accept="image/*" placeholder="Pick an avatar"
