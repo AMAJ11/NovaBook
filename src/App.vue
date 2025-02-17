@@ -73,6 +73,15 @@
     </v-toolbar>
   </v-layout>
   <router-view />
+  <v-btn 
+  variant="outlined"
+  v-show="this.showButton" 
+  color="warning" 
+  @click="scrollToTop" 
+  class="scroll-to-top"
+>
+  <v-icon>mdi-arrow-up</v-icon>
+</v-btn>
 </template>
 
 <script>
@@ -83,6 +92,8 @@ export default {
   },
   data() {
     return {
+      showButton: false,
+
       token:localStorage.getItem("token"),
       icon: true,
       sw: false,
@@ -113,6 +124,12 @@ export default {
       localStorage.setItem("lan", JSON.stringify(this.lan));
       window.location.reload();
     },
+    handleScroll() {
+      this.showButton = window.scrollY > 200;
+    },
+    scrollToTop: ()=> {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    },
   },
   mounted: function () {
     if (!localStorage.getItem("lan")) {
@@ -121,7 +138,12 @@ export default {
     if (!localStorage.getItem("token")) {
       localStorage.setItem("token", "0")
     }
+    window.addEventListener("scroll", this.handleScroll);
   },
+  beforeUnmount: ()=> {
+    window.removeEventListener("scroll", this.handleScroll);
+  }
+
 }
 
 </script>
@@ -137,13 +159,20 @@ function toggleTheme() {
 </script>
 
 <style scoped>
-
+.scroll-to-top {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width:50px;
+  height:50px;
+  border-radius: 45%;
+}
 .sh {
   transition: 0.4s;
   cursor: pointer;
   font-size: 35px !important;
 }
-.bar{width:99% !important}
+.bar{width:100% !important}
 .sh:hover {
   rotate: 360deg;
 }
