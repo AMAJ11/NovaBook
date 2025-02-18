@@ -122,8 +122,6 @@ export default {
 .cls:hover{
    rotate: 240deg;
 }
-.land{
-}
 .posts {
    height: auto;
 }

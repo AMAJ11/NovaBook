@@ -75,7 +75,7 @@
   <router-view />
   <v-btn 
   variant="outlined"
-  v-if="this.showButton" 
+  v-if="showButton" 
   color="warning" 
   @click="scrollToTop" 
   class="scroll-to-top"
