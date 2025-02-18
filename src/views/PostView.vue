@@ -66,7 +66,7 @@
     <V-dialog style="height:400px;max-width:700px" v-model="this.comment">
        <h2>Comments</h2>
         <v-card style="width:100%;margin:auto;min-height: 300px;border-radius: 15px;">
-        <v-btn @click="this.comment=false" variant="text" style="position: fixed; top:0;right:0;z-index:12"> <v-icon color="red">mdi-close</v-icon> </v-btn>  
+         <v-icon @click="this.comment=false" variant="text" style="position: fixed; top:0;right:0;z-index:12" class="cls" color="red">mdi-close</v-icon> 
          <div style="min-height:100%">
             <v-row class="pa-9 pb-16">
                <v-col class="mb-5" style="display: flex;flex-direction: column;" cols="12" v-for="i in 14">
@@ -116,7 +116,12 @@ export default {
 }
 </script>
 <style scoped>
-
+.cls{
+   transition: 0.4s;
+}
+.cls:hover{
+   rotate: 240deg;
+}
 .land{
 }
 .posts {
