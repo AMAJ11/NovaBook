@@ -272,6 +272,10 @@
                 v-model="this.Password" label="كلمة السر" :rules="this.passwordrulea" type=password></v-text-field>
               <v-text-field append-icon="mdi-key" v-model="this.Password1" :rules="this.password1rulea" type=password
                 label="كلمة السر مرة أخرى😁"></v-text-field>
+                <v-autocomplete v-model="this.selectedCountry" :items="this.countries" label="اختر الدولة"></v-autocomplete>
+                  
+                <v-autocomplete v-model="selectedCity" :items="cities"  label="اختر المدينة" item-text="title"
+                  item-value="value" :disabled="!selectedCountry"></v-autocomplete>
               <v-btn variant="outlined" color="warning" :loading="this.loading" class="mt-2" text="تسجيل" type="submit"
                 block></v-btn>
             </v-form>
