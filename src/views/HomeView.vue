@@ -506,25 +506,33 @@ export default {
   },
   methods: {
     async loadCountries() {
-      try {
-        const response = await fetch('https://restcountries.com/v3.1/all');
-        const data = await response.json();
-        console.log(data);
+      // try {
+      //   const response = await fetch('https://restcountries.com/v3.1/all');
+      //   const data = await response.json();
+      //   console.log(data);
 
-        this.countries = data.map(country => ({
-          title: country.name.common,
-          value: country.cca2
-        }));
+      //   this.countries = data.map(country => ({
+      //     title: country.name.common,
+      //     value: country.cca2
+      //   }));
+        
+      
         // for (let i = 0; i < data.length; i++) {
         //   this.countries.push(data[i])
            
         // }
         
+      this.countries = Country.getAllCountries().map(country => ({
+        value: {name:country.name,code: country.isoCode},
+        title: country.translations?.ar || country.name,
+      })).sort((a, b) => a.title.localeCompare(b.name));
+
+
         console.log(this.countries);
 
-      } catch (error) {
-        console.error('Error loading countries:', error);
-      }
+      // } catch (error) {
+      //   console.error('Error loading countries:', error);
+      // }
     },
     submit: function () {
       console.log(this.gender);
@@ -561,9 +569,9 @@ export default {
     },
     loadCities: async function () {
       console.log("hellllo");
-      console.log(City.getCitiesOfCountry(this.selectedCountry));
+      console.log(City.getCitiesOfCountry(this.selectedCountry.code));
    
-     this.cities = City.getCitiesOfCountry(this.selectedCountry).map(city => ({
+     this.cities = City.getCitiesOfCountry(this.selectedCountry.code).map(city => ({
           title: city.name,
            value:{name:city.name ,long: city.longitude,lat: city.latitude}
         }));
