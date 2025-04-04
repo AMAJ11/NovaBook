@@ -127,7 +127,7 @@ export default {
      
      
         const response = await axios.get(
-          `http://api.aladhan.com/v1/timings/${day}-${month}-${year}`,
+          `https://api.aladhan.com/v1/timings/${day}-${month}-${year}`,
           {
             params: {
               latitude: lat ,
