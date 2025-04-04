@@ -74,11 +74,12 @@
   </v-layout>
   <router-view />
   <v-btn 
-  variant="outlined"
+  variant="flat"
   v-if="showButton" 
   color="warning" 
   @click="scrollToTop" 
   class="scroll-to-top"
+  size="small"
 >
   <v-icon>mdi-arrow-up</v-icon>
 </v-btn>
@@ -163,8 +164,6 @@ function toggleTheme() {
   position: fixed;
   bottom: 20px;
   right: 20px;
-  width:50px;
-  height:50px;
   border-radius: 45%;
 }
 .sh {

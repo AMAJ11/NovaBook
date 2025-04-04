@@ -1,22 +1,24 @@
 <template>
-   <v-app>
-         <v-row class="mt-md-14" style="width:99%">
-
-            <v-col style="display:flex;flex-direction: column; justify-items: space-around;margin: auto;" cols="6"> 
-            <v-img style="margin:auto" width="200px" src="../assets/serch.png"></v-img>   
-            <h1 v-if="this.lan==0" class=" hidden-xs text-h1 text-orange" style="text-align: center;">WELCOME</h1>
-                  <h1 v-if="this.lan==0" class="text-h2 text-orange hidden-sm-and-up" style="text-align: center;">WELCOME</h1>
-
-                  <h1 v-if="this.lan==1" class=" hidden-xs text-h1 text-orange mb-3" style="text-align: center;">أهلا و سهلا</h1>
-                  <h1 v-if="this.lan==1" class="text-h2 text-orange hidden-sm-and-up mb-3" style="text-align: center;">أهلا و سهلا</h1>
-
-
-                  <v-text-field color="primary" variant="outlined" style="width:100%" ></v-text-field>
-                  <v-btn style="margin:auto" color="success"> <v-icon>mdi-magnify</v-icon> </v-btn>     
-            </v-col>    
-    
-         </v-row>
-      <v-row style="max-width:100%" >
+   <v-app class="pt-5">
+        
+      <v-row class="mt-12 mb-6 dd">
+        
+         <v-col cols="12" class="dd" >
+            <v-row class="px-1 px-md-7" style="backdrop-filter: blur(4px);width:70%;margin:auto">
+               <v-col md="2" cols="4"> <v-icon>mdi-weather-sunset</v-icon> <p >الفجر</p> <p class="bg-blue" style="width:fit-content"> {{ this.fajr }} </p>  </v-col>
+               <v-spacer></v-spacer>
+               <v-col md="2" cols="4"> <v-icon>mdi-white-balance-sunny</v-icon> <p >الظهر</p> <p class="bg-blue" style="width:fit-content"> {{ this.zhr }} </p>  </v-col>
+               <v-spacer></v-spacer>
+               <v-col md="2" cols="4"> <v-icon>mdi-sun-clock-outline</v-icon><p >العصر</p> <p class="bg-blue" style="width:fit-content"> {{ this.asr }} </p>  </v-col>
+               <v-spacer></v-spacer>
+               <v-col md="2" cols="4"><v-icon>mdi-weather-sunset-down</v-icon> <p >المغرب</p> <p class="bg-blue" style="width:fit-content"> {{ this.mughrib }} </p>  </v-col>
+               <v-spacer></v-spacer>
+               <v-col md="2" cols="4"><v-icon>mdi-moon-full</v-icon> <p >العشاء</p> <p class="bg-blue" style="width:fit-content"> {{  this.isha }} </p>  </v-col>
+               
+            </v-row>
+         </v-col>
+      </v-row>
+      <v-row class="mt-5" style="max-width:100%" >
         
          <v-col cols="12" md="9">
             <v-row class="pa-8 pt-4 px-lg-16 px-md-16 px-sm-8 px-3  mb-6" style="max-width:1000px">
@@ -88,7 +90,7 @@
 
 <script>
 import { onActivated } from 'vue';
-
+import axios from 'axios';
 export default {
    name: "PostView",
    data: function () {
@@ -97,7 +99,13 @@ export default {
          lan: localStorage.getItem("lan"),
          active:[],
          btn: 0,
-         comment: false
+         comment: false,
+         prayerTimes:{},
+         fajr:0,
+         zhr:0,
+         asr:0,
+         mughrib:0,
+         isha:0
       }
    },
    methods:{
@@ -105,11 +113,42 @@ export default {
          console.log(this.$refs.btn);
       }
    },
-   created: function () {
+   created: async function () {
       let lang = localStorage.getItem("lan");
       this.lan = lang;
+      try {
+        const date = new Date();
+        const year = date.getFullYear();
+        const month = date.getMonth() + 1;
+        const day = date.getDate();
+     const lat= JSON.parse(localStorage.getItem("lat"));
+     const long= JSON.parse(localStorage.getItem("long"));
+     console.log(lat, long);
+     
+     
+        const response = await axios.get(
+          `http://api.aladhan.com/v1/timings/${day}-${month}-${year}`,
+          {
+            params: {
+              latitude: lat ,
+              longitude: long,
+              method: 4,
+            }
+          }
+        );
+this.fajr= response.data.data.timings.Fajr
+this.zhr= response.data.data.timings.Dhuhr
+this.asr= response.data.data.timings.Asr
+this.mughrib= response.data.data.timings.Maghrib
+this.isha= response.data.data.timings.Isha
       
-   
+        
+      } catch (error) {
+        console.error('Error fetching prayer times:', error);;
+      } finally {
+        this.loading = false;
+      }
+     
     
       
    },
@@ -130,6 +169,17 @@ export default {
    .posts {
       max-width: 98%
    }
+}
+.dd{
+   min-height: 20vh;
+   background-image: url('../assets/Mosque_PNG_image_with_transparent_background-removebg-preview.png');
+   background-repeat: repeat-x;
+   background-size: contain;
+
+
+}
+@media (max-width:450px) {
+    .dd{min-height: 100vh;background-size: cover;}
 }
 </style>
 

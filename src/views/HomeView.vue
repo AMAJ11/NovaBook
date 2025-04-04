@@ -54,7 +54,10 @@
                       v-model="this.Password" label="Password" :rules="this.passwordrule" type=password></v-text-field>
                     <v-text-field append-icon="mdi-key" v-model="this.Password1" :rules="this.password1rule"
                       type=password label="Return password"></v-text-field>
-
+                    <v-autocomplete v-model="this.selectedCountry" :items="this.countries" label="اختر الدولة"></v-autocomplete>
+                  
+                    <v-autocomplete v-model="selectedCity" :items="cities"  label="اختر المدينة" item-text="title"
+                      item-value="value" :disabled="!selectedCountry"></v-autocomplete>
                     <div style="display: flex;width:50%;margin: auto;"> <v-btn style="border-radius: 12px !important"
                         variant="flat" color="orange-darken-3" :loading="this.loading" class="mt-2" text="SignUp"
                         type="submit" block></v-btn></div>
@@ -70,8 +73,9 @@
                       label="E-mail"></v-text-field>
                     <v-text-field append-icon="mdi-key" class="mb-7" v-model="this.passlog" label="Password"
                       :rules="this.passwordrule" type=password></v-text-field>
-                   <div  style="display: flex;width:50%;margin: auto;"><v-btn style="border-radius: 12px !important" color="orange-darken-3" variant="flat" :loading="this.loading" class="mt-2" text="Sign in"
-                      type="submit" block></v-btn></div> 
+                    <div style="display: flex;width:50%;margin: auto;"><v-btn style="border-radius: 12px !important"
+                        color="orange-darken-3" variant="flat" :loading="this.loading" class="mt-2" text="Sign in"
+                        type="submit" block></v-btn></div>
                   </v-form>
                 </v-card>
               </v-window-item>
@@ -132,6 +136,10 @@
                       type=password></v-text-field>
                     <v-text-field append-icon="mdi-key" v-model="this.Password1" :rules="this.password1rulea"
                       type=password label="كلمة السر مرة أخرى😁"></v-text-field>
+                      <v-autocomplete v-model="this.selectedCountry" :items="this.countries" label="اختر الدولة"></v-autocomplete>
+                  
+                      <v-autocomplete v-model="selectedCity" :items="cities"  label="اختر المدينة" item-text="title"
+                        item-value="value" :disabled="!selectedCountry"></v-autocomplete>
                     <div style="display: flex;width:50%;margin: auto;"> <v-btn style="border-radius: 12px !important"
                         variant="flat" color="orange-darken-3" :loading="this.loading" class="mt-2 w-50" text="تسجيل"
                         type="submit" block></v-btn></div>
@@ -378,10 +386,15 @@
 
 
 <script>
+import { City, Country } from 'country-state-city';
 export default {
   name: 'HomeView',
   data: function () {
     return {
+      selectedCountry: null,
+      selectedCity: null,
+      countries: [], // قائمة الدول
+      cities: [], // قائمة المدن
       im: null,
       window: 1,
       loading: false,
@@ -484,6 +497,27 @@ export default {
     }
   },
   methods: {
+    async loadCountries() {
+      try {
+        const response = await fetch('https://restcountries.com/v3.1/all');
+        const data = await response.json();
+        console.log(data);
+
+        this.countries = data.map(country => ({
+          title: country.name.common,
+          value: country.cca2
+        }));
+        // for (let i = 0; i < data.length; i++) {
+        //   this.countries.push(data[i])
+           
+        // }
+        
+        console.log(this.countries);
+
+      } catch (error) {
+        console.error('Error loading countries:', error);
+      }
+    },
     submit: function () {
       console.log(this.gender);
       console.log(this.date);
@@ -517,6 +551,17 @@ export default {
         })
 
     },
+    loadCities: async function () {
+      console.log("hellllo");
+      console.log(City.getCitiesOfCountry(this.selectedCountry));
+   
+     this.cities = City.getCitiesOfCountry(this.selectedCountry).map(city => ({
+          title: city.name,
+           value:{name:city.name ,long: city.longitude,lat: city.latitude}
+        }));
+    },
+
+
     submitph: function () {
       console.log(this.gender);
       console.log(this.date);
@@ -577,7 +622,7 @@ export default {
             let im = objectURL;
             this.show = true
             console.log(im);
-            
+
           } else { this.err = true; this.image = '' }
         }
       }
@@ -587,14 +632,22 @@ export default {
     }
 
   },
-  mounted() {
-  },
-
-  created: function () {
+  created: async function () {
+    this.loadCountries()
     let lang = localStorage.getItem("lan");
     this.lan = lang;
   },
   watch: {
+    selectedCountry(newvalue, old) {
+      this.loadCities()
+      console.log(newvalue);
+
+    },
+    selectedCity(newvalue, old) {
+      console.log(newvalue);
+     localStorage.setItem("long",JSON.stringify(newvalue.long));
+     localStorage.setItem("lat",JSON.stringify(newvalue.lat));
+    }
   }
 };
 
