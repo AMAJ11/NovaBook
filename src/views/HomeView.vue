@@ -54,9 +54,9 @@
                       v-model="this.Password" label="Password" :rules="this.passwordrule" type=password></v-text-field>
                     <v-text-field append-icon="mdi-key" v-model="this.Password1" :rules="this.password1rule"
                       type=password label="Return password"></v-text-field>
-                    <v-autocomplete v-model="this.selectedCountry" :items="this.countries" label="اختر الدولة"></v-autocomplete>
+                    <v-autocomplete :rules="this.usernamerule" v-model="this.selectedCountry" :items="this.countries" label="اختر الدولة"></v-autocomplete>
                   
-                    <v-autocomplete v-model="selectedCity" :items="cities"  label="اختر المدينة" item-text="title"
+                    <v-autocomplete :rules="this.usernamerule" v-model="selectedCity" :items="cities"  label="اختر المدينة" item-text="title"
                       item-value="value" :disabled="!selectedCountry"></v-autocomplete>
                     <div style="display: flex;width:50%;margin: auto;"> <v-btn style="border-radius: 12px !important"
                         variant="flat" color="orange-darken-3" :loading="this.loading" class="mt-2" text="SignUp"
@@ -136,9 +136,9 @@
                       type=password></v-text-field>
                     <v-text-field append-icon="mdi-key" v-model="this.Password1" :rules="this.password1rulea"
                       type=password label="كلمة السر مرة أخرى😁"></v-text-field>
-                      <v-autocomplete v-model="this.selectedCountry" :items="this.countries" label="اختر الدولة"></v-autocomplete>
+                      <v-autocomplete :rules="this.usernamerulea" v-model="this.selectedCountry" :items="this.countries" label="اختر الدولة"></v-autocomplete>
                   
-                      <v-autocomplete v-model="selectedCity" :items="cities"  label="اختر المدينة" item-text="title"
+                      <v-autocomplete :rules="this.usernamerulea" v-model="selectedCity" :items="cities"  label="اختر المدينة" item-text="title"
                         item-value="value" :disabled="!selectedCountry"></v-autocomplete>
                     <div style="display: flex;width:50%;margin: auto;"> <v-btn style="border-radius: 12px !important"
                         variant="flat" color="orange-darken-3" :loading="this.loading" class="mt-2 w-50" text="تسجيل"
@@ -272,9 +272,9 @@
                 v-model="this.Password" label="كلمة السر" :rules="this.passwordrulea" type=password></v-text-field>
               <v-text-field append-icon="mdi-key" v-model="this.Password1" :rules="this.password1rulea" type=password
                 label="كلمة السر مرة أخرى😁"></v-text-field>
-                <v-autocomplete v-model="this.selectedCountry" :items="this.countries" label="اختر الدولة"></v-autocomplete>
+                <v-autocomplete :rules="this.usernamerulea" v-model="this.selectedCountry" :items="this.countries" label="اختر الدولة"></v-autocomplete>
                   
-                <v-autocomplete v-model="selectedCity" :items="cities"  label="اختر المدينة" item-text="title"
+                <v-autocomplete :rules="this.usernamerulea" v-model="selectedCity" :items="cities"  label="اختر المدينة" item-text="title"
                   item-value="value" :disabled="!selectedCountry"></v-autocomplete>
               <v-btn variant="outlined" color="warning" :loading="this.loading" class="mt-2" text="تسجيل" type="submit"
                 block></v-btn>
@@ -338,9 +338,9 @@
                 label="password" :rules="this.passwordrule" type=password></v-text-field>
               <v-text-field append-icon="mdi-key" v-model="this.Password1" :rules="this.password1rule" type=password
                 label="password again 😁"></v-text-field>
-                <v-autocomplete v-model="this.selectedCountry" :items="this.countries" label="اختر الدولة"></v-autocomplete>
+                <v-autocomplete :rules="this.usernamerule" v-model="this.selectedCountry" :items="this.countries" label="اختر الدولة"></v-autocomplete>
                   
-                <v-autocomplete v-model="selectedCity" :items="cities"  label="اختر المدينة" item-text="title"
+                <v-autocomplete :rules="this.usernamerule" v-model="selectedCity" :items="cities"  label="اختر المدينة" item-text="title"
                   item-value="value" :disabled="!selectedCountry"></v-autocomplete>
               <v-btn variant="outlined" color="warning" :loading="this.loading" class="mt-2" text="Signup" type="submit"
                 block></v-btn>

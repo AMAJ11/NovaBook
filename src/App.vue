@@ -2,7 +2,7 @@
   <v-layout>
     <v-app-bar class="bar">
       <v-toolbar class="hidden-xs">
-        <v-btn to="/profile-setting" rounded="10" height="auto" :ripple="false" v-if="token !='1'" style="translate: 0 -20px;cursor: pointer" class="mt-10 mr-10 ml-5 hidden-sm-and-down">
+        <v-btn to="/profile-setting" rounded="10" height="auto" :ripple="false" v-if="token !='1'" style="translate: 0 200px;cursor: pointer" class="hidden-sm-and-down">
         <v-avatar router :to="{path:'/profile'}" color="grey" rounded="10" size="60" >
           <v-img to="/profile" src="./assets/home.jpg" cover></v-img>
        
@@ -58,7 +58,7 @@
     <v-toolbar class="px-7 pt-2 mt-16 hidden-md-and-up" color="orange-darken-3"
       style="height: auto;padding-right: 10px;width:99%">
 
-     <v-btn to="/profile-setting" rounded="10" height="auto" :ripple="false" v-if="token !='1'" style="translate: 0 -25px;cursor: pointer" class="pa-4 mt-10 ">
+     <v-btn to="/profile-setting" rounded="10" height="auto" :ripple="false" v-if="token !='1'" style="translate: 0 0px;cursor: pointer" class="pa-4">
         <v-avatar router :to="{path:'/profile'}" color="grey" rounded="10" size="60" >
           <v-img to="/profile" src="./assets/home.jpg" cover></v-img>
        
