@@ -4,7 +4,7 @@
       <v-toolbar class="hidden-xs">
         <v-btn to="/profile-setting" rounded="10" height="auto" :ripple="false" style="cursor: pointer" class="hidden-sm-and-down">
         <v-avatar router :to="{path:'/profile'}" color="grey" rounded="10" size="60" >
-          <v-img to="/profile" :src="this.url" cover></v-img>
+          <v-img v-if="this.token !=null" to="/profile" :src="this.url" cover></v-img>
        
         </v-avatar></v-btn>
         <v-btn class="hidden-xs" to="/"> <v-icon>mdi-account</v-icon> Signin/Signup</v-btn>
@@ -93,7 +93,7 @@ export default {
   },
   data() {
     return {
-      url:JSON.parse(localStorage.getItem("user")).profilephoto.url,
+      url: JSON.parse(localStorage.getItem("user")).profilephoto.url,
       showButton: false,
 
       token:localStorage.getItem("token"),
