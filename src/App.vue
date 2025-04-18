@@ -93,7 +93,7 @@ export default {
   },
   data() {
     return {
-      url: JSON.parse(localStorage.getItem("user")).profilephoto.url,
+      url: JSON.parse(localStorage.getItem("user")).profilephoto.url |j| "",
       showButton: false,
 
       token:localStorage.getItem("token"),
