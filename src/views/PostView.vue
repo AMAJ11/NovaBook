@@ -60,7 +60,7 @@
                <h1  style="direction: rtl;opacity: 0.4;" v-if="this.lan == 1">أصدقاؤك</h1>
                <v-card class="pa-6" style="height: 75vh;width:100%;overflow: scroll;">
                
-               <span class="mb-3" v-for="i in 33" style="display: flex;align-items: center;cursor: pointer;"><v-avatar> <v-img src="../assets/logo.png" width="150px"></v-img></v-avatar> <p>Ammar AJ</p><v-spacer></v-spacer><v-btn to="/freinds/:id" variant="text"><v-icon>mdi-eye</v-icon></v-btn></span>
+               <span class="mb-3" v-for="i in 33" style="display: flex;align-items: center;cursor: pointer;"><v-avatar> <v-img src="../assets/logo.png" width="150px"></v-img></v-avatar> <p>Ammar AJ</p><v-spacer></v-spacer><v-btn to="/Person-Profile/:87986" variant="text"><v-icon>mdi-eye</v-icon></v-btn></span>
                <v-divider thickness="2"></v-divider>
             </v-card>
          </v-col>

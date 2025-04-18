@@ -4,6 +4,7 @@ import PostView from '@/views/PostView.vue'
 import QuraanView from '@/views/QuraanView.vue'
 import ProfileCh from '@/views/ProfileCh.vue'
 import ProfileView from '@/views/ProfileView.vue'
+import PersonProfile from '@/views/PersonProfile.vue'
 
 const routes = [
   {
@@ -15,6 +16,11 @@ const routes = [
     path: '/post',
     name: 'PostView',
     component: PostView
+  },
+  {
+    path: '/Person-Profile/:id',
+    name: 'Person-Profile',
+    component: PersonProfile
   },
   {
     path: '/quraan',

@@ -54,13 +54,16 @@
                       v-model="this.Password" label="Password" :rules="this.passwordrule" type=password></v-text-field>
                     <v-text-field append-icon="mdi-key" v-model="this.Password1" :rules="this.password1rule"
                       type=password label="Return password"></v-text-field>
-                    <v-autocomplete :rules="this.usernamerule" v-model="this.selectedCountry" :items="this.countries" label="اختر الدولة"></v-autocomplete>
-                  
-                    <v-autocomplete :rules="this.usernamerule" v-model="selectedCity" :items="cities"  label="اختر المدينة" item-text="title"
-                      item-value="value" :disabled="!selectedCountry"></v-autocomplete>
+                    <v-autocomplete :rules="this.usernamerule" v-model="this.selectedCountry" :items="this.countries"
+                      label="اختر الدولة"></v-autocomplete>
+
+                    <v-autocomplete :rules="this.usernamerule" v-model="selectedCity" :items="cities"
+                      label="اختر المدينة" item-text="title" item-value="value"
+                      :disabled="!selectedCountry"></v-autocomplete>
                     <div style="display: flex;width:50%;margin: auto;"> <v-btn style="border-radius: 12px !important"
                         variant="flat" color="orange-darken-3" :loading="this.loading" class="mt-2" text="SignUp"
                         type="submit" block></v-btn></div>
+                    <p class="text-red"> {{ errmessage }} </p>
                   </v-form>
                 </v-card>
               </v-window-item>
@@ -76,24 +79,13 @@
                     <div style="display: flex;width:50%;margin: auto;"><v-btn style="border-radius: 12px !important"
                         color="orange-darken-3" variant="flat" :loading="this.loading" class="mt-2" text="Sign in"
                         type="submit" block></v-btn></div>
+                        <p class="text-red">  {{ this.errlogmessage }} </p>
                   </v-form>
                 </v-card>
               </v-window-item>
 
 
-              <v-window-item :key="this.im" v-if="this.t" style="margin:auto">
-                <v-avatar color="grey" rounded="10" size="140" class="mt-10">
-
-                  <v-img :src="this.image" cover></v-img>
-                  <v-sheet class="hv" style="right:60px;top:0;position: absolute;opacity: 0.4;"><v-icon
-                      @click="this.show = false; this.image = ''">mdi-close</v-icon> </v-sheet>
-                </v-avatar>
-                <v-file-input v-if="!this.show" style="" class="bg-primary  mt-10" v-model="this.image"
-                  @change="onFileSelected" label="Avatar" type="file" accept="image/*" placeholder="Pick an avatar"
-                  append-icon="mdi-camera"></v-file-input>
-                <v-alert class="mt-10" color="warning"> Choose picture or skip with defualt image </v-alert>
-                <v-btn class="mt-10" to="/post">OK</v-btn>
-              </v-window-item>
+         
 
 
 
@@ -136,10 +128,12 @@
                       type=password></v-text-field>
                     <v-text-field append-icon="mdi-key" v-model="this.Password1" :rules="this.password1rulea"
                       type=password label="كلمة السر مرة أخرى😁"></v-text-field>
-                      <v-autocomplete :rules="this.usernamerulea" v-model="this.selectedCountry" :items="this.countries" label="اختر الدولة"></v-autocomplete>
-                  
-                      <v-autocomplete :rules="this.usernamerulea" v-model="selectedCity" :items="cities"  label="اختر المدينة" item-text="title"
-                        item-value="value" :disabled="!selectedCountry"></v-autocomplete>
+                    <v-autocomplete :rules="this.usernamerulea" v-model="this.selectedCountry" :items="this.countries"
+                      label="اختر الدولة"></v-autocomplete>
+
+                    <v-autocomplete :rules="this.usernamerulea" v-model="selectedCity" :items="cities"
+                      label="اختر المدينة" item-text="title" item-value="value"
+                      :disabled="!selectedCountry"></v-autocomplete>
                     <div style="display: flex;width:50%;margin: auto;"> <v-btn style="border-radius: 12px !important"
                         variant="flat" color="orange-darken-3" :loading="this.loading" class="mt-2 w-50" text="تسجيل"
                         type="submit" block></v-btn></div>
@@ -164,19 +158,6 @@
               </v-window-item>
 
 
-              <v-window-item :key="this.im" v-if="this.t" style="margin:auto">
-                <v-avatar color="grey" rounded="10" size="140" class="mt-10">
-
-                  <v-img :src="this.image" cover></v-img>
-                  <v-sheet class="hv" style="right:60px;top:0;position: absolute;opacity: 0.4;"><v-icon
-                      @click="this.show = false; this.image = ''">mdi-close</v-icon> </v-sheet>
-                </v-avatar>
-                <v-file-input v-if="!this.show" style="" class="bg-primary  mt-10" v-model="this.image"
-                  @change="onFileSelected" label="صورة الحساب" type="file" accept="image/*" placeholder="Pick an avatar"
-                  append-icon="mdi-camera"></v-file-input>
-                <v-alert class="mt-10" color="warning"> اختر صورة من جهازك أو سيتم اختيار الصورة الافتراضية </v-alert>
-                <v-btn class="mt-10" to="/post">تم</v-btn>
-              </v-window-item>
 
 
 
@@ -240,6 +221,7 @@
                 :rules="this.passwordrulea" type=password></v-text-field>
               <v-btn color="warning" variant="outlined" :loading="this.loading" class="mt-2" text="Sign in"
                 type="submit" block></v-btn>
+                <p class="text-red"> {{ errmessage }} </p>
             </v-form>
           </v-card>
         </v-col>
@@ -272,12 +254,14 @@
                 v-model="this.Password" label="كلمة السر" :rules="this.passwordrulea" type=password></v-text-field>
               <v-text-field append-icon="mdi-key" v-model="this.Password1" :rules="this.password1rulea" type=password
                 label="كلمة السر مرة أخرى😁"></v-text-field>
-                <v-autocomplete :rules="this.usernamerulea" v-model="this.selectedCountry" :items="this.countries" label="اختر الدولة"></v-autocomplete>
-                  
-                <v-autocomplete :rules="this.usernamerulea" v-model="selectedCity" :items="cities"  label="اختر المدينة" item-text="title"
-                  item-value="value" :disabled="!selectedCountry"></v-autocomplete>
+              <v-autocomplete :rules="this.usernamerulea" v-model="this.selectedCountry" :items="this.countries"
+                label="اختر الدولة"></v-autocomplete>
+
+              <v-autocomplete :rules="this.usernamerulea" v-model="selectedCity" :items="cities" label="اختر المدينة"
+                item-text="title" item-value="value" :disabled="!selectedCountry"></v-autocomplete>
               <v-btn variant="outlined" color="warning" :loading="this.loading" class="mt-2" text="تسجيل" type="submit"
                 block></v-btn>
+                <p class="text-red"> {{ errmessage }} </p>
             </v-form>
           </v-card>
 
@@ -307,6 +291,7 @@
                 :rules="this.passwordrule" type=password></v-text-field>
               <v-btn color="warning" variant="outlined" :loading="this.loading" class="mt-2" text="Sign in"
                 type="submit" block></v-btn>
+                <p class="text-red"> {{ errlogmessage }} </p>
             </v-form>
           </v-card>
         </v-col>
@@ -322,7 +307,7 @@
           </p>
 
           <v-card>
-            <v-form ref="form" @submit.prevent="submitph" style="text-align: center;padding:3%">
+            <v-form ref="form" @submit.prevent="submit" style="text-align: center;padding:3%">
               <v-text-field append-icon="mdi-account" :rules="this.usernamerule" v-model="this.firstname"
                 label="username"></v-text-field>
 
@@ -338,12 +323,14 @@
                 label="password" :rules="this.passwordrule" type=password></v-text-field>
               <v-text-field append-icon="mdi-key" v-model="this.Password1" :rules="this.password1rule" type=password
                 label="password again 😁"></v-text-field>
-                <v-autocomplete :rules="this.usernamerule" v-model="this.selectedCountry" :items="this.countries" label="اختر الدولة"></v-autocomplete>
-                  
-                <v-autocomplete :rules="this.usernamerule" v-model="selectedCity" :items="cities"  label="اختر المدينة" item-text="title"
-                  item-value="value" :disabled="!selectedCountry"></v-autocomplete>
+              <v-autocomplete :rules="this.usernamerule" v-model="this.selectedCountry" :items="this.countries"
+                label="اختر الدولة"></v-autocomplete>
+
+              <v-autocomplete :rules="this.usernamerule" v-model="selectedCity" :items="cities" label="اختر المدينة"
+                item-text="title" item-value="value" :disabled="!selectedCountry"></v-autocomplete>
               <v-btn variant="outlined" color="warning" :loading="this.loading" class="mt-2" text="Signup" type="submit"
                 block></v-btn>
+                <p class="text-red"> {{ errmessage }} </p>
             </v-form>
           </v-card>
 
@@ -394,11 +381,13 @@
 
 
 <script>
+import axios from 'axios';
 import { City, Country } from 'country-state-city';
 export default {
   name: 'HomeView',
   data: function () {
     return {
+      apiurl:process.env.VUE_APP_API_URL,
       selectedCountry: null,
       selectedCity: null,
       countries: [], // قائمة الدول
@@ -423,6 +412,8 @@ export default {
       lan: localStorage.getItem("lan"),
       t: false,
       ff: true,
+      errmessage: "",
+      errlogmessage:"",
       passwordrule: [(Password) => {
         if (Password) {
           if (this.hasTextAndNumbers(Password) && Password && Password.length >= 8) {
@@ -515,26 +506,26 @@ export default {
       //     title: country.name.common,
       //     value: country.cca2
       //   }));
-        
-      
-        // for (let i = 0; i < data.length; i++) {
-        //   this.countries.push(data[i])
-           
-        // }
-        
+
+
+      // for (let i = 0; i < data.length; i++) {
+      //   this.countries.push(data[i])
+
+      // }
+
       this.countries = Country.getAllCountries().map(country => ({
-        value: {name:country.name,code: country.isoCode},
+        value: { name: country.name, code: country.isoCode },
         title: country.translations?.ar || country.name,
       })).sort((a, b) => a.title.localeCompare(b.name));
 
 
-        console.log(this.countries);
+      console.log(this.countries);
 
       // } catch (error) {
       //   console.error('Error loading countries:', error);
       // }
     },
-    submit: function () {
+    submit: async function () {
       console.log(this.gender);
       console.log(this.date);
 
@@ -542,22 +533,70 @@ export default {
         .then(valid => {
           if (valid.valid == true) {
             this.loading = true
-            setTimeout(() => {
+            setTimeout(async () => {
               let obj = {
                 "username": this.firstname,
                 "email": this.email,
                 "gender": this.gender,
                 "date": this.date,
                 "password": this.Password,
+
               };
-              console.log(obj)
+              console.log({
+                "username": this.firstname,
+                "email": this.email,
+                "password": this.Password,
+                "Gender": this.gender,
+                "Country": this.selectedCountry.code,
+                "City": this.selectedCity.name
+              });
+              try {
+                let response = await axios.post(`${this.apiurl}/users/register`,
+                  {
+                    username: this.firstname,
+                    email: this.email,
+                    password: this.Password,
+                    Gender: this.gender,
+                    Country: this.selectedCountry.code,
+                    City: this.selectedCity.name
+                  }
+                )
+                console.log(response.data.user.token);
+                localStorage.setItem("token", response.data.user.token)
+                console.log( response.data.user._id);
+                try {
+                  let userres = await axios.get(`${this.apiurl}/users/profile/${ response.data.user._id}`)
+                  localStorage.setItem("user",JSON.stringify(userres.data.user))
+                  console.log(userres.data);
+                  this.$router.push("/post");
+                } catch (error) {
+                  console.log(error);
+                  
+                }
+               
+                
+                
+                console.log(obj)
+                this.im = 0;
+                this.window = 0;
+                this.ff = false
+                this.t = true;
+                console.log(this.l)
+              }
+              catch (error) {
+                console.log(error.response.data.message);
+                this.errmessage = error.response.data.message
+                this.firstname=null
+                this.email=null
+                this.Password=null
+                this.gender=null
+                this.Password1=null
+              }
+
+
               this.loading = false
             }, 2000);
-            this.im = 0;
-            this.window = 0;
-            this.ff = false
-            this.t = true;
-            console.log(this.l)
+
           };
 
 
@@ -570,11 +609,11 @@ export default {
     loadCities: async function () {
       console.log("hellllo");
       console.log(City.getCitiesOfCountry(this.selectedCountry.code));
-   
-     this.cities = City.getCitiesOfCountry(this.selectedCountry.code).map(city => ({
-          title: city.name,
-           value:{name:city.name ,long: city.longitude,lat: city.latitude}
-        }));
+
+      this.cities = City.getCitiesOfCountry(this.selectedCountry.code).map(city => ({
+        title: city.name,
+        value: { name: city.name, long: city.longitude, lat: city.latitude }
+      }));
     },
 
 
@@ -596,7 +635,6 @@ export default {
               console.log(obj)
               this.loading = false
             }, 2000);
-            this.$router.push("/Profile");
 
           };
 
@@ -607,19 +645,45 @@ export default {
         })
 
     },
-    login: function () {
+    login: async function () {
       this.$refs.form1.validate()
         .then(valid => {
           if (valid.valid == true) {
             this.loading = true
-            setTimeout(() => {
+            setTimeout(async () => {
               let obj = {
                 "username": this.firstname,
                 "email": this.email,
                 "img": this.image,
                 "pass": this.Password,
               };
-              console.log(obj)
+              try{
+                 let response =await axios.post(`${this.apiurl}/users/login`,
+                  {
+                    email: this.emaillog,
+                    password: this.passlog
+                  }
+                 )
+                 console.log(response);
+                  localStorage.setItem("token",response.data.token)
+                  try {
+                  let userres = await axios.get(`${this.apiurl}/users/profile/${ response.data.userId}`)
+                  localStorage.setItem("user",JSON.stringify(userres.data.user))
+                  console.log(userres.data);
+                  this.$router.push("/post");
+                } catch (error) {
+                  console.log(error);
+                  
+                }
+               
+                  
+              }
+              catch(error){
+                console.log(error.response.data.message);
+                this.errlogmessage = error.response.data.message
+                this.emaillog=null
+                this.passlog=null
+              }
               this.loading = false
             }, 2000)
           }
@@ -661,8 +725,8 @@ export default {
     },
     selectedCity(newvalue, old) {
       console.log(newvalue);
-     localStorage.setItem("long",JSON.stringify(newvalue.long));
-     localStorage.setItem("lat",JSON.stringify(newvalue.lat));
+      localStorage.setItem("long", JSON.stringify(newvalue.long));
+      localStorage.setItem("lat", JSON.stringify(newvalue.lat));
     }
   }
 };
