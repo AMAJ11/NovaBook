@@ -1,10 +1,10 @@
 <template>
-  <v-layout>
+  <v-layout v-if="this.showNavbar">
     <v-app-bar class="bar">
       <v-toolbar class="hidden-xs">
         <v-btn to="/profile-setting" rounded="10" height="auto" :ripple="false" style="cursor: pointer" class="hidden-sm-and-down">
         <v-avatar router :to="{path:'/profile'}" color="grey" rounded="10" size="60" >
-          <v-img v-if="this.token !=null" to="/profile" :src="this.url" cover></v-img>
+          <v-img to="/profile" :src="this.url" cover></v-img>
        
         </v-avatar></v-btn>
         <v-btn class="hidden-xs" to="/"> <v-icon>mdi-account</v-icon> Signin/Signup</v-btn>
@@ -96,7 +96,6 @@ export default {
       url: JSON.parse(localStorage.getItem("user")).profilephoto.url || "",
       showButton: false,
 
-      token:localStorage.getItem("token"),
       icon: true,
       sw: false,
       path: false,
@@ -120,6 +119,12 @@ export default {
     }
 
   },
+  computed: {
+    showNavbar() {
+      // إخفاء الـ Navbar في صفحات معينة
+      return this.$route.name !== 'Auth';
+    }
+  },
   methods: {
     ch: function () {
       console.log(this.lan)
@@ -136,9 +141,6 @@ export default {
   mounted: function () {
     if (!localStorage.getItem("lan")) {
       localStorage.setItem("lan", 0)
-    }
-    if (!localStorage.getItem("token")) {
-      localStorage.setItem("token", "0")
     }
     window.addEventListener("scroll", this.handleScroll);
   },
