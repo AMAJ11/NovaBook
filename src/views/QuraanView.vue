@@ -14,9 +14,9 @@
       <v-row>
         <v-col class="" style="border: 2px dashed black;" cols="12" sm="12" md="10" lg="8">
           <v-progress-linear v-if="lod" indeterminate></v-progress-linear>
-          <h1 v-for="s in this.surahs" class="text-primary mb-4 mt-2"> {{ s.name }} </h1>
-          <h2> {{ this.i }} الصفحة </h2>
-          <p class="text-button" style="font-size: 25px !important;" v-for="p in this.aayt"> {{ p.text }} <span
+          <h1 v-for="s in surahs" class="text-primary mb-4 mt-2"> {{ s.name }} </h1>
+          <h2> {{ i }} الصفحة </h2>
+          <p class="text-button" style="font-size: 25px !important;" v-for="p in aayt"> {{ p.text }} <span
               class=text-orange-darken-3>{{ p.numberInSurah }}</span> </p>
         </v-col>
         <v-col lg="4" style="text-align: right
