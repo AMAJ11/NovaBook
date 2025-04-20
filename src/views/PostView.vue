@@ -247,8 +247,8 @@ export default {
          const year = date.getFullYear();
          const month = date.getMonth() + 1;
          const day = date.getDate();
-         const lat = JSON.parse(localStorage.getItem("lat"));
-         const long = JSON.parse(localStorage.getItem("long"));
+         const lat = JSON.parse(localStorage.getItem("user")).lat;
+         const long = JSON.parse(localStorage.getItem("user")).lat;
          console.log(lat, long);
 
 
