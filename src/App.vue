@@ -139,6 +139,9 @@ export default {
     },
   },
   mounted: function () {
+    if(!localStorage.getItem("lan")){
+      localStorage.setItem("photoUrl"," ")
+    }
     if (!localStorage.getItem("lan")) {
       localStorage.setItem("lan", 0)
     }
