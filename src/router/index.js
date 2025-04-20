@@ -10,7 +10,14 @@ const routes = [
   {
     path: '/Auth',
     name: 'Auth',
-    component: HomeView
+    component: HomeView,
+    beforeEnter: (to, from, next) => {
+      if (localStorage.getItem('token')) {
+        next('/post');
+      } else {
+        next();
+      }
+    }
   },
   {
     path: '/',
@@ -30,7 +37,7 @@ const routes = [
   },
   {
     path: '/quraan',
-    name: 'QuraanView',
+    name: 'quraan',
     component: QuraanView,
     meta: { requiresAuth: false }
   },

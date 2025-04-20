@@ -1,5 +1,15 @@
 <template>
-    <div class="about mt-md-16" style="text-align: center;width:97%">
+     <v-app> <v-app-bar>
+    <v-toolbar>
+      <v-btn to="/"><v-icon size="x-large"> mdi-arrow-left </v-icon> </v-btn> 
+       <v-btn to="/quraan"> Read Quraan </v-btn> 
+       <v-btn to="/about"> About </v-btn>
+       <v-spacer></v-spacer>  
+       <v-switch style="translate: 0px 10px;" class="hidden-xs" @click="toggleTheme"
+       :append-icon='icon == true ? "mdi-weather-night" : "mdi-white-balance-sunny" '></v-switch>
+      </v-toolbar>
+      </v-app-bar>
+    <div class="about" style="text-align: center;width:97%">
       <v-alert color="grey"> ` و من جهلت نفسه قدره      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  رأى غيره منه ما لا يرى`  </v-alert>
       <v-row>
         <v-col class="" style="border: 2px dashed black;" cols="12" sm="12" md="10" lg="8">
@@ -19,6 +29,7 @@
         </v-col>
       </v-row>
     </div>
+  </v-app>
   </template>
   
   <script>
@@ -547,3 +558,13 @@
     font-family: ff !important
   }
   </style>
+
+<script setup>
+import { useTheme } from 'vuetify'
+const theme = useTheme()
+let icon = true
+function toggleTheme() {
+  icon = !icon;
+  theme.global.name.value = theme.global.current.value.dark ? 'myCustomLightTheme' : 'dark'
+}
+</script>

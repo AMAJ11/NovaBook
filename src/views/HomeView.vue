@@ -1,5 +1,17 @@
 <template>
   <v-app class="app">
+    <v-app-bar>
+      <v-toolbar>
+        <v-btn to="/">home </v-btn>
+        <v-btn to="/quraan"> Read Quraan </v-btn>
+        <v-btn to="/about"> About </v-btn>
+        <v-spacer></v-spacer>
+        <v-switch style="translate: 0px 10px;" class="hidden-xs" @click="toggleTheme"
+          :append-icon='icon == true ? "mdi-weather-night" : "mdi-white-balance-sunny"'></v-switch>
+        <v-select :item-title="title" :item-value="value" v-model="lan" :items="item">
+        </v-select>
+      </v-toolbar>
+    </v-app-bar>
     <v-lazy>
       <div class="home pb-16 pt-10 pb-xl-0 hidden-xs">
         <v-row style="width:99%" v-if="this.lan == 0" class="pa-6 pt-5 px-3">
@@ -37,33 +49,38 @@
             <v-window class="mt-5" v-model="window" style="width:100%">
               <v-window-item :key="0" v-if="this.ff">
                 <v-card style="border-radius: 20px !important;">
-                  <v-form ref="form" @submit.prevent="submit" style="text-align: center;padding:3%">
-                    <v-text-field append-icon="mdi-account" :rules="this.usernamerule" v-model="this.firstname"
-                      label="username"></v-text-field>
+                  <v-form ref="form" @submit.prevent="verifycheck" style="text-align: center;padding:3%">
+                    <v-text-field :disabled="ok" append-icon="mdi-account" :rules="this.usernamerule"
+                      v-model="this.firstname" label="username"></v-text-field>
 
-                    <v-text-field append-icon="mdi-email" :rules="this.emailrule" v-model="this.email"
+                    <v-text-field  :disabled="ok" append-icon="mdi-email" :rules="this.emailrule" v-model="this.email"
                       label="E-mail"></v-text-field>
-                    <v-radio-group :rules="this.genderrules" class="ml-10" inline v-model="this.gender">
+                    <v-radio-group :disabled="ok" :rules="this.genderrules" class="ml-10" inline v-model="this.gender">
                       <v-radio class="mr-16" value="male"> male <v-icon>mdi-gender-male</v-icon> </v-radio>
                       <v-radio class="ml-16" value="female">female <v-icon>mdi-gender-female</v-icon> </v-radio>
                     </v-radio-group>
-                    <v-date-input :rules="this.daterule" v-model="this.date" prepend-icon=""
+                    <v-date-input :disabled="ok" :rules="this.daterule" v-model="this.date" prepend-icon=""
                       append-icon="mdi-calendar-range">
                     </v-date-input>
-                    <v-text-field hint="Password Must be more than 8 and mix of char and num" append-icon="mdi-key"
-                      v-model="this.Password" label="Password" :rules="this.passwordrule" type=password></v-text-field>
-                    <v-text-field append-icon="mdi-key" v-model="this.Password1" :rules="this.password1rule"
-                      type=password label="Return password"></v-text-field>
-                    <v-autocomplete :rules="this.usernamerule" v-model="this.selectedCountry" :items="this.countries"
-                      label="اختر الدولة"></v-autocomplete>
+                    <v-text-field   hint="Password Must be more than 8 and mix of char and num"
+                      append-icon="mdi-key" v-model="this.Password" label="Password" :rules="this.passwordrule"
+                      type=password></v-text-field>
+                    <v-text-field :disabled="ok" append-icon="mdi-key" v-model="this.Password1"
+                      :rules="this.password1rule" type=password label="Return password"></v-text-field>
+                    <v-autocomplete :disabled="ok" :rules="this.usernamerule" v-model="this.selectedCountry"
+                      :items="this.countries" label="choose country"></v-autocomplete>
 
                     <v-autocomplete :rules="this.usernamerule" v-model="selectedCity" :items="cities"
-                      label="اختر المدينة" item-text="title" item-value="value"
-                      :disabled="!selectedCountry"></v-autocomplete>
-                    <div style="display: flex;width:50%;margin: auto;"> <v-btn style="border-radius: 12px !important"
-                        variant="flat" color="orange-darken-3" :loading="this.loading" class="mt-2" text="SignUp"
-                        type="submit" block></v-btn></div>
+                      label="choose City" item-text="title" item-value="value"
+                      :disabled="!selectedCountry && ok"></v-autocomplete>
+                    <div style="display: flex;width:50%;margin: auto;"> <v-btn :disabled="ok"
+                        style="border-radius: 12px !important" variant="flat" color="orange-darken-3"
+                        :loading="this.loading" class="mt-2" text="SignUp" type="submit" block></v-btn></div>
                     <p class="text-red"> {{ errmessage }} </p>
+                    <p class="text-success"> {{ sucmessage }} </p>
+                    <v-text-field :disabled="!ok" class="mt-3" label="Activation code"
+                      v-model="this.verify"></v-text-field>
+                    <v-btn @click="submit" :disabled="!ok" text="verify"></v-btn>
                   </v-form>
                 </v-card>
               </v-window-item>
@@ -79,13 +96,13 @@
                     <div style="display: flex;width:50%;margin: auto;"><v-btn style="border-radius: 12px !important"
                         color="orange-darken-3" variant="flat" :loading="this.loading" class="mt-2" text="Sign in"
                         type="submit" block></v-btn></div>
-                        <p class="text-red">  {{ this.errlogmessage }} </p>
+                    <p class="text-red"> {{ this.errlogmessage }} </p>
                   </v-form>
                 </v-card>
               </v-window-item>
 
 
-         
+
 
 
 
@@ -110,33 +127,38 @@
             <v-window v-model="window" style="width:100%" class="mt-5">
               <v-window-item v-if="this.ff" :key="0">
                 <v-card style="border-radius: 20px !important;">
-                  <v-form ref="form" @submit.prevent="submit" style="text-align: center;padding:3%">
-                    <v-text-field append-icon="mdi-account" :rules="this.usernamerulea" v-model="this.firstname"
+                  <v-form ref="form" @submit.prevent="verifycheck" style="text-align: center;padding:3%">
+                    <v-text-field :disabled="ok" append-icon="mdi-account" :rules="this.usernamerulea" v-model="this.firstname"
                       label="اسم المستخدم"></v-text-field>
 
-                    <v-text-field append-icon="mdi-email" :rules="this.emailrulea" v-model="this.email"
+                    <v-text-field :disabled="ok" append-icon="mdi-email" :rules="this.emailrulea" v-model="this.email"
                       label="الحساب الالكتروني"></v-text-field>
-                    <v-radio-group :rules="this.genderrulesa" class="ml-10" inline v-model="this.gender">
+                    <v-radio-group :disabled="ok" :rules="this.genderrulesa" class="ml-10" inline v-model="this.gender">
                       <v-radio class="mr-16" value="male"> male <v-icon>mdi-gender-male</v-icon> </v-radio>
                       <v-radio class="ml-16" value="female">female <v-icon>mdi-gender-female</v-icon> </v-radio>
                     </v-radio-group>
-                    <v-date-input :rules="this.daterulea" v-model="this.date" prepend-icon=""
+                    <v-date-input :disabled="ok" :rules="this.daterulea" v-model="this.date" prepend-icon=""
                       append-icon="mdi-calendar-range">
                     </v-date-input>
-                    <v-text-field hint="كلمة السر يجب ان تكون اكثر من 8 محارف و مكونة من ارقام و احرف"
+                    <v-text-field :disabled="ok" hint="كلمة السر يجب ان تكون اكثر من 8 محارف و مكونة من ارقام و احرف"
                       append-icon="mdi-key" v-model="this.Password" label="كلمة السر" :rules="this.passwordrulea"
                       type=password></v-text-field>
-                    <v-text-field append-icon="mdi-key" v-model="this.Password1" :rules="this.password1rulea"
+                    <v-text-field :disabled="ok" append-icon="mdi-key" v-model="this.Password1" :rules="this.password1rulea"
                       type=password label="كلمة السر مرة أخرى😁"></v-text-field>
-                    <v-autocomplete :rules="this.usernamerulea" v-model="this.selectedCountry" :items="this.countries"
+                    <v-autocomplete :disabled="ok" :rules="this.usernamerulea" v-model="this.selectedCountry" :items="this.countries"
                       label="اختر الدولة"></v-autocomplete>
 
                     <v-autocomplete :rules="this.usernamerulea" v-model="selectedCity" :items="cities"
                       label="اختر المدينة" item-text="title" item-value="value"
-                      :disabled="!selectedCountry"></v-autocomplete>
+                      :disabled="!selectedCountry && ok"></v-autocomplete>
                     <div style="display: flex;width:50%;margin: auto;"> <v-btn style="border-radius: 12px !important"
                         variant="flat" color="orange-darken-3" :loading="this.loading" class="mt-2 w-50" text="تسجيل"
                         type="submit" block></v-btn></div>
+                        <p class="text-success"> {{ errmessage }} </p>
+                        <p class="text-success"> {{ sucmessage }} </p>
+                    <v-text-field :disabled="!ok" class="mt-3" label="Activation code"
+                      v-model="this.verify"></v-text-field>
+                    <v-btn @click="submit" :disabled="!ok" text="verify"></v-btn>
                   </v-form>
                 </v-card>
               </v-window-item>
@@ -221,7 +243,7 @@
                 :rules="this.passwordrulea" type=password></v-text-field>
               <v-btn color="warning" variant="outlined" :loading="this.loading" class="mt-2" text="Sign in"
                 type="submit" block></v-btn>
-                <p class="text-red"> {{ errmessage }} </p>
+              <p class="text-red"> {{ errmessage }} </p>
             </v-form>
           </v-card>
         </v-col>
@@ -237,31 +259,34 @@
             قم بإنشاء حساب لتتمكن من التفاعل مع المقالات</p>
 
           <v-card>
-            <v-form ref="form" @submit.prevent="submitph" style="text-align: center;padding:3%">
-              <v-text-field append-icon="mdi-account" :rules="this.usernamerulea" v-model="this.firstname"
+            <v-form ref="form" @submit.prevent="verifycheck" style="text-align: center;padding:3%">
+              <v-text-field :disabled="ok"  append-icon="mdi-account" :rules="this.usernamerulea" v-model="this.firstname"
                 label="اسم المستخدم"></v-text-field>
-
-              <v-text-field append-icon="mdi-email" :rules="this.emailrulea" v-model="this.email"
+              <v-text-field :disabled="ok"  append-icon="mdi-email" :rules="this.emailrulea" v-model="this.email"
                 label="الحساب الالكتروني"></v-text-field>
-              <v-radio-group :rules="this.genderrulesa" class="ml-10" inline v-model="this.gender">
+              <v-radio-group :disabled="ok"  :rules="this.genderrulesa" class="ml-10" inline v-model="this.gender">
                 <v-radio class="mr-16" value="male"> male <v-icon>mdi-gender-male</v-icon> </v-radio>
                 <v-radio class="ml-16" value="female">female <v-icon>mdi-gender-female</v-icon> </v-radio>
               </v-radio-group>
-              <v-date-input :rules="this.daterulea" v-model="this.date" prepend-icon=""
+              <v-date-input :disabled="ok"  :rules="this.daterulea" v-model="this.date" prepend-icon=""
                 append-icon="mdi-calendar-range">
               </v-date-input>
-              <v-text-field hint="كلمة السر يجب ان تكون اكثر من 8 محارف و مكونة من ارقام و احرف" append-icon="mdi-key"
+              <v-text-field :disabled="ok"  hint="كلمة السر يجب ان تكون اكثر من 8 محارف و مكونة من ارقام و احرف" append-icon="mdi-key"
                 v-model="this.Password" label="كلمة السر" :rules="this.passwordrulea" type=password></v-text-field>
-              <v-text-field append-icon="mdi-key" v-model="this.Password1" :rules="this.password1rulea" type=password
+              <v-text-field :disabled="ok"  append-icon="mdi-key" v-model="this.Password1" :rules="this.password1rulea" type=password
                 label="كلمة السر مرة أخرى😁"></v-text-field>
-              <v-autocomplete :rules="this.usernamerulea" v-model="this.selectedCountry" :items="this.countries"
+              <v-autocomplete :disabled="ok"  :rules="this.usernamerule" v-model="this.selectedCountry" :items="this.countries"
                 label="اختر الدولة"></v-autocomplete>
 
-              <v-autocomplete :rules="this.usernamerulea" v-model="selectedCity" :items="cities" label="اختر المدينة"
-                item-text="title" item-value="value" :disabled="!selectedCountry"></v-autocomplete>
-              <v-btn variant="outlined" color="warning" :loading="this.loading" class="mt-2" text="تسجيل" type="submit"
+              <v-autocomplete :rules="this.usernamerule" v-model="selectedCity" :items="cities" label="اختر المدينة"
+                item-text="title" item-value="value" :disabled="!selectedCountry && ok"></v-autocomplete>
+              <v-btn variant="outlined" :disabled="ok" color="warning" :loading="this.loading" class="mt-2" text="تسجيل" type="submit"
                 block></v-btn>
                 <p class="text-red"> {{ errmessage }} </p>
+                    <p class="text-success"> {{ sucmessage }} </p>
+                    <v-text-field :disabled="!ok" class="mt-3" label="رمز التحقق"
+                      v-model="this.verify"></v-text-field>
+                    <v-btn @click="submit" :disabled="!ok" text="تحقق"></v-btn>
             </v-form>
           </v-card>
 
@@ -291,7 +316,7 @@
                 :rules="this.passwordrule" type=password></v-text-field>
               <v-btn color="warning" variant="outlined" :loading="this.loading" class="mt-2" text="Sign in"
                 type="submit" block></v-btn>
-                <p class="text-red"> {{ errlogmessage }} </p>
+              <p class="text-red"> {{ errlogmessage }} </p>
             </v-form>
           </v-card>
         </v-col>
@@ -307,30 +332,34 @@
           </p>
 
           <v-card>
-            <v-form ref="form" @submit.prevent="submit" style="text-align: center;padding:3%">
-              <v-text-field append-icon="mdi-account" :rules="this.usernamerule" v-model="this.firstname"
+            <v-form ref="form" @submit.prevent="verifycheck" style="text-align: center;padding:3%">
+              <v-text-field :disabled="ok" append-icon="mdi-account" :rules="this.usernamerule" v-model="this.firstname"
                 label="username"></v-text-field>
 
-              <v-text-field append-icon="mdi-email" :rules="this.emailrule" v-model="this.email"
+              <v-text-field :disabled="ok" append-icon="mdi-email" :rules="this.emailrule" v-model="this.email"
                 label="Gmail"></v-text-field>
-              <v-radio-group :rules="this.genderrules" class="ml-10" inline v-model="this.gender">
+              <v-radio-group :disabled="ok" :rules="this.genderrules" class="ml-10" inline v-model="this.gender">
                 <v-radio class="mr-16" value="male"> male <v-icon>mdi-gender-male</v-icon> </v-radio>
                 <v-radio class="ml-16" value="female">female <v-icon>mdi-gender-female</v-icon> </v-radio>
               </v-radio-group>
-              <v-date-input :rules="this.daterule" v-model="this.date" prepend-icon="" append-icon="mdi-calendar-range">
+              <v-date-input :disabled="ok" :rules="this.daterule" v-model="this.date" prepend-icon="" append-icon="mdi-calendar-range">
               </v-date-input>
-              <v-text-field hint="password must be char and number min 8" append-icon="mdi-key" v-model="this.Password"
+              <v-text-field :disabled="ok" hint="password must be char and number min 8" append-icon="mdi-key" v-model="this.Password"
                 label="password" :rules="this.passwordrule" type=password></v-text-field>
-              <v-text-field append-icon="mdi-key" v-model="this.Password1" :rules="this.password1rule" type=password
+              <v-text-field :disabled="ok" append-icon="mdi-key" v-model="this.Password1" :rules="this.password1rule" type=password
                 label="password again 😁"></v-text-field>
-              <v-autocomplete :rules="this.usernamerule" v-model="this.selectedCountry" :items="this.countries"
-                label="اختر الدولة"></v-autocomplete>
+              <v-autocomplete :disabled="ok" :rules="this.usernamerule" v-model="this.selectedCountry" :items="this.countries"
+                label="choose country"></v-autocomplete>
 
-              <v-autocomplete :rules="this.usernamerule" v-model="selectedCity" :items="cities" label="اختر المدينة"
-                item-text="title" item-value="value" :disabled="!selectedCountry"></v-autocomplete>
+              <v-autocomplete :rules="this.usernamerule" v-model="selectedCity" :items="cities" label="choose city"
+                item-text="title" item-value="value" :disabled="!selectedCountry && ok"></v-autocomplete>
               <v-btn variant="outlined" color="warning" :loading="this.loading" class="mt-2" text="Signup" type="submit"
                 block></v-btn>
-                <p class="text-red"> {{ errmessage }} </p>
+              <p class="text-red"> {{ errmessage }} </p>
+              <p class="text-success"> {{ sucmessage }} </p>
+                    <v-text-field :disabled="!ok" class="mt-3" label="Activation code"
+                      v-model="this.verify"></v-text-field>
+                    <v-btn @click="submit" :disabled="!ok" text="verify"></v-btn>
             </v-form>
           </v-card>
 
@@ -383,11 +412,13 @@
 <script>
 import axios from 'axios';
 import { City, Country } from 'country-state-city';
+import emailjs from 'emailjs-com';
 export default {
   name: 'HomeView',
-  data: function () {
+  data() {
     return {
-      apiurl:process.env.VUE_APP_API_URL,
+      verify: "",
+      apiurl: process.env.VUE_APP_API_URL,
       selectedCountry: null,
       selectedCity: null,
       countries: [], // قائمة الدول
@@ -409,11 +440,16 @@ export default {
       sh: false,
       gender: '',
       date: null,
-      lan: localStorage.getItem("lan"),
+      ok: false,
+      item: [
+        { title: "EN", value: 0 },
+        { title: "AR", value: 1 },
+      ],
+      lan: +localStorage.getItem("lan"),
       t: false,
       ff: true,
       errmessage: "",
-      errlogmessage:"",
+      errlogmessage: "",
       passwordrule: [(Password) => {
         if (Password) {
           if (this.hasTextAndNumbers(Password) && Password && Password.length >= 8) {
@@ -449,7 +485,7 @@ export default {
       emailrule: [
         v => /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) || 'E-mail must be valid '
       ],
-
+      sucmessage: "",
 
 
       passwordrulea: [(Password) => {
@@ -486,7 +522,8 @@ export default {
         }],
       emailrulea: [
         v => /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) || 'البريد الالكتروني غير صحيح '
-      ]
+      ],
+      otp: null
 
 
 
@@ -526,84 +563,54 @@ export default {
       // }
     },
     submit: async function () {
-      console.log(this.gender);
-      console.log(this.date);
+    let date= ""+this.date;
 
-      this.$refs.form.validate()
-        .then(valid => {
-          if (valid.valid == true) {
-            this.loading = true
-            setTimeout(async () => {
-              let obj = {
-                "username": this.firstname,
-                "email": this.email,
-                "gender": this.gender,
-                "date": this.date,
-                "password": this.Password,
+      if (this.verify == this.code) {
+        try {
+          let response = await axios.post(`${this.apiurl}/users/register`,
+            {
+              username: this.firstname,
+              email: this.email,
+              password: this.Password,
+              Gender: this.gender,
+              Country: this.selectedCountry.code,
+              City: this.selectedCity.name,
+              lat: this.selectedCity.lat,
+              long: this.selectedCity.long,
+              birthdate: date.slice(4,16)
+            }
+          )
+          console.log(response.data.user.token);
+          localStorage.setItem("token", response.data.user.token)
+          console.log(response.data.user._id);
+          localStorage.setItem("id", response.data.user._id)
+          this.loading = false
+         
+          this.$router.push("/post");
+          console.log(obj)
 
-              };
-              console.log({
-                "username": this.firstname,
-                "email": this.email,
-                "password": this.Password,
-                "Gender": this.gender,
-                "Country": this.selectedCountry.code,
-                "City": this.selectedCity.name
-              });
-              try {
-                let response = await axios.post(`${this.apiurl}/users/register`,
-                  {
-                    username: this.firstname,
-                    email: this.email,
-                    password: this.Password,
-                    Gender: this.gender,
-                    Country: this.selectedCountry.code,
-                    City: this.selectedCity.name
-                  }
-                )
-                console.log(response.data.user.token);
-                localStorage.setItem("token", response.data.user.token)
-                console.log( response.data.user._id);
-                try {
-                  let userres = await axios.get(`${this.apiurl}/users/profile/${ response.data.user._id}`)
-                  localStorage.setItem("user",JSON.stringify(userres.data.user))
-                  console.log(userres.data);
-                  this.$router.push("/post");
-                } catch (error) {
-                  console.log(error);
-                  
-                }
-               
-                
-                
-                console.log(obj)
-                this.im = 0;
-                this.window = 0;
-                this.ff = false
-                this.t = true;
-                console.log(this.l)
-              }
-              catch (error) {
-                console.log(error.response.data.message);
-                this.errmessage = error.response.data.message
-                this.firstname=null
-                this.email=null
-                this.Password=null
-                this.gender=null
-                this.Password1=null
-              }
-
-
-              this.loading = false
-            }, 2000);
-
-          };
+        
 
 
 
-          console.log(this.image);
-
-        })
+          this.im = 0;
+          this.window = 0;
+          this.ff = false
+          this.t = true;
+          console.log(this.l)
+        }
+        catch (error) {
+          if(error){
+          this.firstname = null
+          this.email = null
+          this.Password = null
+          this.gender = null
+          this.Password1 = null
+          }
+        }
+      } else {
+        this.errmessage = "The code is wrong"
+      }
 
     },
     loadCities: async function () {
@@ -616,6 +623,58 @@ export default {
       }));
     },
 
+    verifycheck: async function () {
+    let date= ""+this.date;
+     console.log(date);
+
+    console.log(date.slice(4,16));
+    
+      let res
+      this.$refs.form.validate()
+        .then(valid => {
+          if (valid.valid == true) {
+            this.loading = true
+            setTimeout(async () => {
+              try {
+                res = await axios.get(`${this.apiurl}/users/checkemail`, {
+                  params: {
+                    email: this.email,
+                  }
+                })
+                console.log(res);
+
+              } catch (error) {
+                console.log(error);
+              }
+
+              const otp = Math.floor(100000 + Math.random() * 900000);
+
+              emailjs.init('pzhtPhukIgsST1zI7');
+              if (res.data.message == "user allowed") {
+                this.ok = true
+                let ressss = await emailjs.send("service_z1nezne", "template_7bxf08c", {
+                  passcode: otp,
+                  time: 15,
+                  email: "apo.zouher11@gmail.com",
+                })
+                this.code = otp
+                console.log(ressss, otp);
+                this.sucmessage = "Enter a code which send you on email"
+                this.errmessage=""
+                this.loading=false
+              } else {
+                this.errmessage = "you aleredy registered"
+                this.loading=false
+
+              }
+
+
+            }, 2000)
+           
+          }
+        })
+
+    },
 
     submitph: function () {
       console.log(this.gender);
@@ -651,40 +710,38 @@ export default {
           if (valid.valid == true) {
             this.loading = true
             setTimeout(async () => {
-              let obj = {
-                "username": this.firstname,
-                "email": this.email,
-                "img": this.image,
-                "pass": this.Password,
-              };
-              try{
-                 let response =await axios.post(`${this.apiurl}/users/login`,
+              try {
+                let response = await axios.post(`${this.apiurl}/users/login`,
                   {
                     email: this.emaillog,
                     password: this.passlog
                   }
-                 )
-                 console.log(response);
-                  localStorage.setItem("token",response.data.token)
-                  try {
-                  let userres = await axios.get(`${this.apiurl}/users/profile/${ response.data.userId}`)
-                  localStorage.setItem("user",JSON.stringify(userres.data.user))
+                )
+                console.log(response);
+                localStorage.setItem("token", response.data.token)
+                localStorage.setItem("id",response.data.userId)
+                try {
+                  let userres = await axios.get(`${this.apiurl}/users/profile/${response.data.userId}`)
+                  localStorage.setItem("user", JSON.stringify(userres.data.user))
                   console.log(userres.data);
+                  localStorage.setItem("photourl", userres.data.user.profilephoto.url)
+                  this.loading = false
                   this.$router.push("/post");
                 } catch (error) {
                   console.log(error);
-                  
+
                 }
-               
-                  
+
+
               }
-              catch(error){
+              catch (error) {
                 console.log(error.response.data.message);
                 this.errlogmessage = error.response.data.message
-                this.emaillog=null
-                this.passlog=null
+                this.emaillog = null
+                this.passlog = null
+                this.loading = false
               }
-              this.loading = false
+             
             }, 2000)
           }
         })
@@ -714,8 +771,6 @@ export default {
   },
   created: async function () {
     this.loadCountries()
-    let lang = localStorage.getItem("lan");
-    this.lan = lang;
   },
   watch: {
     selectedCountry(newvalue, old) {
@@ -728,8 +783,26 @@ export default {
       localStorage.setItem("long", JSON.stringify(newvalue.long));
       localStorage.setItem("lat", JSON.stringify(newvalue.lat));
     }
+  },
+  icon(newvalue, oldvalue) {
+    console.log(newvalue);
+    this.icon = newvalue;
+  },
+  lan(newvalue, oldvalue) {
+    console.log(this.lan);
+    localStorage.setItem("lan", newvalue);
+    window.location.reload();
   }
 };
 
 
+</script>
+<script setup>
+import { useTheme } from 'vuetify'
+const theme = useTheme()
+let icon = true
+function toggleTheme() {
+  icon = !icon;
+  theme.global.name.value = theme.global.current.value.dark ? 'myCustomLightTheme' : 'dark'
+}
 </script>

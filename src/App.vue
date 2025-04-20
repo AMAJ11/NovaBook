@@ -1,15 +1,14 @@
 <template>
-  <v-layout v-if="this.showNavbar">
+  <v-layout v-if="showNavbar">
     <v-app-bar class="bar">
       <v-toolbar class="hidden-xs">
         <v-btn to="/profile-setting" rounded="10" height="auto" :ripple="false" style="cursor: pointer" class="hidden-sm-and-down">
         <v-avatar router :to="{path:'/profile'}" color="grey" rounded="10" size="60" >
-          <v-img to="/profile" :src="this.url" cover></v-img>
+          <v-img to="/profile" :src="this.photoUrl" cover></v-img>
        
         </v-avatar></v-btn>
-        <v-btn class="hidden-xs" to="/"> <v-icon>mdi-account</v-icon> Signin/Signup</v-btn>
+        <v-btn class="hidden-xs" to="/post"><v-icon>mdi-home</v-icon>posts</v-btn>
         <v-btn class="hidden-xs" to="/about"><v-icon>mdi-help</v-icon>About</v-btn>
-        <v-btn class="hidden-xs" to="/post"><v-icon>mdi-post-outline</v-icon>posts</v-btn>
         <v-btn class="hidden-xs" to="/quraan"><v-icon>mdi-book</v-icon>Quraan</v-btn>
         <v-spacer></v-spacer>
         <v-switch class="hidden-xs" @click="toggleTheme"
@@ -21,11 +20,9 @@
       </v-toolbar>
 
       <v-toolbar class="hidden-sm-and-up" style="width:99%">
-        <v-btn class="hidden-sm-and-up" to="/"> <v-icon>mdi-account</v-icon> </v-btn>
-        <v-spacer></v-spacer>
         <v-btn class="hidden-sm-and-up" to="/about"><v-icon>mdi-help</v-icon></v-btn>
         <v-spacer></v-spacer>
-        <v-btn class="hidden-sm-and-up" to="/post"><v-icon>mdi-post-outline</v-icon></v-btn>
+        <v-btn class="hidden-sm-and-up" to="/post"><v-icon>mdi-home</v-icon></v-btn>
         <v-spacer></v-spacer>
         <v-btn class="hidden-sm-and-up" to="/quraan"><v-icon>mdi-book</v-icon></v-btn>
       </v-toolbar>
@@ -60,7 +57,7 @@
 
      <v-btn to="/profile-setting" rounded="10" height="auto" :ripple="false" v-if="token !='1'" style="translate: 0 0px;cursor: pointer" class="pa-4">
         <v-avatar router :to="{path:'/profile'}" color="grey" rounded="10" size="60" >
-          <v-img to="/profile" :src="this.url" cover></v-img>
+          <v-img to="/profile" :src="this.photoUrl" cover></v-img>
        
         </v-avatar></v-btn>
       <v-spacer></v-spacer>
@@ -93,9 +90,11 @@ export default {
   },
   data() {
     return {
-      url: JSON.parse(localStorage.getItem("user")).profilephoto.url || "",
+      
       showButton: false,
-
+      photoUrl:  ""+localStorage.getItem("photourl"),
+      icon: true,
+      sw: false,
       icon: true,
       sw: false,
       path: false,
@@ -122,8 +121,9 @@ export default {
   computed: {
     showNavbar() {
       // إخفاء الـ Navbar في صفحات معينة
-      return this.$route.name !== 'Auth';
-    }
+      return this.$route.name !== 'Auth' && this.$route.name !== 'quraan' && this.$route.name !== 'about' ;
+    },
+
   },
   methods: {
     ch: function () {
