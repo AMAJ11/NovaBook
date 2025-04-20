@@ -53,7 +53,7 @@
     //     })
     //   }
     // },
-    data: function () {
+    data() {
       return {
         s: [
           {
