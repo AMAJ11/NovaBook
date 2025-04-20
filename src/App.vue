@@ -92,7 +92,7 @@ export default {
     return {
       
       showButton: false,
-      photoUrl:  ""+localStorage.getItem("photourl"),
+      photoUrl:  ""+localStorage.getItem("photourl")|| null,
       icon: true,
       sw: false,
       icon: true,
