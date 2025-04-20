@@ -23,7 +23,7 @@
         ;">
           <div class="mb-10 mt-10">
             <p class="text-button"> الانتقال الى صفحة معينة</p>
-            <v-number-input style="" max="604" control-variant="split" min="1" v-model="this.i"></v-number-input>
+            <v-number-input style="" max="604" control-variant="split" min="1" v-model="i"></v-number-input>
           </div>
          
         </v-col>
