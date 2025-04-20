@@ -14,28 +14,28 @@
     </v-app-bar>
     <v-lazy>
       <div class="home pb-16 pt-10 pb-xl-0 hidden-xs">
-        <v-row style="width:99%" v-if="this.lan == 0" class="pa-6 pt-5 px-3">
-          <v-col class="pl-8" lg="6" md="5" sm="6" v-if="this.ff"
+        <v-row style="width:99%" v-if="lan == 0" class="pa-6 pt-5 px-3">
+          <v-col class="pl-8" lg="6" md="5" sm="6" v-if="ff"
             style="backdrop-filter: blur(1px);min-height: 500px;display: flex;flex-direction: column;justify-content: center;">
             <v-window v-model="window">
-              <v-window-item style="" v-if="this.ff" :key="0">
+              <v-window-item style="" v-if="ff" :key="0">
                 <v-img style="" height="350px" width="400px" src="../assets/pic1.png"></v-img>
                 <h1 class="text-h2" style="font-weight: 900 !important;"> Welcome to our blog </h1>
                 <p class="text-orange-darken-3" style="font-size: 25px !important;font-weight: 600 !important;">
                   Create new account to active with</p>
 
                 <v-btn
-                  @click="this.window++; this.email = ''; this.userName = ''; this.password = ''; this.Password1 = ''"
+                  @click=" window++;  email = '';  userName = '';  password = '';  Password1 = ''"
                   color="success" variant="flat">You have acount?</v-btn>
               </v-window-item>
-              <v-window-item key="1" v-if="this.ff">
+              <v-window-item key="1" v-if=" ff">
                 <v-img class="mt-5" src="../assets/pic6.png" width="400" height="350px"></v-img>
                 <h1 class="text-h2" style="font-weight: 900 !important;"> Welcome Come back</h1>
                 <p class="text- text-orange-darken-3" style="font-size: 25px !important;font-weight: 600 !important;">
                   Signin
                   to active with</p>
                 <v-btn
-                  @click="this.window--; this.email = ''; this.userName = ''; this.password = ''; this.Password1 = ''"
+                  @click=" window--;  email = '';  userName = '';  password = '';  Password1 = ''"
                   color="success" variant="flat">Dont have acount?</v-btn>
               </v-window-item>
             </v-window>
@@ -47,56 +47,56 @@
             style="backdrop-filter: blur(7px);text-align: center;padding:10px 25px;border-radius: 15px;margin:auto;display: flex;align-items: center;justify-content: center;"
             lg="5" md="7" sm="6" cols="12">
             <v-window class="mt-5" v-model="window" style="width:100%">
-              <v-window-item :key="0" v-if="this.ff">
+              <v-window-item :key="0" v-if=" ff">
                 <v-card style="border-radius: 20px !important;">
                   <v-form ref="form" @submit.prevent="verifycheck" style="text-align: center;padding:3%">
-                    <v-text-field :disabled="ok" append-icon="mdi-account" :rules="this.usernamerule"
-                      v-model="this.firstname" label="username"></v-text-field>
+                    <v-text-field :disabled="ok" append-icon="mdi-account" :rules=" usernamerule"
+                      v-model=" firstname" label="username"></v-text-field>
 
-                    <v-text-field  :disabled="ok" append-icon="mdi-email" :rules="this.emailrule" v-model="this.email"
+                    <v-text-field  :disabled="ok" append-icon="mdi-email" :rules=" emailrule" v-model=" email"
                       label="E-mail"></v-text-field>
-                    <v-radio-group :disabled="ok" :rules="this.genderrules" class="ml-10" inline v-model="this.gender">
+                    <v-radio-group :disabled="ok" :rules=" genderrules" class="ml-10" inline v-model=" gender">
                       <v-radio class="mr-16" value="male"> male <v-icon>mdi-gender-male</v-icon> </v-radio>
                       <v-radio class="ml-16" value="female">female <v-icon>mdi-gender-female</v-icon> </v-radio>
                     </v-radio-group>
-                    <v-date-input :disabled="ok" :rules="this.daterule" v-model="this.date" prepend-icon=""
+                    <v-date-input :disabled="ok" :rules=" daterule" v-model=" date" prepend-icon=""
                       append-icon="mdi-calendar-range">
                     </v-date-input>
                     <v-text-field   hint="Password Must be more than 8 and mix of char and num"
-                      append-icon="mdi-key" v-model="this.Password" label="Password" :rules="this.passwordrule"
+                      append-icon="mdi-key" v-model=" Password" label="Password" :rules=" passwordrule"
                       type=password></v-text-field>
-                    <v-text-field :disabled="ok" append-icon="mdi-key" v-model="this.Password1"
-                      :rules="this.password1rule" type=password label="Return password"></v-text-field>
-                    <v-autocomplete :disabled="ok" :rules="this.usernamerule" v-model="this.selectedCountry"
-                      :items="this.countries" label="choose country"></v-autocomplete>
+                    <v-text-field :disabled="ok" append-icon="mdi-key" v-model=" Password1"
+                      :rules=" password1rule" type=password label="Return password"></v-text-field>
+                    <v-autocomplete :disabled="ok" :rules=" usernamerule" v-model=" selectedCountry"
+                      :items=" countries" label="choose country"></v-autocomplete>
 
-                    <v-autocomplete :rules="this.usernamerule" v-model="selectedCity" :items="cities"
+                    <v-autocomplete :rules=" usernamerule" v-model="selectedCity" :items="cities"
                       label="choose City" item-text="title" item-value="value"
                       :disabled="!selectedCountry && ok"></v-autocomplete>
                     <div style="display: flex;width:50%;margin: auto;"> <v-btn :disabled="ok"
                         style="border-radius: 12px !important" variant="flat" color="orange-darken-3"
-                        :loading="this.loading" class="mt-2" text="SignUp" type="submit" block></v-btn></div>
+                        :loading=" loading" class="mt-2" text="SignUp" type="submit" block></v-btn></div>
                     <p class="text-red"> {{ errmessage }} </p>
                     <p class="text-success"> {{ sucmessage }} </p>
                     <v-text-field :disabled="!ok" class="mt-3" label="Activation code"
-                      v-model="this.verify"></v-text-field>
+                      v-model=" verify"></v-text-field>
                     <v-btn @click="submit" :disabled="!ok" text="verify"></v-btn>
                   </v-form>
                 </v-card>
               </v-window-item>
 
 
-              <v-window-item :key="1" v-if="this.ff" style="height:auto;">
+              <v-window-item :key="1" v-if=" ff" style="height:auto;">
                 <v-card style="border-radius: 20px !important;">
                   <v-form ref="form1" @submit.prevent="login" style="padding:6%">
-                    <v-text-field append-icon="mdi-email" class="mb-7" :rules="this.emailrule" v-model="this.emaillog"
+                    <v-text-field append-icon="mdi-email" class="mb-7" :rules=" emailrule" v-model=" emaillog"
                       label="E-mail"></v-text-field>
-                    <v-text-field append-icon="mdi-key" class="mb-7" v-model="this.passlog" label="Password"
-                      :rules="this.passwordrule" type=password></v-text-field>
+                    <v-text-field append-icon="mdi-key" class="mb-7" v-model=" passlog" label="Password"
+                      :rules=" passwordrule" type=password></v-text-field>
                     <div style="display: flex;width:50%;margin: auto;"><v-btn style="border-radius: 12px !important"
-                        color="orange-darken-3" variant="flat" :loading="this.loading" class="mt-2" text="Sign in"
+                        color="orange-darken-3" variant="flat" :loading=" loading" class="mt-2" text="Sign in"
                         type="submit" block></v-btn></div>
-                    <p class="text-red"> {{ this.errlogmessage }} </p>
+                    <p class="text-red"> {{  errlogmessage }} </p>
                   </v-form>
                 </v-card>
               </v-window-item>
@@ -118,62 +118,62 @@
 
 
 
-        <v-row style="width:99%" v-if="this.lan == 1" class="pa-6 pt-5">
+        <v-row style="width:99%" v-if=" lan == 1" class="pa-6 pt-5">
 
 
           <v-col
             style="backdrop-filter: blur(7px);text-align: center;padding:10px 25px;border-radius: 15px;margin:auto;display: flex;align-items: center;justify-content: center;"
             lg="5" md="7" sm="6">
             <v-window v-model="window" style="width:100%" class="mt-5">
-              <v-window-item v-if="this.ff" :key="0">
+              <v-window-item v-if=" ff" :key="0">
                 <v-card style="border-radius: 20px !important;">
                   <v-form ref="form" @submit.prevent="verifycheck" style="text-align: center;padding:3%">
-                    <v-text-field :disabled="ok" append-icon="mdi-account" :rules="this.usernamerulea" v-model="this.firstname"
+                    <v-text-field :disabled="ok" append-icon="mdi-account" :rules=" usernamerulea" v-model=" firstname"
                       label="اسم المستخدم"></v-text-field>
 
-                    <v-text-field :disabled="ok" append-icon="mdi-email" :rules="this.emailrulea" v-model="this.email"
+                    <v-text-field :disabled="ok" append-icon="mdi-email" :rules=" emailrulea" v-model=" email"
                       label="الحساب الالكتروني"></v-text-field>
-                    <v-radio-group :disabled="ok" :rules="this.genderrulesa" class="ml-10" inline v-model="this.gender">
+                    <v-radio-group :disabled="ok" :rules=" genderrulesa" class="ml-10" inline v-model=" gender">
                       <v-radio class="mr-16" value="male"> male <v-icon>mdi-gender-male</v-icon> </v-radio>
                       <v-radio class="ml-16" value="female">female <v-icon>mdi-gender-female</v-icon> </v-radio>
                     </v-radio-group>
-                    <v-date-input :disabled="ok" :rules="this.daterulea" v-model="this.date" prepend-icon=""
+                    <v-date-input :disabled="ok" :rules=" daterulea" v-model=" date" prepend-icon=""
                       append-icon="mdi-calendar-range">
                     </v-date-input>
                     <v-text-field :disabled="ok" hint="كلمة السر يجب ان تكون اكثر من 8 محارف و مكونة من ارقام و احرف"
-                      append-icon="mdi-key" v-model="this.Password" label="كلمة السر" :rules="this.passwordrulea"
+                      append-icon="mdi-key" v-model=" Password" label="كلمة السر" :rules=" passwordrulea"
                       type=password></v-text-field>
-                    <v-text-field :disabled="ok" append-icon="mdi-key" v-model="this.Password1" :rules="this.password1rulea"
+                    <v-text-field :disabled="ok" append-icon="mdi-key" v-model=" Password1" :rules=" password1rulea"
                       type=password label="كلمة السر مرة أخرى😁"></v-text-field>
-                    <v-autocomplete :disabled="ok" :rules="this.usernamerulea" v-model="this.selectedCountry" :items="this.countries"
+                    <v-autocomplete :disabled="ok" :rules=" usernamerulea" v-model=" selectedCountry" :items=" countries"
                       label="اختر الدولة"></v-autocomplete>
 
-                    <v-autocomplete :rules="this.usernamerulea" v-model="selectedCity" :items="cities"
+                    <v-autocomplete :rules=" usernamerulea" v-model="selectedCity" :items="cities"
                       label="اختر المدينة" item-text="title" item-value="value"
                       :disabled="!selectedCountry && ok"></v-autocomplete>
                     <div style="display: flex;width:50%;margin: auto;"> <v-btn style="border-radius: 12px !important"
-                        variant="flat" color="orange-darken-3" :loading="this.loading" class="mt-2 w-50" text="تسجيل"
+                        variant="flat" color="orange-darken-3" :loading=" loading" class="mt-2 w-50" text="تسجيل"
                         type="submit" block></v-btn></div>
                         <p class="text-success"> {{ errmessage }} </p>
                         <p class="text-success"> {{ sucmessage }} </p>
                     <v-text-field :disabled="!ok" class="mt-3" label="Activation code"
-                      v-model="this.verify"></v-text-field>
+                      v-model=" verify"></v-text-field>
                     <v-btn @click="submit" :disabled="!ok" text="verify"></v-btn>
                   </v-form>
                 </v-card>
               </v-window-item>
 
 
-              <v-window-item v-if="this.ff" :key="1" style="height:auto;">
+              <v-window-item v-if=" ff" :key="1" style="height:auto;">
                 <v-card style="border-radius: 20px !important;">
                   <v-form ref="form1" @submit.prevent="login" style="padding:6%">
-                    <v-text-field append-icon="mdi-email" class="mb-7" :rules="this.emailrulea" v-model="this.emaillog"
+                    <v-text-field append-icon="mdi-email" class="mb-7" :rules=" emailrulea" v-model=" emaillog"
                       label="الحساب الالكتروني"></v-text-field>
-                    <v-text-field append-icon="mdi-key" class="mb-7" v-model="this.passlog" label="كلمة السر"
-                      :rules="this.passwordrulea" type=password></v-text-field>
+                    <v-text-field append-icon="mdi-key" class="mb-7" v-model=" passlog" label="كلمة السر"
+                      :rules=" passwordrulea" type=password></v-text-field>
 
                     <div style="display: flex;width:50%;margin: auto;"><v-btn style="border-radius: 12px !important"
-                        color="orange-darken-3" variant="flat" :loading="this.loading" class="mt-2" text="Sign in"
+                        color="orange-darken-3" variant="flat" :loading=" loading" class="mt-2" text="Sign in"
                         type="submit" block></v-btn></div>
                   </v-form>
                 </v-card>
@@ -187,7 +187,7 @@
 
           </v-col>
 
-          <v-col lg="5" md="5" sm="6" class="hidden-xs" v-if="this.im != 0"
+          <v-col lg="5" md="5" sm="6" class="hidden-xs" v-if=" im != 0"
             style=" direction: rtl;backdrop-filter: blur(1px);min-height: 500px;display: flex;flex-direction: column;">
             <v-window v-model="window">
               <v-window-item key="0">
@@ -196,7 +196,7 @@
                 <p class="text- text-orange-darken-3" style="font-size: 25px !important;font-weight: 600 !important;">
                   قم بإنشاء حساب لتتمكن من التفاعل مع المقالات</p>
                 <v-btn
-                  @click="this.window++; this.email = ''; this.userName = ''; this.password = ''; this.Password1 = ''"
+                  @click=" window++;  email = '';  userName = '';  password = '';  Password1 = ''"
                   color="success" variant="flat">هل تملك حسابا مسبقاً؟</v-btn>
               </v-window-item>
               <v-window-item key="1" class="mt-4">
@@ -206,7 +206,7 @@
                   سجل دخولك
                   لتتمكن من التفاعل</p>
                 <v-btn
-                  @click="this.window--; this.email = ''; this.userName = ''; this.password = ''; this.Password1 = ''"
+                  @click=" window--;  email = '';  userName = '';  password = '';  Password1 = ''"
                   color="success" variant="flat">لا تملك حساباً؟ أنشىء واحدا</v-btn>
               </v-window-item>
             </v-window>
@@ -227,7 +227,7 @@
       </div>
     </v-lazy>
     <div class="px-5 hidden-sm-and-up" style="width:99%">
-      <v-row s v-if="this.lan == 1">
+      <v-row s v-if=" lan == 1">
         <v-col cols="12" style="direction: rtl;">
           <v-img style="" height="250px" width="300px" src="../assets/pic6.png"></v-img>
           <h1 class="text-h3" style="font-weight: 900 !important;"> أهلاً بعودتك</h1>
@@ -237,11 +237,11 @@
 
           <v-card>
             <v-form ref="form1" @submit.prevent="login" style="padding:6%">
-              <v-text-field append-icon="mdi-email" class="mb-7" :rules="this.emailrulea" v-model="this.emaillog"
+              <v-text-field append-icon="mdi-email" class="mb-7" :rules=" emailrulea" v-model=" emaillog"
                 label="الحساب الالكتروني"></v-text-field>
-              <v-text-field append-icon="mdi-key" class="mb-7" v-model="this.passlog" label="كلمة السر"
-                :rules="this.passwordrulea" type=password></v-text-field>
-              <v-btn color="warning" variant="outlined" :loading="this.loading" class="mt-2" text="Sign in"
+              <v-text-field append-icon="mdi-key" class="mb-7" v-model=" passlog" label="كلمة السر"
+                :rules=" passwordrulea" type=password></v-text-field>
+              <v-btn color="warning" variant="outlined" :loading=" loading" class="mt-2" text="Sign in"
                 type="submit" block></v-btn>
               <p class="text-red"> {{ errmessage }} </p>
             </v-form>
@@ -260,32 +260,32 @@
 
           <v-card>
             <v-form ref="form" @submit.prevent="verifycheck" style="text-align: center;padding:3%">
-              <v-text-field :disabled="ok"  append-icon="mdi-account" :rules="this.usernamerulea" v-model="this.firstname"
+              <v-text-field :disabled="ok"  append-icon="mdi-account" :rules=" usernamerulea" v-model=" firstname"
                 label="اسم المستخدم"></v-text-field>
-              <v-text-field :disabled="ok"  append-icon="mdi-email" :rules="this.emailrulea" v-model="this.email"
+              <v-text-field :disabled="ok"  append-icon="mdi-email" :rules=" emailrulea" v-model=" email"
                 label="الحساب الالكتروني"></v-text-field>
-              <v-radio-group :disabled="ok"  :rules="this.genderrulesa" class="ml-10" inline v-model="this.gender">
+              <v-radio-group :disabled="ok"  :rules=" genderrulesa" class="ml-10" inline v-model=" gender">
                 <v-radio class="mr-16" value="male"> male <v-icon>mdi-gender-male</v-icon> </v-radio>
                 <v-radio class="ml-16" value="female">female <v-icon>mdi-gender-female</v-icon> </v-radio>
               </v-radio-group>
-              <v-date-input :disabled="ok"  :rules="this.daterulea" v-model="this.date" prepend-icon=""
+              <v-date-input :disabled="ok"  :rules=" daterulea" v-model=" date" prepend-icon=""
                 append-icon="mdi-calendar-range">
               </v-date-input>
               <v-text-field :disabled="ok"  hint="كلمة السر يجب ان تكون اكثر من 8 محارف و مكونة من ارقام و احرف" append-icon="mdi-key"
-                v-model="this.Password" label="كلمة السر" :rules="this.passwordrulea" type=password></v-text-field>
-              <v-text-field :disabled="ok"  append-icon="mdi-key" v-model="this.Password1" :rules="this.password1rulea" type=password
+                v-model=" Password" label="كلمة السر" :rules=" passwordrulea" type=password></v-text-field>
+              <v-text-field :disabled="ok"  append-icon="mdi-key" v-model=" Password1" :rules=" password1rulea" type=password
                 label="كلمة السر مرة أخرى😁"></v-text-field>
-              <v-autocomplete :disabled="ok"  :rules="this.usernamerule" v-model="this.selectedCountry" :items="this.countries"
+              <v-autocomplete :disabled="ok"  :rules=" usernamerule" v-model=" selectedCountry" :items=" countries"
                 label="اختر الدولة"></v-autocomplete>
 
-              <v-autocomplete :rules="this.usernamerule" v-model="selectedCity" :items="cities" label="اختر المدينة"
+              <v-autocomplete :rules=" usernamerule" v-model="selectedCity" :items="cities" label="اختر المدينة"
                 item-text="title" item-value="value" :disabled="!selectedCountry && ok"></v-autocomplete>
-              <v-btn variant="outlined" :disabled="ok" color="warning" :loading="this.loading" class="mt-2" text="تسجيل" type="submit"
+              <v-btn variant="outlined" :disabled="ok" color="warning" :loading=" loading" class="mt-2" text="تسجيل" type="submit"
                 block></v-btn>
                 <p class="text-red"> {{ errmessage }} </p>
                     <p class="text-success"> {{ sucmessage }} </p>
                     <v-text-field :disabled="!ok" class="mt-3" label="رمز التحقق"
-                      v-model="this.verify"></v-text-field>
+                      v-model=" verify"></v-text-field>
                     <v-btn @click="submit" :disabled="!ok" text="تحقق"></v-btn>
             </v-form>
           </v-card>
@@ -301,7 +301,7 @@
 
 
       <!--English start   -->
-      <v-row v-if="this.lan == 0">
+      <v-row v-if=" lan == 0">
         <v-col cols="12">
           <v-img style="" height="250px" width="300px" src="../assets/pic6.png"></v-img>
           <h1 class="text-h2" style="font-weight: 900 !important;"> welcome back</h1>
@@ -310,11 +310,11 @@
 
           <v-card>
             <v-form ref="form1" @submit.prevent="login" style="padding:6%">
-              <v-text-field append-icon="mdi-email" class="mb-7" :rules="this.emailrule" v-model="this.emaillog"
+              <v-text-field append-icon="mdi-email" class="mb-7" :rules=" emailrule" v-model=" emaillog"
                 label="Gmail"></v-text-field>
-              <v-text-field append-icon="mdi-key" class="mb-7" v-model="this.passlog" label="password"
-                :rules="this.passwordrule" type=password></v-text-field>
-              <v-btn color="warning" variant="outlined" :loading="this.loading" class="mt-2" text="Sign in"
+              <v-text-field append-icon="mdi-key" class="mb-7" v-model=" passlog" label="password"
+                :rules=" passwordrule" type=password></v-text-field>
+              <v-btn color="warning" variant="outlined" :loading=" loading" class="mt-2" text="Sign in"
                 type="submit" block></v-btn>
               <p class="text-red"> {{ errlogmessage }} </p>
             </v-form>
@@ -333,32 +333,32 @@
 
           <v-card>
             <v-form ref="form" @submit.prevent="verifycheck" style="text-align: center;padding:3%">
-              <v-text-field :disabled="ok" append-icon="mdi-account" :rules="this.usernamerule" v-model="this.firstname"
+              <v-text-field :disabled="ok" append-icon="mdi-account" :rules=" usernamerule" v-model=" firstname"
                 label="username"></v-text-field>
 
-              <v-text-field :disabled="ok" append-icon="mdi-email" :rules="this.emailrule" v-model="this.email"
+              <v-text-field :disabled="ok" append-icon="mdi-email" :rules=" emailrule" v-model=" email"
                 label="Gmail"></v-text-field>
-              <v-radio-group :disabled="ok" :rules="this.genderrules" class="ml-10" inline v-model="this.gender">
+              <v-radio-group :disabled="ok" :rules=" genderrules" class="ml-10" inline v-model=" gender">
                 <v-radio class="mr-16" value="male"> male <v-icon>mdi-gender-male</v-icon> </v-radio>
                 <v-radio class="ml-16" value="female">female <v-icon>mdi-gender-female</v-icon> </v-radio>
               </v-radio-group>
-              <v-date-input :disabled="ok" :rules="this.daterule" v-model="this.date" prepend-icon="" append-icon="mdi-calendar-range">
+              <v-date-input :disabled="ok" :rules=" daterule" v-model=" date" prepend-icon="" append-icon="mdi-calendar-range">
               </v-date-input>
-              <v-text-field :disabled="ok" hint="password must be char and number min 8" append-icon="mdi-key" v-model="this.Password"
-                label="password" :rules="this.passwordrule" type=password></v-text-field>
-              <v-text-field :disabled="ok" append-icon="mdi-key" v-model="this.Password1" :rules="this.password1rule" type=password
+              <v-text-field :disabled="ok" hint="password must be char and number min 8" append-icon="mdi-key" v-model=" Password"
+                label="password" :rules=" passwordrule" type=password></v-text-field>
+              <v-text-field :disabled="ok" append-icon="mdi-key" v-model=" Password1" :rules=" password1rule" type=password
                 label="password again 😁"></v-text-field>
-              <v-autocomplete :disabled="ok" :rules="this.usernamerule" v-model="this.selectedCountry" :items="this.countries"
+              <v-autocomplete :disabled="ok" :rules=" usernamerule" v-model=" selectedCountry" :items=" countries"
                 label="choose country"></v-autocomplete>
 
-              <v-autocomplete :rules="this.usernamerule" v-model="selectedCity" :items="cities" label="choose city"
+              <v-autocomplete :rules=" usernamerule" v-model="selectedCity" :items="cities" label="choose city"
                 item-text="title" item-value="value" :disabled="!selectedCountry && ok"></v-autocomplete>
-              <v-btn variant="outlined" color="warning" :loading="this.loading" class="mt-2" text="Signup" type="submit"
+              <v-btn variant="outlined" color="warning" :loading=" loading" class="mt-2" text="Signup" type="submit"
                 block></v-btn>
               <p class="text-red"> {{ errmessage }} </p>
               <p class="text-success"> {{ sucmessage }} </p>
                     <v-text-field :disabled="!ok" class="mt-3" label="Activation code"
-                      v-model="this.verify"></v-text-field>
+                      v-model=" verify"></v-text-field>
                     <v-btn @click="submit" :disabled="!ok" text="verify"></v-btn>
             </v-form>
           </v-card>
@@ -375,9 +375,9 @@
 
     </div>
 
-    <v-dialog style="width:50%" v-model="this.err">
+    <v-dialog style="width:50%" v-model=" err">
       <v-card>
-        <h2 class="mb-10"> Type of file is not supported </h2><v-btn color="red" @click="this.err = false">close</v-btn>
+        <h2 class="mb-10"> Type of file is not supported </h2><v-btn color="red" @click="err = false">close</v-btn>
       </v-card>
 
     </v-dialog>

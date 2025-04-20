@@ -4,7 +4,7 @@
       <v-toolbar class="hidden-xs">
         <v-btn to="/profile-setting" rounded="10" height="auto" :ripple="false" style="cursor: pointer" class="hidden-sm-and-down">
         <v-avatar router :to="{path:'/profile'}" color="grey" rounded="10" size="60" >
-          <v-img to="/profile" :src="this.photoUrl" cover></v-img>
+          <v-img to="/profile" :src="photoUrl" cover></v-img>
        
         </v-avatar></v-btn>
         <v-btn class="hidden-xs" to="/post"><v-icon>mdi-home</v-icon>posts</v-btn>
@@ -57,7 +57,7 @@
 
      <v-btn to="/profile-setting" rounded="10" height="auto" :ripple="false" v-if="token !='1'" style="translate: 0 0px;cursor: pointer" class="pa-4">
         <v-avatar router :to="{path:'/profile'}" color="grey" rounded="10" size="60" >
-          <v-img to="/profile" :src="this.photoUrl" cover></v-img>
+          <v-img to="/profile" :src="photoUrl" cover></v-img>
        
         </v-avatar></v-btn>
       <v-spacer></v-spacer>
