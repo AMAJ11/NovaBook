@@ -90,9 +90,8 @@ export default {
   },
   data() {
     return {
-      
       showButton: false,
-      photoUrl:  ""+localStorage.getItem("photourl")|| null,
+      photoUrl:  ""+localStorage.getItem("photourl"),
       icon: true,
       sw: false,
       icon: true,
@@ -140,7 +139,7 @@ export default {
   },
   mounted: function () {
     if(!localStorage.getItem("lan")){
-      localStorage.setItem("photoUrl"," ")
+      localStorage.setItem("photourl"," ")
     }
     if (!localStorage.getItem("lan")) {
       localStorage.setItem("lan", 0)
