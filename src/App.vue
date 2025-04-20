@@ -87,11 +87,16 @@
 export default {
   name: 'App',
   created: function () {
+    if(!localStorage.getItem("lan")){
+      localStorage.setItem("photourl"," ")
+    }else{
+      this.photoUrl = localStorage.getItem("photourl")
+    }
   },
   data() {
     return {
       showButton: false,
-      photoUrl:  ""+localStorage.getItem("photourl"),
+      photoUrl:  "",
       icon: true,
       sw: false,
       icon: true,
@@ -138,9 +143,7 @@ export default {
     },
   },
   mounted: function () {
-    if(!localStorage.getItem("lan")){
-      localStorage.setItem("photourl"," ")
-    }
+   
     if (!localStorage.getItem("lan")) {
       localStorage.setItem("lan", 0)
     }
