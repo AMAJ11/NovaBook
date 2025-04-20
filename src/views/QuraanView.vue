@@ -13,7 +13,7 @@
       <v-alert color="grey"> ` و من جهلت نفسه قدره      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  رأى غيره منه ما لا يرى`  </v-alert>
       <v-row>
         <v-col class="" style="border: 2px dashed black;" cols="12" sm="12" md="10" lg="8">
-          <v-progress-linear v-if="this.lod" indeterminate></v-progress-linear>
+          <v-progress-linear v-if="lod" indeterminate></v-progress-linear>
           <h1 v-for="s in this.surahs" class="text-primary mb-4 mt-2"> {{ s.name }} </h1>
           <h2> {{ this.i }} الصفحة </h2>
           <p class="text-button" style="font-size: 25px !important;" v-for="p in this.aayt"> {{ p.text }} <span
