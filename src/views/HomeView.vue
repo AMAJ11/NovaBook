@@ -8,8 +8,9 @@
         <v-spacer></v-spacer>
         <v-switch style="translate: 0px 10px;" class="hidden-xs" @click="toggleTheme"
           :append-icon='icon == true ? "mdi-weather-night" : "mdi-white-balance-sunny"'></v-switch>
-        <v-select :item-title="title" :item-value="value" v-model="lan" :items="item">
-        </v-select>
+        <div  style="width: 10%;">
+          <v-select :item-title="title" :item-value="value" v-model="lan" :items="item">
+        </v-select></div>
       </v-toolbar>
     </v-app-bar>
     <v-lazy>
