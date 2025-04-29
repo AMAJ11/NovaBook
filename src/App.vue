@@ -25,8 +25,7 @@
           <v-list-item v-if="notify.length==0">
                 <v-list-item-title style="display: flex;">
                   <v-avatar>
-                    <v-img src="https://cdn.icon-icons.com/images/no_results2.png"></v-img>
-                   
+                    <v-img src="https://cdn.icon-icons.com/images/no_results2.png"></v-img>               
                   </v-avatar>
                   <p class="text-button ml-2 text-red"> لا يوجد اية اشعارات </p>
                 </v-list-item-title>
@@ -103,7 +102,7 @@
 
         </v-avatar></v-btn>
       <v-spacer></v-spacer>
-      <v-badge class="mr-6" style="cursor: pointer;" :content="notify.length" value="8" color="red" overlap>
+      <v-badge class="mr-6 hidden-sm-and-up" style="cursor: pointer;" :content="notify.length" value="8" color="red" overlap>
         <v-icon large>
           mdi-bell
         </v-icon>
@@ -152,6 +151,7 @@
 </template>
 
 <script>
+import socket from '@/services/socket';
 import axios from 'axios';
 import { Howler } from 'howler';
 export default {
@@ -191,7 +191,7 @@ export default {
       this.fajr = response.data.data.timings.Fajr
       this.zhr = response.data.data.timings.Dhuhr
       this.asr = response.data.data.timings.Asr
-      this.mughrib = response.data.data.timings.Maghrib
+      // this.mughrib = response.data.data.timings.Maghrib
       this.isha = response.data.data.timings.Isha
 
     console.log( this.fajr);
@@ -234,7 +234,7 @@ export default {
       this.alarmSound.play();
       this.menuShow = true
     }
-    }, 40000);
+    }, 600000);
   },
   data() {
     return {
@@ -253,7 +253,7 @@ export default {
       fajr: "",
       zhr: "",
       asr: "",
-      mughrib: "",
+      mughrib: "20:53",
       isha: "",
       notify: [],
       showButton: false,
@@ -345,8 +345,6 @@ export default {
         this.alarmSound.play();
         this.menuShow = true
       }
-
-      console.log(this.time, this.CutTime(this.zhr));
     }
 
     },
@@ -391,6 +389,13 @@ export default {
       localStorage.setItem("lan", 0)
     }
     window.addEventListener("scroll", this.handleScroll);
+    socket.on('connect', () => {
+    console.log('Connected to server');
+  });
+  socket.on('new-notification', (notification) => {
+      console.log(notification);
+      
+    });
   },
   beforeUnmount: () => {
     window.removeEventListener("scroll", this.handleScroll);

@@ -55,12 +55,7 @@
                     <div style="display:flex;justify-content: space-between">
                         <v-card-title>
 
-                            <v-btn variant="text" :to="`/Person-Profile/${i.user.id}`" color="primary">
-                                <v-avatar size="30">
-                                    <v-img :src="i.user.profilephoto.url"></v-img>
-                                </v-avatar>
-                                {{
-                                    i.user.username }} <v-icon> mdi-account </v-icon></v-btn>
+                         
 
                         </v-card-title>
 
@@ -144,8 +139,8 @@
                         v-model="postText">
 
                     </v-textarea>
-                    <v-file-input rules="required" style="border-radius: 12px !important;" class="mt-10 px-3 pt-1"
-                        v-model="image" @change="onFileSelected" label="Post image" type="file" accept="image/*"
+                    <v-file-input :rules="fileRules" style="border-radius: 12px !important;" class="mt-10 px-3 pt-1"
+                        v-model="image" @change="onFileSelected" label="Post image"  accept="image/*"
                         append-icon="mdi-camera"></v-file-input>
                     <v-select :rules="this.usernamerule" :items="['music', 'politic']" label="category" class="mt-3"
                         v-model="this.cat"></v-select>
@@ -342,7 +337,7 @@ export default {
         this.user = resUser.data.user
         console.log(this.user);
         this.followers = this.user.followers.length
-        this.following = this.user.followers.length
+        this.following = this.user.following.length
         this.profilephoto = this.user.profilephoto.url
 
     },
@@ -375,6 +370,12 @@ export default {
                 if (userName) return true
                 return 'You must enter this Field.'
             }],
+            fileRules: [() => {
+                if (this.image==null)  return 'You must enter this Field.'
+                else{return true}
+               
+            }],
+           
         }
     },
     methods: {
@@ -487,7 +488,6 @@ export default {
                     this.t = true
 
                 }
-                else { this.err = true; this.image = '' }
             }
         }, onFileSelected2: function () {
 

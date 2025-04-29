@@ -41,7 +41,7 @@
                   <v-card elevation="0" variant="solo" class="pa-1 pa-sm-5 " style="width: 100% !important;">
                      <div style="display:flex;justify-content: space-between;">
 
-                           <v-btn variant="text" :to="`/Person-Profile/${i.user.id}`" color="primary">
+                           <v-btn variant="text" :to="getUrl(i.user.id)" color="primary">
                               <v-avatar size="30">
                                  <v-img :src="i.user.profilephoto.url"></v-img>
                               </v-avatar>
@@ -121,7 +121,7 @@
 
                      <span style="display: flex;align-items: center;"><v-avatar> <v-img :src="i.profilephoto"
                               width="150px"></v-img></v-avatar>
-                        <v-btn :to="`/Person-Profile/${i.user}`" append-icon="mdi-account" variant="text" size="small"> {{ i.username }} </v-btn>
+                        <v-btn :to="getUrl(i.user)" append-icon="mdi-account" variant="text" size="small"> {{ i.username }} </v-btn>
                      </span>
                      <p class="mt-1"> {{ i.text }} </p>
                      <v-divider thickness="2"></v-divider>
@@ -193,6 +193,12 @@ export default {
       }
    },
    methods: {
+      getUrl: function(id){
+          if(id != localStorage.getItem("id")){
+            return `/Person-Profile/${id}`
+          }
+          else{return "profile-setting"}
+      },
       CommentPost: async function(){
          if(this.CommentText !=""){
          let token = localStorage.getItem("token")
