@@ -191,7 +191,7 @@ export default {
       this.fajr = response.data.data.timings.Fajr
       this.zhr = response.data.data.timings.Dhuhr
       this.asr = response.data.data.timings.Asr
-      // this.mughrib = response.data.data.timings.Maghrib
+      this.mughrib = response.data.data.timings.Maghrib
       this.isha = response.data.data.timings.Isha
 
     console.log( this.fajr);
@@ -253,7 +253,7 @@ export default {
       fajr: "",
       zhr: "",
       asr: "",
-      mughrib: "20:53",
+      mughrib: "",
       isha: "",
       notify: [],
       showButton: false,
@@ -329,9 +329,12 @@ export default {
         this.alarmSound.play();
         this.menuShow = true
       }
+
+      
       else if (this.time == this.CutTime(this.mughrib)) {
         this.notify.push({ src: "https://images.icon-icons.com/567/PNG/96/clock_icon-icons.com_54407.png", text: "تبقى ساعة على اذان صلاة المغرب" },)
         this.alarmSound.play();
+        
         this.menuShow = true
       }
       else if (this.time == this.CutTime(this.isha)) {
@@ -345,6 +348,7 @@ export default {
         this.alarmSound.play();
         this.menuShow = true
       }
+      console.log(this.CutTime(this.mughrib));
     }
 
     },
@@ -392,10 +396,14 @@ export default {
     socket.on('connect', () => {
     console.log('Connected to server');
   });
-  socket.on('new-notification', (notification) => {
-      console.log(notification);
-      
+  socket.on('GetOnlineUsers', (data) => {
+      console.log(data)
+      // سيحدث الواجهة تلقائيًا
     });
+    socket.on('notification' ,(data)=>{
+      console.log(data);
+      
+    })
   },
   beforeUnmount: () => {
     window.removeEventListener("scroll", this.handleScroll);
