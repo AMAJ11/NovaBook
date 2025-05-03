@@ -41,19 +41,19 @@
                   <v-card elevation="0" variant="solo" class="pa-1 pa-sm-5 " style="width: 100% !important;">
                      <div style="display:flex;justify-content: space-between;">
 
-                           <v-btn variant="text" :to="getUrl(i.user.id)" color="primary">
-                              <v-avatar size="30">
-                                 <v-img :src="i.user.profilephoto.url"></v-img>
-                              </v-avatar>
-                              {{
-                                 i.user.username }} <v-icon> mdi-account </v-icon></v-btn>
+                        <v-btn variant="text" :to="getUrl(i.user.id)" color="primary">
+                           <v-avatar size="30">
+                              <v-img :src="i.user.profilephoto.url"></v-img>
+                           </v-avatar>
+                           {{
+                              i.user.username }} <v-icon> mdi-account </v-icon></v-btn>
                         <p style="translate: 0 14px;font-size: 10px;"> {{ i.createdAt.slice(0, 10) }}</p>
                      </div>
                      <p style="text-align: center;" class="text-button"> {{ i.title }} </p>
                      <div style="width: 100%;display: flex;justify-content: center;align-items: center;">
-                        <img
-                        class="w-100 w-md-75"
-                           :src="i.image.url" style="margin:auto;height: 50vh;width: 80%;border-radius: 12px;"></div>
+                        <img class="w-100 w-md-75" :src="i.image.url"
+                           style="margin:auto;height: 50vh;width: 80%;border-radius: 12px;">
+                     </div>
                      <v-card-text class="text-button">
                         {{ i.description }}
                      </v-card-text>
@@ -65,21 +65,23 @@
 
                         <v-btn size="large" class="hidden-sm-and-down" append-icon="mdi-share">Share</v-btn>
                         <v-btn size="large" class="hidden-sm-and-down"
-                           @click="this.comment = true; this.comments = i.comments;postid=i.id" color=""
+                           @click="this.comment = true; this.comments = i.comments; postid = i.id" color=""
                            append-icon="mdi-message-alert-outline">Comment {{ i.comments.length != 0 ? i.comments.length
-                           : '' }} </v-btn>
+                              : '' }} </v-btn>
                         <v-btn size="large" class="hidden-sm-and-down" :loading="this.WillLike"
                            :append-icon="islike(i.id) ? 'mdi-heart' : 'mdi-heart-outline'" @click="addLike(i.id)"
-                           :color="islike(i.id) ? 'red' : ''">Love {{ i.likes.length != 0 ? i.likes.length : '' }} </v-btn>
+                           :color="islike(i.id) ? 'red' : ''">Love {{ i.likes.length != 0 ? i.likes.length : '' }}
+                        </v-btn>
 
                         <v-btn size="md" class="hidden-md-and-up"
                            :v-ripple="{ class: 'ripple-blue' }"><v-icon>mdi-share</v-icon></v-btn>
                         <v-btn size="md" class="hidden-md-and-up"
-                           @click="this.comment = true; this.comments = i.comments;postid=i.id;console.log(comments)"><v-icon>mdi-message-alert-outline</v-icon>
+                           @click="this.comment = true; this.comments = i.comments; postid = i.id; console.log(comments)"><v-icon>mdi-message-alert-outline</v-icon>
                            {{ i.comments.length != 0 ? i.comments.length : '' }} </v-btn>
                         <v-btn size="md" class="hidden-md-and-up" @click="addLike(i.id)" :loading="this.WillLike"
-                           :color="islike(i.id) ? 'red' : ''"><v-icon> {{ islike(i.id) ? 'mdi-heart' : 'mdi-heart-outline'
-                              }}</v-icon>
+                           :color="islike(i.id) ? 'red' : ''"><v-icon> {{ islike(i.id) ? 'mdi-heart' :
+                              'mdi-heart-outline'
+                           }}</v-icon>
                            <p> {{ i.likes.length != 0 ? i.likes.length : null }} </p>
                         </v-btn>
                      </v-card-actions>
@@ -89,25 +91,38 @@
                </v-col>
             </v-row></v-col>
          <v-spacer></v-spacer>
-         <v-col class="pa-8" cols="12" md="3">
-            <h1 style="opacity: 0.4;" v-if="this.lan == 0">Categories</h1>
-            <h1 style="direction: rtl;opacity: 0.4;" v-if="this.lan == 1">الاقسام</h1>
-            <v-list class="pa-5">
+         <v-col cols="10" md="3">
+            <v-row class="pt-10">
+               <v-col cols="12">
+                  <v-text-field append-icon="mdi-magnify"></v-text-field>
+               </v-col>
+               <v-col cols="12">
+                  <div style="display: flex;justify-content: space-between;align-items: center;">
+                    
+                     <h1 style="opacity: 0.4;" v-if="this.lan == 0">Your Friends</h1>
+                     <h1 style="direction: rtl;opacity: 0.4;" v-if="this.lan == 1">أصدقاؤك</h1>
+                  </div>
+                  <v-card class="pa-6" style="height: 75vh;width:100%;overflow: scroll;">
+                     <span class="mb-3" v-for="i in allUsers"
+                        style="display: flex;align-items: center;cursor: pointer;">
+                        <v-badge size="x-small" class="mr-3" v-if="i.isonline && i.image" style="" color="green">
+                           <v-tooltip activator="parent">نشط الآن</v-tooltip>
+                           <v-avatar>
 
-               <v-list-item value="home" v-for="i in 4">home</v-list-item>
-            </v-list>
-            <h2 class="mt-6" style="opacity: 0.4;"> </h2>
-            <h1 style="opacity: 0.4;" v-if="this.lan == 0">Your Friends</h1>
-            <h1 style="direction: rtl;opacity: 0.4;" v-if="this.lan == 1">أصدقاؤك</h1>
-            <v-card class="pa-6" style="height: 75vh;width:100%;overflow: scroll;">
+                              <v-img v-if="i.image" :src="i.image" width="150px"></v-img>
+                           </v-avatar></v-badge>
 
-               <span class="mb-3" v-for="i in 33" style="display: flex;align-items: center;cursor: pointer;"><v-avatar>
-                     <v-img src="../assets/logo.png" width="150px"></v-img></v-avatar>
-                  <p>Ammar AJ</p><v-spacer></v-spacer><v-btn to="/Person-Profile/:87986"
-                     variant="text"><v-icon>mdi-eye</v-icon></v-btn>
-               </span>
-               <v-divider thickness="2"></v-divider>
-            </v-card>
+                        <v-avatar class="mr-3" v-if="!i.isonline">
+
+                           <v-img v-if="i.image" :src="i.image" width="150px"></v-img>
+                        </v-avatar>
+                        <p v-if="i.image"> {{ i.Name }} </p><v-spacer></v-spacer><v-btn v-if="i.image"
+                           :to="`/Person-Profile/${i.id}`" variant="text"><v-icon>mdi-eye</v-icon></v-btn>
+                     </span>
+                     <v-divider thickness="2"></v-divider>
+                  </v-card>
+               </v-col>
+            </v-row>
          </v-col>
       </v-row>
       <V-dialog style="height:400px;width: 60%;min-width: 300px" v-model="this.comment">
@@ -121,7 +136,8 @@
 
                      <span style="display: flex;align-items: center;"><v-avatar> <v-img :src="i.profilephoto"
                               width="150px"></v-img></v-avatar>
-                        <v-btn :to="getUrl(i.user)" append-icon="mdi-account" variant="text" size="small"> {{ i.username }} </v-btn>
+                        <v-btn :to="getUrl(i.user)" append-icon="mdi-account" variant="text" size="small"> {{ i.username
+                           }} </v-btn>
                      </span>
                      <p class="mt-1"> {{ i.text }} </p>
                      <v-divider thickness="2"></v-divider>
@@ -131,7 +147,9 @@
             </div>
          </v-card>
          <div style="display: flex;" class="mt-4">
-            <v-text-field style="border-radius: 20px;" class="mr-3" v-model="CommentText" :label="this.comments.length == 0 ? 'Be First one comment' : 'Comment with'+' '+ username.toUpperCase() +' '+'name'" variant="solo"></v-text-field>
+            <v-text-field style="border-radius: 20px;" class="mr-3" v-model="CommentText"
+               :label="this.comments.length == 0 ? 'Be First one comment' : 'Comment with' + ' ' + username.toUpperCase() + ' ' + 'name'"
+               variant="solo"></v-text-field>
             <v-btn style="translate: 0 10px" color="warning" variant="flat" @click="CommentPost()">Comment</v-btn>
          </div>
       </V-dialog>
@@ -147,9 +165,9 @@
     </v-card> -->
 
 
-      
 
-<!-- 
+
+      <!-- 
       <v-dialog location="top-left" v-model="notify" :persistent="false" style="width:30%;height: 30vh">
     <v-card>
       <v-card-title>notify</v-card-title>
@@ -166,14 +184,15 @@
 
 <script>
 import { onActivated } from 'vue';
+import socket from '@/services/socket';
 import axios from 'axios';
 export default {
    name: "PostView",
    data: function () {
       return {
-         notify:false,
-         CommentText:"",
-         postid:"",
+         notify: false,
+         CommentText: "",
+         postid: "",
          comments: [],
          posts: {},
          color1: false,
@@ -185,66 +204,108 @@ export default {
          fajr: 0,
          zhr: 0,
          asr: 0,
+         likedpost: [],
+         followers: [],
+         following: [],
+         FreindsOnline: [],
          mughrib: 0,
          isha: 0,
          apiurl: process.env.VUE_APP_API_URL,
          WillLike: false,
-         username:""
+         username: "",
+         freinds: []
       }
    },
    methods: {
-      getUrl: function(id){
-          if(id != localStorage.getItem("id")){
+      getUrl: function (id) {
+         if (id != localStorage.getItem("id")) {
             return `/Person-Profile/${id}`
-          }
-          else{return "profile-setting"}
+         }
+         else { return "profile-setting" }
       },
-      CommentPost: async function(){
-         if(this.CommentText !=""){
-         let token = localStorage.getItem("token")
-         try {
-            let response =  await axios.post(`${this.apiurl}/comments`,
-        {
-         postId: this.postid,
-         text: this.CommentText
-        },
-               {
-                  headers: {
-                     'Authorization': `Bearer ${token}`,
-                     'Content-Type': 'application/json'
+      CommentPost: async function () {
+         if (this.CommentText != "") {
+            let token = localStorage.getItem("token")
+            try {
+               let response = await axios.post(`${this.apiurl}/comments`,
+                  {
+                     postId: this.postid,
+                     text: this.CommentText
+                  },
+                  {
+                     headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                     }
+                  }
+               )
+               console.log(response.data);
+
+               let j = 0
+               let o = this.posts.filter(e => {
+                  return e.id == this.postid
+               })
+               console.log(o);
+
+               console.log(o[0]);
+               console.log(o[0].id);
+
+               for (let i = 0; i < this.posts.length; i++) {
+                  console.log(o.id, this.posts[i].id);
+
+                  if (o[0].id == this.posts[i].id) {
+                     j = i
                   }
                }
-        )
-        console.log(response.data);
+               this.posts[j].comments.push({ text: this.CommentText, username: this.username })
+               this.CommentText = ""
+               this.comment = false
 
-                let j=0
-        let o = this.posts.filter(e=>{
-         return e.id == this.postid
-        })
-        console.log(o);
-        
-        console.log(o[0]);
-        console.log(o[0].id);
-        
-        for(let i=0;i<this.posts.length;i++){
-         console.log(o.id,this.posts[i].id);
-         
-         if(o[0].id==this.posts[i].id){
-            j=i 
-         }
-        }
-        this.posts[j].comments.push({text: this.CommentText,  username: this.username })
-    this.CommentText= ""
-        this.comment=false
+               console.log(j);
 
- console.log(j);
- 
-        
-         } catch (error) {
-            this.comment=false
+
+            } catch (error) {
+               this.comment = false
+            }
          }
-      }
-      
+
+      },
+      SocketConnect: function () {
+         //    socket.on('connect', () => {
+         //    console.log('Connected to server');
+         // });
+         // socket.on('GetOnlineUsers', async (data) => {
+         //    console.log(this.freinds.length);
+         //    if (this.freinds.length > 1) {
+         //       for (let j = 0; j < data.length; j++) {
+         //          for (let i = 0; i < this.freinds.length; i++) {
+         //             if (data[j] != localStorage.getItem("id")) {
+         //                if (this.freinds[i].id == data[j]) {
+         //                   this.freinds[i].isonline = true
+         //                }
+         //             }
+         //          }
+         //       }
+         //    }
+         //    else {
+         //          console.log("length" , data.length);           
+         //       for (let i = 0; i < data.length; i++) {
+         //          if (data[i] != localStorage.getItem("id")) {
+         //             let response = await axios.get(`${this.apiurl}/users/profile/${data[i]}`)
+         //             this.FreindsOnline.push(data[i])
+         //             this.online = true
+         //             console.log(response);
+         //             this.freinds.push({ Name: response.data.user.username, isonline: true, id: data[i], image: response.data.user.profilephoto.url })
+         //          }
+         //       }
+
+         //       this.getFollower();
+
+         //    }
+
+         //    console.log(data);
+         //    // سيحدث الواجهة تلقائيًا
+         // });
       },
       saveuser: async function () {
          try {
@@ -258,6 +319,30 @@ export default {
             console.log(error);
 
          }
+      },
+      getFollower: async function () {
+         this.followers = JSON.parse(localStorage.getItem("user")).followers
+         this.following = JSON.parse(localStorage.getItem("user")).following
+         for (let i = 0; i < this.followers.length; i++) {
+            if (!this.following.includes(this.followers[i])) {
+               this.following.push(this.followers[i])
+            }
+         }
+            for (let i = 0; i < this.following.length; i++) {
+               let response = await axios.get(`${this.apiurl}/users/profile/${this.following[i]}`)
+               this.freinds.push({ Name: response.data.user.username, isonline: false, id: this.following[i], image: response.data.user.profilephoto.url })
+
+
+            }
+
+      
+         
+         console.log("khara", this.following);
+         console.log("freind", this.freinds);
+
+
+
+
       },
       addLike: async function (id) {
          this.WillLike = true
@@ -299,13 +384,13 @@ export default {
 
          }
          this.saveuser()
-        
+
          console.log(this.islike(id));
 
          console.log(this.likedpost);
-      
+
       },
-      notifyLoad: function(){
+      notifyLoad: function () {
       },
       islike: function (id) {
 
@@ -320,12 +405,13 @@ export default {
       }
    },
    created: async function () {
+      this.getFollower();
       setInterval(() => {
-      this.notify=true
-      setTimeout(() => {
-         this.notify=false
-      }, 5000);
-    }, 10000);
+         this.notify = true
+         setTimeout(() => {
+            this.notify = false
+         }, 5000);
+      }, 10000);
 
       this.saveuser();
       try {
@@ -372,12 +458,50 @@ export default {
       } finally {
          this.loading = false;
       }
+      console.log("freind", this.followers);
+      console.log("freind2", this.following);
 
-   },
-   mounted: function () {
       this.likedpost = JSON.parse(localStorage.getItem("user")).likeposts
       console.log(this.likedpost);
       this.username = JSON.parse(localStorage.getItem("user")).username
+
+
+
+   },
+   computed: {
+      allUsers() {
+      const merged = [];
+      const seenIds = new Set();
+
+      // أولاً: ضف الأصدقاء مع تعديل isonline حسب المتصلين
+      for (const friend of this.freinds) {
+        const onlineMatch = this.onlineUsers.find((u) => u.id === friend.id);
+
+        const user = {
+          ...friend,
+          isonline: !!onlineMatch,
+        };
+
+        merged.push(user);
+        seenIds.add(friend.id);
+      }
+
+      // ثانياً: أضف المتصلين غير الموجودين في friends
+      for (const online of this.onlineUsers) {
+        if (!seenIds.has(online.id)) {
+          merged.push({ ...online, isonline: true });
+          seenIds.add(online.id);
+        }
+      }
+
+      return merged;
+    },
+      onlineUsers() {
+         return this.$store.getters.onlineUsers;
+      }
+   },
+   mounted() {
+
    }
 }
 </script>

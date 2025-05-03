@@ -15,9 +15,9 @@
                         </v-btn>
                         <v-btn v-if="!IsFollow && !FollowBack" @click="FollowAdd" color="warning"
                             append-icon="mdi-plus">Follow</v-btn>
-                        <v-btn v-if="IsFollow && !FollowBack" @click="FollowAdd" color="red"
+                        <v-btn v-if="IsFollow" @click="FollowAdd" color="red"
                             append-icon="mdi-close">unFollow</v-btn>
-                        <v-btn v-if="FollowBack" @click="FollowAdd" color="success"
+                        <v-btn v-if="FollowBack && !IsFollow" @click="FollowAdd" color="success"
                             append-icon="mdi-check-outline">FollowBack</v-btn>
                     </div>
                     <v-chip>followers: {{ followersNum }} </v-chip><v-chip class="ml-2">following: {{ followingNum
@@ -110,6 +110,7 @@
 
 <script>
 import axios from 'axios';
+import { isReadonly } from 'vue';
 
 export default {
     data() {
@@ -150,17 +151,23 @@ export default {
         this.profilephoto = this.user.profilephoto.url
         if (this.user.following.includes(JSON.parse(localStorage.getItem("user")).id)) {
             this.HeFollowMe = true
-        } else { this.HeFollowMe = false }
-        if (this.user.followers.includes(JSON.parse(localStorage.getItem("user")).id) && this.user.following.includes(localStorage.getItem("id"))) {
+        } 
+        if (this.user.followers.includes(JSON.parse(localStorage.getItem("user")).id) && this.HeFollowMe == true) {
             console.log("i follow him");
             this.IsFollow = true
+            this.FollowBack = false
         }
         else if (!this.user.followers.includes(JSON.parse(localStorage.getItem("user")).id) && !this.user.following.includes(localStorage.getItem("id"))) {
             this.IsFollow = false
+            this.FollowBack=false
         }
-        else if (this.user.following.includes(JSON.parse(localStorage.getItem("user")).id) && !this.user.followers.includes(localStorage.getItem("id"))) {
+        else if (this.HeFollowMe == true && !this.user.followers.includes(localStorage.getItem("id"))) {
             this.FollowBack = true
-
+            this.IsFollow =false
+        }
+        else if( this.HeFollowMe==false &&  this.user.followers.includes(JSON.parse(localStorage.getItem("user")).id)){
+            this.FollowBack = false;
+            this.IsFollow =true
         }
         console.log(this.user.following.includes(JSON.parse(localStorage.getItem("user")).id));
         console.log(this.user.followers.includes(localStorage.getItem("id")));

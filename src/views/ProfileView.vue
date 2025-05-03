@@ -142,8 +142,7 @@
                     <v-file-input :rules="fileRules" style="border-radius: 12px !important;" class="mt-10 px-3 pt-1"
                         v-model="image" @change="onFileSelected" label="Post image"  accept="image/*"
                         append-icon="mdi-camera"></v-file-input>
-                    <v-select :rules="this.usernamerule" :items="['music', 'politic']" label="category" class="mt-3"
-                        v-model="this.cat"></v-select>
+                  
                     <div style="display: flex;justify-content: center;"> <v-btn class="mt-4  mb-16" type="submit"
                             @click="" color="green"> post </v-btn></div>
                 </v-form>
@@ -443,7 +442,6 @@ export default {
                                     title: this.title,
                                     description: this.postText,
                                     image: this.image,
-                                    category: this.cat
                                 },
 
                                 {

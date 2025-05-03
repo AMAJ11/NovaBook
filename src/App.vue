@@ -22,14 +22,14 @@
             </v-icon>
             <v-menu style="" v-model="menuShow" activator="parent" transition="slide-x-transition">
               <v-list>
-          <v-list-item v-if="notify.length==0">
-                <v-list-item-title style="display: flex;">
-                  <v-avatar>
-                    <v-img src="https://cdn.icon-icons.com/images/no_results2.png"></v-img>               
-                  </v-avatar>
-                  <p class="text-button ml-2 text-red"> لا يوجد اية اشعارات </p>
-                </v-list-item-title>
-          </v-list-item>
+                <v-list-item v-if="notify.length == 0">
+                  <v-list-item-title style="display: flex;">
+                    <v-avatar>
+                      <v-img src="https://cdn.icon-icons.com/images/no_results2.png"></v-img>
+                    </v-avatar>
+                    <p class="text-button ml-2 text-red"> لا يوجد اية اشعارات </p>
+                  </v-list-item-title>
+                </v-list-item>
                 <v-list-item class="mb-2" v-for="j in notify">
                   <v-list-item-title style="display: flex;">
                     <!-- <v-avatar>
@@ -39,9 +39,11 @@
                     <v-avatar>
                       <v-img :src="j.src"></v-img>
                     </v-avatar>
+
                     <p class="text-button ml-2">{{ j.text }}</p>
                   </v-list-item-title>
-                  <p style="font-size: 10px;text-align: right;"> {{ this.time.slice(0,5)}}  {{" ,  "+ this.date  }} </p>
+                  <p style="font-size: 10px;text-align: right;"> {{ this.time.slice(0, 5) }} {{ " , " + this.date }}
+                  </p>
                   <v-divider></v-divider>
                 </v-list-item>
 
@@ -102,23 +104,24 @@
 
         </v-avatar></v-btn>
       <v-spacer></v-spacer>
-      <v-badge class="mr-6 hidden-sm-and-up" style="cursor: pointer;" :content="notify.length" value="8" color="red" overlap>
+      <v-badge class="mr-6 hidden-sm-and-up" style="cursor: pointer;" :content="notify.length" value="8" color="red"
+        overlap>
         <v-icon large>
           mdi-bell
         </v-icon>
         <v-menu style="border-radius: 15px;" activator="parent" transition="slide-x-transition">
           <v-list height="250px" style="border-radius: 15px;">
-            <v-list-item v-if="notify.length==0">
-                <v-list-item-title style="display: flex;">
-                  <v-avatar>
-                    <v-img src="https://cdn.icon-icons.com/images/no_results2.png"></v-img>
-                   
-                  </v-avatar>
-                  <p class="text-button ml-2 text-red"> لا يوجد اية اشعارات </p>
-                </v-list-item-title>
-          </v-list-item>
-            <v-list-item class="mb-2" v-for="j in notify">
+            <v-list-item v-if="notify.length == 0">
               <v-list-item-title style="display: flex;">
+                <v-avatar>
+                  <v-img src="https://cdn.icon-icons.com/images/no_results2.png"></v-img>
+
+                </v-avatar>
+                <p class="ml-2 text-red"> لا يوجد اية اشعارات </p>
+              </v-list-item-title>
+            </v-list-item>
+            <v-list-item class="mb-2" v-for="j in notify">
+              <v-list-item-title style="display: flex;flex-direction: column;">
                 <!-- <v-avatar>
                       <v-img src="../src/assets/Mosque_PNG_image_with_transparent_background-removebg-preview.png"></v-img>
                     </v-avatar>
@@ -126,7 +129,8 @@
                 <v-avatar>
                   <v-img :src="j.src"></v-img>
                 </v-avatar>
-                <p class="text-button ml-2">{{ j.text }}</p>
+
+                <p class="" style="font-size: 12px;">{{ j.text }}</p>
 
 
 
@@ -144,14 +148,14 @@
     </v-toolbar>
   </v-layout>
   <router-view />
-
   <v-btn variant="flat" v-if="showButton" color="warning" @click="scrollToTop" class="scroll-to-top" size="small">
     <v-icon>mdi-arrow-up</v-icon>
   </v-btn>
 </template>
 
 <script>
-import socket from '@/services/socket';
+// import socket from '@/services/socket';
+import io from 'socket.io-client';
 import axios from 'axios';
 import { Howler } from 'howler';
 export default {
@@ -172,10 +176,10 @@ export default {
 
       const lat = JSON.parse(localStorage.getItem("user")).lat;
       const long = JSON.parse(localStorage.getItem("user")).lat;
-      this.date=`${year}/${month}/${day}`
+      this.date = `${year}/${month}/${day}`
       console.log(lat, long);
       console.log(this.date);
-      
+
 
 
       const response = await axios.get(
@@ -194,17 +198,17 @@ export default {
       this.mughrib = response.data.data.timings.Maghrib
       this.isha = response.data.data.timings.Isha
 
-    console.log( this.fajr);
-     
-    console.log(  this.zhr);
-    
-    console.log(  this.asr);
-    
-    console.log(this.mughrib);
-     
-    console.log( this.isha);
+      console.log(this.fajr);
 
-     
+      console.log(this.zhr);
+
+      console.log(this.asr);
+
+      console.log(this.mughrib);
+
+      console.log(this.isha);
+
+
 
     } catch (error) {
       console.error('Error fetching prayer times:', error);;
@@ -225,20 +229,20 @@ export default {
         }:${formattedSeconds}`
       this.CheakTime();
     }, 1000);
-  
+
     setInterval(() => {
-      if(localStorage.getItem("token")){
-      const randomNumber = Math.floor(Math.random() * 5);
-      console.log(randomNumber);
-      this.notify.push(this.SecNotify[randomNumber]);
-      this.alarmSound.play();
-      this.menuShow = true
-    }
+      if (localStorage.getItem("token")) {
+        const randomNumber = Math.floor(Math.random() * 5);
+        console.log(randomNumber);
+        this.notify.push(this.SecNotify[randomNumber]);
+        this.alarmSound.play();
+        this.menuShow = true
+      }
     }, 600000);
   },
   data() {
     return {
-      date:"",
+      date: "",
       menuShow: false,
       time: "",
       SecNotify: [
@@ -264,6 +268,7 @@ export default {
       sw: false,
       path: false,
       alarmSound: null,
+      apiurl: process.env.VUE_APP_API_URL,
       item: [
         { title: "EN", value: 0 },
         { title: "AR", value: 1 },
@@ -285,6 +290,12 @@ export default {
 
   },
   computed: {
+    socket() {
+      return this.$store.getters.getSocket;
+    },
+    // notifications() {
+    //      return this.$store.getters.allNotifications;
+    //   },
     showNavbar() {
       // إخفاء الـ Navbar في صفحات معينة
       return this.$route.name !== 'Auth' && this.$route.name !== 'quraan' && this.$route.name !== 'about';
@@ -293,63 +304,63 @@ export default {
   },
   methods: {
     CheakTime: function () {
-      if(localStorage.getItem("token")){
-      if (this.time == this.zhr + ":00") {
-        this.notify.push({ src: "https://images.icon-icons.com/4015/PNG/96/muslim_islam_religion_prayer_masjid_worship_mosque_adha_eid_icon_255587.png", text: "حان موعد اذان الظهر" },)
-        this.alarmSound.play();
-        this.menuShow = true
-      }
-      else if (this.time == this.asr + ":00") {
-        this.notify.push({ src: "https://images.icon-icons.com/4015/PNG/96/muslim_islam_religion_prayer_masjid_worship_mosque_adha_eid_icon_255587.png", text: "حان موعد اذان العصر" },)
-        this.alarmSound.play();
-        this.menuShow = true
-      }
-      else if (this.time == this.mughrib + ":00") {
-        this.notify.push({ src: "https://images.icon-icons.com/4015/PNG/96/muslim_islam_religion_prayer_masjid_worship_mosque_adha_eid_icon_255587.png", text: "حان موعد اذان المغرب" },)
-        this.alarmSound.play();
-        this.menuShow = true
-      }
-      else if (this.time == this.isha + ":00") {
-        this.notify.push({ src: "https://images.icon-icons.com/4015/PNG/96/muslim_islam_religion_prayer_masjid_worship_mosque_adha_eid_icon_255587.png", text: "حان موعد اذان العشاء" },)
-        this.alarmSound.play();
-        this.menuShow = true
-      }
-      else if (this.time == this.fajr + ":00") {
-        this.notify.push({ src: "https://images.icon-icons.com/4015/PNG/96/muslim_islam_religion_prayer_masjid_worship_mosque_adha_eid_icon_255587.png", text: "حان موعد اذان الفجر" },)
-        this.alarmSound.play();
-        this.menuShow = true
-      }
-      else if (this.time == this.CutTime(this.zhr)) {
-        this.notify.push({ src: "https://images.icon-icons.com/567/PNG/96/clock_icon-icons.com_54407.png", text: "تبقى ساعة على اذان صلاة الظهر" },)
-        this.alarmSound.play();
-        this.menuShow = true
-      }
-      else if (this.time == this.CutTime(this.asr)) {
-        this.notify.push({ src: "https://images.icon-icons.com/567/PNG/96/clock_icon-icons.com_54407.png", text: "تبقى ساعة على اذان صلاة العصر" },)
-        this.alarmSound.play();
-        this.menuShow = true
-      }
+      if (localStorage.getItem("token")) {
+        if (this.time == this.zhr + ":00") {
+          this.notify.push({ src: "https://images.icon-icons.com/4015/PNG/96/muslim_islam_religion_prayer_masjid_worship_mosque_adha_eid_icon_255587.png", text: "حان موعد اذان الظهر" },)
+          this.alarmSound.play();
+          this.menuShow = true
+        }
+        else if (this.time == this.asr + ":00") {
+          this.notify.push({ src: "https://images.icon-icons.com/4015/PNG/96/muslim_islam_religion_prayer_masjid_worship_mosque_adha_eid_icon_255587.png", text: "حان موعد اذان العصر" },)
+          this.alarmSound.play();
+          this.menuShow = true
+        }
+        else if (this.time == this.mughrib + ":00") {
+          this.notify.push({ src: "https://images.icon-icons.com/4015/PNG/96/muslim_islam_religion_prayer_masjid_worship_mosque_adha_eid_icon_255587.png", text: "حان موعد اذان المغرب" },)
+          this.alarmSound.play();
+          this.menuShow = true
+        }
+        else if (this.time == this.isha + ":00") {
+          this.notify.push({ src: "https://images.icon-icons.com/4015/PNG/96/muslim_islam_religion_prayer_masjid_worship_mosque_adha_eid_icon_255587.png", text: "حان موعد اذان العشاء" },)
+          this.alarmSound.play();
+          this.menuShow = true
+        }
+        else if (this.time == this.fajr + ":00") {
+          this.notify.push({ src: "https://images.icon-icons.com/4015/PNG/96/muslim_islam_religion_prayer_masjid_worship_mosque_adha_eid_icon_255587.png", text: "حان موعد اذان الفجر" },)
+          this.alarmSound.play();
+          this.menuShow = true
+        }
+        else if (this.time == this.CutTime(this.zhr)) {
+          this.notify.push({ src: "https://images.icon-icons.com/567/PNG/96/clock_icon-icons.com_54407.png", text: "تبقى ساعة على اذان صلاة الظهر" },)
+          this.alarmSound.play();
+          this.menuShow = true
+        }
+        else if (this.time == this.CutTime(this.asr)) {
+          this.notify.push({ src: "https://images.icon-icons.com/567/PNG/96/clock_icon-icons.com_54407.png", text: "تبقى ساعة على اذان صلاة العصر" },)
+          this.alarmSound.play();
+          this.menuShow = true
+        }
 
-      
-      else if (this.time == this.CutTime(this.mughrib)) {
-        this.notify.push({ src: "https://images.icon-icons.com/567/PNG/96/clock_icon-icons.com_54407.png", text: "تبقى ساعة على اذان صلاة المغرب" },)
-        this.alarmSound.play();
-        
-        this.menuShow = true
-      }
-      else if (this.time == this.CutTime(this.isha)) {
-        this.notify.push({ src: "https://images.icon-icons.com/567/PNG/96/clock_icon-icons.com_54407.png", text: "تبقى ساعة على اذان صلاة العشاء" },)
-        this.alarmSound.play();
-        this.menuShow = true
-      }
-      else if (this.time == this.CutTime(this.fajr)) {
 
-        this.notify.push({ src: "https://images.icon-icons.com/567/PNG/96/clock_icon-icons.com_54407.png", text: "تبقى ساعة على اذان صلاة الفجر" },)
-        this.alarmSound.play();
-        this.menuShow = true
+        else if (this.time == this.CutTime(this.mughrib)) {
+          this.notify.push({ src: "https://images.icon-icons.com/567/PNG/96/clock_icon-icons.com_54407.png", text: "تبقى ساعة على اذان صلاة المغرب" },)
+          this.alarmSound.play();
+
+          this.menuShow = true
+        }
+        else if (this.time == this.CutTime(this.isha)) {
+          this.notify.push({ src: "https://images.icon-icons.com/567/PNG/96/clock_icon-icons.com_54407.png", text: "تبقى ساعة على اذان صلاة العشاء" },)
+          this.alarmSound.play();
+          this.menuShow = true
+        }
+        else if (this.time == this.CutTime(this.fajr)) {
+
+          this.notify.push({ src: "https://images.icon-icons.com/567/PNG/96/clock_icon-icons.com_54407.png", text: "تبقى ساعة على اذان صلاة الفجر" },)
+          this.alarmSound.play();
+          this.menuShow = true
+        }
+        console.log(this.CutTime(this.mughrib));
       }
-      console.log(this.CutTime(this.mughrib));
-    }
 
     },
     playSound() {
@@ -387,28 +398,56 @@ export default {
       window.scrollTo({ top: 0, behavior: "smooth" });
     },
   },
+  
   mounted: function () {
+    this.$store.dispatch('initSocket');
+    this.socket.on('notification', async (data) => {
+      console.log(data);
+      if (data.data.type == "new_like") {
+            console.log("eveeet");
+
+            let response = await axios.get(`${this.apiurl}/users/profile/${data.data.userId}`)
+
+            let user = response.data.user.username;
+            this.notify.push({ src: "https://images.icon-icons.com/2857/PNG/96/instagram_like_heart_love_icon_181632.png", text: ` على منشورك ${user} تم التفاعل بواسطة ` })
+          } else if (data.data.type == "new_post") {
+            let response = await axios.get(`${this.apiurl}/users/profile/${data.data.userId}`)
+
+            let user = response.data.user.username;
+            this.notify.push({ src: " https://images.icon-icons.com/3237/PNG/96/tool_social_media_edit_edit_post_aplication_icon_197319.png", text: ` ${user} تم نشر منشور بواسطة ` })
+
+          } else if (data.data.type == "new_follow") {
+
+            let user = data.data.currentUser.username;
+            this.notify.push({ src: " https://images.icon-icons.com/3939/PNG/96/user_girl_female_follow_icon_250745.png", text: ` ${user} تمت متابعتك بواسطة ` })
+
+          } else if (data.data.type == "new_comment") {
+
+            let response = await axios.get(`${this.apiurl}/users/profile/${data.data.userId}`)
+
+            let user = response.data.user.username;
+            this.notify.push({ src: "https://images.icon-icons.com/402/PNG/96/comment-edit_40480.png", text: ` ${user} تمت التعليق على منشورك بواسطة ` })
+
+          }
+          this.alarmSound.play();
+          console.log(data);
+    })
     this.playSound();
     if (!localStorage.getItem("lan")) {
       localStorage.setItem("lan", 0)
     }
     window.addEventListener("scroll", this.handleScroll);
-    socket.on('connect', () => {
-    console.log('Connected to server');
-  });
-  socket.on('GetOnlineUsers', (data) => {
-      console.log(data)
-      // سيحدث الواجهة تلقائيًا
-    });
-    socket.on('notification' ,(data)=>{
-      console.log(data);
-      
-    })
+           // socket.on('GetOnlineUsers', (users) => {
+    //   this.$store.dispatch('updateOnlineUsers', users);
+    // });
+    // socket.on('connect', () => {
+    //   console.log('Connected to server');
+    // }); 
   },
   beforeUnmount: () => {
     window.removeEventListener("scroll", this.handleScroll);
-  }
-
+  },
+  
 }
 
 </script>

@@ -26,7 +26,7 @@ const routes = [
   {
     path: '/post',
     name: 'PostView',
-    component: PostView,
+    component: () => import('../views/PostView.vue'),
     meta: { requiresAuth: true }
   },
   {

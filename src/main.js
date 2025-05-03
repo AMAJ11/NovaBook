@@ -5,12 +5,13 @@ import vuetify from './plugins/vuetify'
 import { loadFonts } from './plugins/webfontloader'
 import "./assets/style.css"
 import { validationMixin } from 'vuelidate';
-
+import store from './store/store'
 
 loadFonts()
+const app = createApp(App);
 
-createApp(App)
-  .use(router)
-  .use(vuetify)
-  .use(validationMixin)
-  .mount('#app')
+app.use(router)
+   .use(store)
+   .use(vuetify) 
+   .use(validationMixin)
+   .mount('#app')
