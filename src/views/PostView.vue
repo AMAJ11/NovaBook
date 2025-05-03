@@ -184,7 +184,6 @@
 
 <script>
 import { onActivated } from 'vue';
-import socket from '@/services/socket';
 import axios from 'axios';
 export default {
    name: "PostView",
