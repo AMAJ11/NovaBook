@@ -161,6 +161,7 @@ import { Howler } from 'howler';
 export default {
   name: 'App',
   created: async function () {
+    this.playSound();
     this.timeSlice = this.time.slice(0, 5) ;
 
     if (!localStorage.getItem("photourl")) {
@@ -400,7 +401,7 @@ export default {
   },
   
   mounted: function () {
-    this.playSound();
+
     this.$store.dispatch('initSocket');
     this.socket.on('notification', async (data) => {
       console.log(data);
