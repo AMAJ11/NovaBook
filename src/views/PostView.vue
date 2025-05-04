@@ -28,8 +28,8 @@
             <v-chip>المغرب {{ this.mughrib }}</v-chip>
             <v-chip>العشاء {{ this.isha }}</v-chip>
 
-
-         </v-col>
+</v-col>
+        
       </v-row>
 
       <v-row class="mt-5" style="max-width:100%">

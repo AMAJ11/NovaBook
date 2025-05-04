@@ -20,7 +20,7 @@
             <v-icon large>
               mdi-bell
             </v-icon>
-            <v-menu style="" v-model="menuShow" activator="parent" transition="slide-x-transition">
+            <v-menu  activator="parent" transition="slide-x-transition">
               <v-list>
                 <v-list-item v-if="notify.length == 0">
                   <v-list-item-title style="display: flex;">
