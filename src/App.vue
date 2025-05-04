@@ -42,7 +42,7 @@
 
                     <p class="text-button ml-2">{{ j.text }}</p>
                   </v-list-item-title>
-                  <p style="font-size: 10px;text-align: right;"> {{ this.time.slice(0, 5) }} {{ " , " + this.date }}
+                  <p style="font-size: 10px;text-align: right;"> {{timeSlice }} {{ " , " + date }}
                   </p>
                   <v-divider></v-divider>
                 </v-list-item>
@@ -161,9 +161,9 @@ import { Howler } from 'howler';
 export default {
   name: 'App',
   created: async function () {
+    this.timeSlice = this.time.slice(0, 5) ;
 
-
-    if (!localStorage.getItem("lan")) {
+    if (!localStorage.getItem("photourl")) {
       localStorage.setItem("photourl", " ")
     } else {
       this.photoUrl = localStorage.getItem("photourl")
