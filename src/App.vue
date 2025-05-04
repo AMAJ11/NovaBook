@@ -400,6 +400,7 @@ export default {
   },
   
   mounted: function () {
+    this.playSound();
     this.$store.dispatch('initSocket');
     this.socket.on('notification', async (data) => {
       console.log(data);
@@ -432,7 +433,6 @@ export default {
           this.alarmSound.play();
           console.log(data);
     })
-    this.playSound();
     if (!localStorage.getItem("lan")) {
       localStorage.setItem("lan", 0)
     }
