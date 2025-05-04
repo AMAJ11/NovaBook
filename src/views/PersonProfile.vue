@@ -1,6 +1,13 @@
 <template>
     <v-app class="pa-2 pa-md-16 pb-0">
-        <v-container>
+        <v-progress-linear
+        class="mt-16"
+      color="primary"
+      :height="9"
+      v-if="loadingPage"
+      indeterminate
+    ></v-progress-linear>
+        <v-container v-if="!loadingPage">
             <v-row>
                 <v-col cols="12">
                     <v-avatar style="" size="300">
@@ -10,7 +17,7 @@
                         <v-btn variant="text"> <v-icon color="primary"> mdi-message </v-icon>
                             <v-tooltip location="top" activator="parent"> Chat with him </v-tooltip>
                         </v-btn>
-                        <v-btn variant="text"> <v-icon color="primary"> mdi-post-outline </v-icon>
+                        <v-btn variant="text" href="#UserPost"> <v-icon color="primary"> mdi-post-outline </v-icon>
                             <v-tooltip location="bottom" activator="parent"> view all posts </v-tooltip>
                         </v-btn>
                         <v-btn v-if="!IsFollow && !FollowBack" @click="FollowAdd" color="warning"
@@ -55,8 +62,8 @@
             </v-row>
 
 
-            <v-row class="mt-16">
-                <v-col cols="12" v-for="i in this.user.posts">
+            <v-row class="mt-16" id="UserPost">
+                <v-col cols="12" md="6" v-for="i in this.user.posts">
                     <v-card elevation="0" variant="solo" class="pa-1 pa-sm-5 " style="width: 100% !important;">
                         <div style="display:flex;justify-content: space-between;">
                                {{ user.username }} 
@@ -70,9 +77,6 @@
                         <v-card-text class="text-button">
                             {{ i.description }}
                         </v-card-text>
-                        <v-chip class="mb-5" color="green" variant="flat">
-                            {{ i.category }}
-                        </v-chip>
                         <v-divider></v-divider>
                         <v-card-actions calss="" style="height:15px;display:flex;justify-content: space-between;">
 
@@ -115,6 +119,7 @@ import { isReadonly } from 'vue';
 export default {
     data() {
         return {
+            loadingPage:true,
             IsFollow: "",
             user: {},
             apiurl: process.env.VUE_APP_API_URL,
@@ -171,6 +176,7 @@ export default {
         }
         console.log(this.user.following.includes(JSON.parse(localStorage.getItem("user")).id));
         console.log(this.user.followers.includes(localStorage.getItem("id")));
+        this.loadingPage=false
 
     },
 

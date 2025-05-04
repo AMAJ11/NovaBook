@@ -1,14 +1,5 @@
 <template>
-     <v-app> <v-app-bar>
-    <v-toolbar>
-      <v-btn to="/"><v-icon size="x-large"> mdi-arrow-left </v-icon> </v-btn> 
-       <v-btn to="/quraan"> Read Quraan </v-btn> 
-       <v-btn to="/about"> About </v-btn>
-       <v-spacer></v-spacer>  
-       <v-switch style="translate: 0px 10px;" class="hidden-xs" @click="toggleTheme"
-       :append-icon='icon == true ? "mdi-weather-night" : "mdi-white-balance-sunny" '></v-switch>
-      </v-toolbar>
-      </v-app-bar>
+     <v-app> 
     <div class="about" style="text-align: center;width:97%">
       <v-alert color="grey"> ` و من جهلت نفسه قدره      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  رأى غيره منه ما لا يرى`  </v-alert>
       <v-row>

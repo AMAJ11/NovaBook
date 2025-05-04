@@ -1,18 +1,13 @@
 <template>
   <v-app class="app">
-    <v-app-bar>
-      <v-toolbar>
-        <v-btn to="/">home </v-btn>
-        <v-btn to="/quraan"> Read Quraan </v-btn>
-        <v-btn to="/about"> About </v-btn>
-        <v-spacer></v-spacer>
-        <v-switch style="translate: 0px 10px;" class="hidden-xs" @click="toggleTheme"
-          :append-icon='icon == true ? "mdi-weather-night" : "mdi-white-balance-sunny"'></v-switch>
-        <div  style="width: 10%;">
-          <v-select :item-title="title" :item-value="value" v-model="lan" :items="item">
-        </v-select></div>
-      </v-toolbar>
-    </v-app-bar>
+  <div class="pl-6" style="width:190px;display:flex;justify-content:space-between">
+    <v-switch  class="mr-2" @click="toggleTheme"
+            :append-icon='icon == true ? "mdi-weather-night" : "mdi-white-balance-sunny"'></v-switch>
+          <div style="width:60%" class="">
+            <v-select :item-title="title" item-value="value" v-model="lan" :items="item">
+            </v-select>
+          </div>
+        </div>
     <v-lazy>
       <div class="home pb-16 pt-10 pb-xl-0 hidden-xs">
         <v-row style="width:99%" v-if="lan == 0" class="pa-6 pt-5 px-3">
@@ -585,8 +580,10 @@ export default {
           localStorage.setItem("token", response.data.user.token)
           console.log(response.data.user._id);
           localStorage.setItem("id", response.data.user._id)
+          localStorage.setItem("lat",this.selectedCity.lat)
+          localStorage.setItem("long",this.selectedCity.long)
           this.loading = false
-         
+           
           this.$router.push("/post");
           console.log(obj)
 

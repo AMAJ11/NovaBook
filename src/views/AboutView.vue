@@ -1,18 +1,6 @@
 <template>
   <v-app>  
-    <v-app-bar>
-      <v-toolbar>
-      <v-btn to="/">  <v-icon size="x-large"> mdi-arrow-left </v-icon> </v-btn> 
-       <v-btn to="/quraan"> Read Quraan </v-btn> 
-       <v-btn to="/about"> About </v-btn>
-       <v-spacer></v-spacer>  
-       <v-switch style="translate: 0px 10px;" class="hidden-xs" @click="toggleTheme"
-       :append-icon='icon == true ? "mdi-weather-night" : "mdi-white-balance-sunny" '></v-switch>
-       <v-select :item-title="title" item-value="value" v-model="lan" :items="item">
-      </v-select>
-    </v-toolbar>
-      </v-app-bar>
-
+   
   <div class="about">
     <h1>This is an about page</h1>
   </div>

@@ -1,5 +1,5 @@
 <template>
-  <v-layout v-if="showNavbar">
+  <v-layout v-if="!$route.meta.hideNavbar">
     <v-app-bar class="bar">
       <v-toolbar class="hidden-xs">
         <v-btn to="/profile-setting" rounded="10" height="auto" :ripple="false" style="cursor: pointer"
@@ -8,14 +8,14 @@
             <v-img to="/profile" :src="photoUrl" cover></v-img>
 
           </v-avatar></v-btn>
-        <v-btn class="hidden-xs" to="/post" color="warning"><v-icon>mdi-home</v-icon>posts</v-btn>
-        <v-btn class="hidden-xs" to="/about"><v-icon>mdi-help</v-icon>About</v-btn>
-        <v-btn class="hidden-xs" to="/quraan"><v-icon>mdi-book</v-icon>Quraan</v-btn>
+        <v-btn class="hidden-xs"  style="font-size: 13px;" size="small" to="/post" color="warning"><v-icon>mdi-home</v-icon>posts</v-btn>
+        <v-btn class="hidden-xs" style="font-size: 13px;" size="small" to="/about"><v-icon>mdi-help</v-icon>About</v-btn>
+        <v-btn class="hidden-xs"  style="font-size: 13px;" size="small" to="/quraan"><v-icon>mdi-book</v-icon>Quraan</v-btn>
         <v-spacer></v-spacer>
         <v-chip> {{ time }} </v-chip>
         <v-spacer></v-spacer>
 
-        <div style="align-items: center;display: flex;justify-content: space-between;width: 20%;">
+        <div style="align-items: center;display: flex;justify-content: space-between;width: 22%;">
           <v-badge class="mr-6" style="cursor: pointer;" :content="notify.length" value="8" color="red" overlap>
             <v-icon large>
               mdi-bell
@@ -52,7 +52,7 @@
           </v-badge>
           <v-switch style="translate: 0 10px;" class="mr-2 hidden-xs" @click="toggleTheme"
             :append-icon='icon == true ? "mdi-weather-night" : "mdi-white-balance-sunny"'></v-switch>
-          <div style="width: 60%;" class="mr-4 hidden-sm">
+          <div style="width: 40%;" class="mr-4 hidden-sm">
             <v-select style="translate: 0 10px;" :item-title="title" item-value="value" v-model="lan" :items="item">
             </v-select>
           </div>
@@ -62,7 +62,7 @@
       <v-toolbar class="hidden-sm-and-up" style="width:99%">
         <v-btn class="hidden-sm-and-up" to="/about"><v-icon>mdi-help</v-icon></v-btn>
         <v-spacer></v-spacer>
-        <v-btn class="hidden-sm-and-up" to="/post"><v-icon>mdi-home</v-icon></v-btn>
+        <v-btn class="hidden-sm-and-up" to="/post" color="warning"><v-icon>mdi-home</v-icon></v-btn>
         <v-spacer></v-spacer>
         <v-btn class="hidden-sm-and-up" to="/quraan"><v-icon>mdi-book</v-icon></v-btn>
         <v-spacer></v-spacer>
@@ -298,7 +298,7 @@ export default {
     //   },
     showNavbar() {
       // إخفاء الـ Navbar في صفحات معينة
-      return this.$route.name !== 'Auth' && this.$route.name !== 'quraan' && this.$route.name !== 'about';
+      return this.$route.name !== 'Auth';
     },
 
   },

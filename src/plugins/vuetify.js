@@ -10,7 +10,7 @@ const myCustomLightTheme = {
   dark: false,
   colors: {
     background: '#fff',
-    surface: '#FFDF99',
+    surface: '#CCC ',
     'surface-bright': '#FFFFFF',
     'surface-light': '#EEEEEE',
     'surface-variant': '#424242',
@@ -23,6 +23,7 @@ const myCustomLightTheme = {
     info: '#2196F3',
     success: '#4CAF50',
     warning: '#FB8C00',
+    myCustomColor1: '#FFE0B2',
   },
   variables: {
     'border-color': '#000000',
@@ -43,8 +44,7 @@ const myCustomLightTheme = {
     'theme-on-code': '#000000',
   }
 }
-
-
+ 
 
 export default createVuetify({
   components: {
@@ -53,7 +53,12 @@ export default createVuetify({
   theme: {
     defaultTheme: 'dark',
     themes:{
-      myCustomLightTheme
+      myCustomLightTheme,
+      dark: {
+        colors:{
+        // هنا نضيف اللون المخصص للوضع الداكن فقط
+        myCustomColor1: '#FFB74D', // لون برتقالي متوافق مع الداكن
+      }},
     }
   }
 })

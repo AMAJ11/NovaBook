@@ -1,29 +1,27 @@
 <template>
-   <v-app class="pt-3">
-
-      <v-row class="hidden-md-and-up">
-
-         <v-col cols="12" class="bg-primary" style="display: flex;justify-content: space-between;">
-
-            <v-chip class="pa-5">الفجر <br> {{ this.fajr }}</v-chip>
-            <!-- <v-chip class="pa-5">الفجر <br> {{ this.fajr }}</v-chip>
-                  <v-chip class="pa-5">الفجر <br> {{ this.fajr }}</v-chip>
-                  <v-chip class="pa-5">الفجر <br> {{ this.fajr }}</v-chip>
-                  <v-chip class="pa-5">الفجر <br> {{ this.fajr }}</v-chip> -->
-            <v-chip class="pa-5">الظهر <br>{{ this.zhr }}</v-chip>
-            <v-chip class="pa-5">العصر <br>{{ this.asr }}</v-chip>
-            <v-chip class="pa-5">المغرب <br>{{ this.mughrib }}</v-chip>
-            <v-chip class="pa-5">العشاء <br>{{ this.isha }}</v-chip>
-
-
-         </v-col>
-      </v-row>
+           <v-progress-linear
+        class="mt-16"
+      color="primary"
+      :height="9"
+      v-if="loadingPage"
+      indeterminate
+    ></v-progress-linear>
+   <v-app class="pt-3" v-if="!loadingPage">
 
       <v-row>
 
-         <v-col cols="12" class="bg-primary hidden-sm-and-down mt-8"
-            style="flex-wrap: wrap;display: flex;justify-content: space-between;">
+         <v-col cols="12" class="bg-myCustomColor1 hidden-sm-and-up" style="display: flex;justify-content: space-between;">
 
+            <v-chip  style="font-size: 12px;" class="pa-4">الفجر <br> {{ this.fajr }}</v-chip>
+            <v-chip  style="font-size: 12px;" class="pa-4">الظهر <br>{{ this.zhr }}</v-chip>
+            <v-chip  style="font-size: 12px;" class="pa-4">العصر <br>{{ this.asr }}</v-chip>
+            <v-chip  style="font-size: 12px;" class="pa-4">المغرب <br>{{ this.mughrib }}</v-chip>
+            <v-chip  style="font-size: 12px;" class="pa-4">العشاء <br>{{ this.isha }}</v-chip>
+
+
+         </v-col>
+         <v-col  cols="12" class="hidden-xs mt-md-16 bg-myCustomColor1"
+            style="flex-wrap: wrap;display: flex;justify-content: space-between ;">
             <v-chip>الفجر {{ this.fajr }}</v-chip>
             <v-chip>الظهر {{ this.zhr }}</v-chip>
             <v-chip>العصر {{ this.asr }}</v-chip>
@@ -33,12 +31,17 @@
 
          </v-col>
       </v-row>
-      <v-row class="mt-5" style="max-width:100%">
 
-         <v-col cols="12" md="8">
+      <v-row class="mt-5" style="max-width:100%">
+         <v-col cols="12" class="hidden-md-and-up  pl-2">
+            <div class="w-100 w-sm-50 mx-auto">
+            <SearchComponent />
+         </div>
+         </v-col>
+         <v-col cols="12" sm="10" md="8">
             <v-row class="pa-2 pt-4 px-lg-16 px-md-16 px-sm-8 px-3  mb-6" style="">
                <v-col cols="12" v-for="i in this.posts">
-                  <v-card elevation="0" variant="solo" class="pa-1 pa-sm-5 " style="width: 100% !important;">
+                  <v-card elevation="0" variant="solo" class="pa-1 pa-sm-5 w-sm-75 " style="width: 100% !important;">
                      <div style="display:flex;justify-content: space-between;">
 
                         <v-btn variant="text" :to="getUrl(i.user.id)" color="primary">
@@ -57,9 +60,7 @@
                      <v-card-text class="text-button">
                         {{ i.description }}
                      </v-card-text>
-                     <v-chip class="mb-5" color="green" variant="flat">
-                        {{ i.category }}
-                     </v-chip>
+                    
                      <v-divider></v-divider>
                      <v-card-actions calss="" style="height:15px;display:flex;justify-content: space-between;">
 
@@ -91,18 +92,20 @@
                </v-col>
             </v-row></v-col>
          <v-spacer></v-spacer>
-         <v-col cols="10" md="3">
+         <v-col cols="12" md="3">
             <v-row class="pt-10">
-               <v-col cols="12">
+               <!-- <v-col cols="12" class="hidden-sm-and-down">
                   <v-text-field append-icon="mdi-magnify"></v-text-field>
-               </v-col>
-               <v-col cols="12">
+               </v-col> -->
+               <SearchComponent class="hidden-sm-and-down"/>
+               <v-col cols="12"
+                  style="display: flex;justify-content: center;flex-direction: column;align-items: center;">
                   <div style="display: flex;justify-content: space-between;align-items: center;">
-                    
+
                      <h1 style="opacity: 0.4;" v-if="this.lan == 0">Your Friends</h1>
                      <h1 style="direction: rtl;opacity: 0.4;" v-if="this.lan == 1">أصدقاؤك</h1>
                   </div>
-                  <v-card class="pa-6" style="height: 75vh;width:100%;overflow: scroll;">
+                  <v-card class="pa-6" style="height: 75vh;width:90%;overflow: scroll;">
                      <span class="mb-3" v-for="i in allUsers"
                         style="display: flex;align-items: center;cursor: pointer;">
                         <v-badge size="x-small" class="mr-3" v-if="i.isonline && i.image" style="" color="green">
@@ -137,7 +140,7 @@
                      <span style="display: flex;align-items: center;"><v-avatar> <v-img :src="i.profilephoto"
                               width="150px"></v-img></v-avatar>
                         <v-btn :to="getUrl(i.user)" append-icon="mdi-account" variant="text" size="small"> {{ i.username
-                           }} </v-btn>
+                        }} </v-btn>
                      </span>
                      <p class="mt-1"> {{ i.text }} </p>
                      <v-divider thickness="2"></v-divider>
@@ -150,7 +153,7 @@
             <v-text-field style="border-radius: 20px;" class="mr-3" v-model="CommentText"
                :label="this.comments.length == 0 ? 'Be First one comment' : 'Comment with' + ' ' + username.toUpperCase() + ' ' + 'name'"
                variant="solo"></v-text-field>
-            <v-btn style="translate: 0 10px" color="warning" variant="flat" @click="CommentPost()">Comment</v-btn>
+            <v-btn style="translate: 0 10px" color="warning" variant="flat" @click="CommentPost()" :loading="CommentLoad">Comment</v-btn>
          </div>
       </V-dialog>
 
@@ -183,12 +186,18 @@
 </template>
 
 <script>
+import SearchComponent from '@/components/SearchComponent.vue';
 import { onActivated } from 'vue';
 import axios from 'axios';
 export default {
    name: "PostView",
+   components: {
+    SearchComponent
+  },
    data: function () {
       return {
+         CommentLoad:null,
+         loadingPage:true,
          notify: false,
          CommentText: "",
          postid: "",
@@ -216,6 +225,18 @@ export default {
       }
    },
    methods: {
+      saveuser: async function () {
+            try {
+                let id = localStorage.getItem("id")
+                let userres = await axios.get(`${this.apiurl}/users/profile/${id}`)
+                localStorage.setItem("user", JSON.stringify(userres.data.user))
+                localStorage.setItem("photourl", userres.data.user.profilephoto.url)
+
+            } catch (error) {
+                console.log(error);
+
+            }
+        },
       getUrl: function (id) {
          if (id != localStorage.getItem("id")) {
             return `/Person-Profile/${id}`
@@ -225,6 +246,7 @@ export default {
       CommentPost: async function () {
          if (this.CommentText != "") {
             let token = localStorage.getItem("token")
+            this.CommentLoad =true
             try {
                let response = await axios.post(`${this.apiurl}/comments`,
                   {
@@ -267,7 +289,7 @@ export default {
                this.comment = false
             }
          }
-
+         this.CommentLoad =false
       },
       SocketConnect: function () {
          //    socket.on('connect', () => {
@@ -327,15 +349,15 @@ export default {
                this.following.push(this.followers[i])
             }
          }
-            for (let i = 0; i < this.following.length; i++) {
-               let response = await axios.get(`${this.apiurl}/users/profile/${this.following[i]}`)
-               this.freinds.push({ Name: response.data.user.username, isonline: false, id: this.following[i], image: response.data.user.profilephoto.url })
+         for (let i = 0; i < this.following.length; i++) {
+            let response = await axios.get(`${this.apiurl}/users/profile/${this.following[i]}`)
+            this.freinds.push({ Name: response.data.user.username, isonline: false, id: this.following[i], image: response.data.user.profilephoto.url })
 
 
-            }
+         }
 
-      
-         
+
+
          console.log("khara", this.following);
          console.log("freind", this.freinds);
 
@@ -404,6 +426,8 @@ export default {
       }
    },
    created: async function () {
+      this.saveuser()
+      localStorage.setItem("islogin", "AMAJHELLO0937379312.omarDH")
       this.getFollower();
       setInterval(() => {
          this.notify = true
@@ -463,38 +487,38 @@ export default {
       this.likedpost = JSON.parse(localStorage.getItem("user")).likeposts
       console.log(this.likedpost);
       this.username = JSON.parse(localStorage.getItem("user")).username
-
+this.loadingPage=false
 
 
    },
    computed: {
-      allUsers() {
-      const merged = [];
-      const seenIds = new Set();
+      allUsers(){
+         const merged = [];
+         const seenIds = new Set();
 
-      // أولاً: ضف الأصدقاء مع تعديل isonline حسب المتصلين
-      for (const friend of this.freinds) {
-        const onlineMatch = this.onlineUsers.find((u) => u.id === friend.id);
+         // أولاً: ضف الأصدقاء مع تعديل isonline حسب المتصلين
+         for (const friend of this.freinds) {
+            const onlineMatch = this.onlineUsers.find((u) => u.id === friend.id);
 
-        const user = {
-          ...friend,
-          isonline: !!onlineMatch,
-        };
+            const user = {
+               ...friend,
+               isonline: !!onlineMatch,
+            };
 
-        merged.push(user);
-        seenIds.add(friend.id);
-      }
+            merged.push(user);
+            seenIds.add(friend.id);
+         }
 
-      // ثانياً: أضف المتصلين غير الموجودين في friends
-      for (const online of this.onlineUsers) {
-        if (!seenIds.has(online.id)) {
-          merged.push({ ...online, isonline: true });
-          seenIds.add(online.id);
-        }
-      }
+         // ثانياً: أضف المتصلين غير الموجودين في friends
+         for (const online of this.onlineUsers) {
+            if (!seenIds.has(online.id)) {
+               merged.push({ ...online, isonline: true });
+               seenIds.add(online.id);
+            }
+         }
 
-      return merged;
-    },
+         return merged;
+      },
       onlineUsers() {
          return this.$store.getters.onlineUsers;
       }

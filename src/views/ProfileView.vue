@@ -1,8 +1,20 @@
 <template>
-    <div class="home">
+        <v-progress-linear
+        class="mt-16"
+      color="primary"
+      :height="9"
+      v-if="loadingPage"
+      indeterminate
+    ></v-progress-linear>
+<div class="home" v-if="!loadingPage">
+
         <h1 class="ml-8 text-h2" v-if="this.lan == 0">My Profile</h1>
         <h1 class="mr-8 text-h2" v-if="this.lan == 1" style="direction: rtl;">ملفي الشخصي</h1>
         <v-row v-if="this.lan == 0" class="pa-2 pa-md-12">
+            <v-col cols="12" sm="12" md="6" class="hiddden-md-and-up  mt-4"> 
+                <v-avatar style="translate: 0 -18px;margin: auto;" size="300">
+                    <v-img :src="profilephoto"></v-img>
+                </v-avatar> </v-col>
             <v-col cols="12" sm="8" md="6" class="mt-2"><v-card class="pa-5">
                     <p class="text-button"> name : {{ user.username }} </p>
                     <p class="text-button"> from : {{ user.Country + '/' + user.City }} </p>
@@ -10,11 +22,16 @@
                     <p class="text-button"> Folowers : {{ followers }} </p>
                     <p class="text-button"> Following : {{ following }} </p>
                 </v-card></v-col>
-            <v-col cols="12" sm="4" md="6">
-                 <v-avatar style="translate: 0 -15px;" size="300">
+
+           <v-col cols="12" sm="12" md="6" class="hidden-sm-and-down"> 
+                <v-avatar style="translate: 0 -18px;margin: auto;" class="" size="300">
                     <v-img :src="profilephoto"></v-img>
                 </v-avatar> </v-col></v-row>
         <v-row class="pa-2 pa-md-12" style="direction: rtl;" v-if="this.lan == 1" >
+            <v-col cols="12" sm="12" md="6" class="hiddden-md-and-up  mt-4"> 
+                <v-avatar style="translate: 0 -18px;margin: auto;" size="300">
+                    <v-img :src="profilephoto"></v-img>
+                </v-avatar> </v-col>
             <v-col cols="12" sm="8" md="6" ><v-card class="pa-5">
                     <p class="text-button"> الاسم : {{ user.username }} </p>
                     <p class="text-button"> من : {{ user.Country + '/' + user.City }} </p>
@@ -22,8 +39,8 @@
                     <p class="text-button"> يتابعني : {{ followers }} </p>
                     <p class="text-button"> اتابع : {{ following }} </p>
                 </v-card></v-col>
-            <v-col cols="12" sm="4" md="6"> 
-                <v-avatar style="translate: 0 -18px;" size="300">
+            <v-col cols="12" sm="12" md="6" class="hidden-sm-and-down"> 
+                <v-avatar style="translate: 0 -18px;margin: auto;" class="" size="300">
                     <v-img :src="profilephoto"></v-img>
                 </v-avatar> </v-col>
 
@@ -47,11 +64,11 @@
         <p class="text-h4 mt-10 mb-1" v-if="this.lan == 0"> My posts </p>
         <p class="text-h4 mt-10 mr-4" v-if="this.lan == 1" style="direction: rtl;"> منشوراتي </p>
 
-        <v-row class="pa-7 mt-3">
+        <v-row class="pa-1 pa-md-6 mt-3">
 
 
-            <v-col cols="12" md="4" v-for="i in this.posts">
-                <v-card elevation="0" variant="solo" class="pa-2 pa-sm-5 " style="width: 100% !important;">
+            <v-col cols="12" sm="8" md="6" v-for="i in this.posts">
+                <v-card elevation="0" variant="solo" class="pa-2" style="width: 100% !important;">
                     <div style="display:flex;justify-content: space-between">
                         <v-card-title>
 
@@ -68,11 +85,11 @@
                             <v-menu activator="parent">
                                 <v-list>
                                     <v-list-item>
-                                        <v-list-item-title> <v-btn color="warning">Edit post</v-btn>
+                                        <v-list-item-title> <v-btn @click="edit(i.id)" color="warning">Edit post</v-btn>
                                         </v-list-item-title>
                                     </v-list-item>
                                     <v-list-item>
-                                        <v-list-item-title> <v-btn color="red" @click="this.delete(i.id)">Delete
+                                        <v-list-item-title> <v-btn @click="deleteUserPost(i.id)" color="red" >Delete
                                                 post</v-btn> </v-list-item-title>
                                     </v-list-item>
                                 </v-list>
@@ -87,9 +104,7 @@
                     <v-card-text class="text-button">
                         {{ i.description }}
                     </v-card-text>
-                    <v-chip class="mb-5" color="green" variant="flat">
-                        {{ i.category }}
-                    </v-chip>
+                  
                     <v-divider></v-divider>
                     <v-card-actions calss="" style="height:15px;display:flex;justify-content: space-between;">
                         <v-btn size="large" @click="this.comment = true" append-icon="mdi-arrow-right-bold-circle">
@@ -126,14 +141,14 @@
 
         </v-row>
 
-        <v-dialog class="pa-16" v-model="CreatePost" style="width:60%;min-width: 300px;">
+        <v-dialog class="pa-16 w-100 w-sm-50 h-75" v-model="CreatePost" style="width:60%;min-width: 300px;">
             <v-icon @click="CreatePost = false" variant="text" style="position: fixed; top:0;right:15px;z-index:12;"
                 class="cls" color="red">mdi-close</v-icon>
             <v-card style="border-radius: 30px;" class="pa-4">
                 <v-form class="mt-4" ref="form1" @submit.prevent="post">
                     <p class="text-h4"> New Post</p>
                     <v-divider></v-divider>
-                    <v-img v-if="this.image != null" width="100%" height="300px" :src="this.imageurl"></v-img>
+                    <v-img v-if="Fill" width="100%" height="300px" :src="this.imageurl"></v-img>
                     <v-text-field :rules="usernamerule" v-model="title" label="title"> </v-text-field>
                     <v-textarea :rules="usernamerule" class="mt-4" label="post" prepend-icon="mdi-post-outline"
                         v-model="postText">
@@ -284,7 +299,7 @@
 
 
         </v-row>
-        <v-dialog style="width:50%" v-model="this.dia">
+        <v-dialog style="width:50%"  class="w-sm-75" v-model="this.dia">
             <v-card class="pa-10 pb-1">
                 <h2 class="mb-10"> loading </h2>
                 <v-btn color="red" @click="this.dia = false; this.$router.push('/post');"
@@ -297,25 +312,53 @@
         </v-dialog>
 
 
-        <v-dialog style="width:50%" v-model="diaDelete">
+        <v-dialog style="width:50%" class="w-75 w-sm-50" v-model="diaDelete">
             <v-card class="pa-10 pb-1">
 
                 <h2 class="mb-10"> Are You sure To delete this post </h2>
                 <v-btn color="red" @click="DletePost" style="width: 40%;margin: auto;" variant="outlined"
                     :loading="deleteLoad" class="mb-3">DELETE</v-btn>
-                <v-btn color="green" @click="this.diaDelete = false;" style="width: 40%;margin: auto;">close</v-btn>
+                <v-btn color="green" @click="diaDelete = false;" style="width: 40%;margin: auto;">close</v-btn>
             </v-card>
 
         </v-dialog>
 
 
-        <v-dialog style="width:50%" v-model="this.err">
+        <v-dialog style="width:50%" class="w-sm-75" v-model="this.err">
             <v-card class="pa-10 pb-1">
                 <h2 class="mb-10"> Type of file is not supported </h2>
                 <v-btn color="red" @click="this.err = false;">close</v-btn>
             </v-card>
 
         </v-dialog>
+
+        <v-dialog class="pa-16 w-100 w-sm-75 h-75" v-model="Editdia" style="width:60%;min-width: 300px;">
+            <v-icon @click="Editdia = false" variant="text" style="position: fixed; top:0;right:15px;z-index:12;"
+                class="cls" color="red">mdi-close</v-icon>
+            <v-card style="border-radius: 30px;" class="pa-4">
+                <v-form class="mt-4" ref="form2"  @submit.prevent="EditPost">
+                    <p class="text-h4"> New Post</p>
+                    <v-divider></v-divider>
+                    <v-img v-if="Fill" width="100%" height="300px" :src="this.imageurl"></v-img>
+                    <v-text-field :rules="usernamerule" v-model="title" label="title"> </v-text-field>
+                    <v-textarea :rules="usernamerule" class="mt-4" label="post" prepend-icon="mdi-post-outline"
+                        v-model="postText">
+
+                    </v-textarea>
+                    <v-file-input style="border-radius: 12px !important;" class="mt-10 px-3 pt-1"
+                        v-model="image" @change="onFileSelected" label="Post image"  accept="image/*"
+                        append-icon="mdi-camera"></v-file-input>
+                  
+                    <div style="display: flex;justify-content: center;"> <v-btn class="mt-4  mb-16" type="submit"
+                            @click="" color="green" :loading="editload"> Edit </v-btn></div>
+                </v-form>
+            </v-card>
+        </v-dialog>
+
+
+
+
+
     </div>
 </template>
 
@@ -324,16 +367,15 @@ import axios from 'axios';
 
 export default {
     created: async function () {
-        let response = await axios.get(`${this.apiurl}/categories`)
-        console.log(response.data);
-        this.categories = response.data.categories
         let MyPostRes = await axios.get(`${this.apiurl}/posts`)
         console.log(MyPostRes.data);
         this.posts = MyPostRes.data.posts.filter(e => {
             return e.user.id == localStorage.getItem("id")
         })
+        this.loadingPage= true
         let resUser = await axios.get(`${this.apiurl}/users/profile/${localStorage.getItem("id")}`)
         this.user = resUser.data.user
+        this.loadingPage = false
         console.log(this.user);
         this.followers = this.user.followers.length
         this.following = this.user.following.length
@@ -342,13 +384,18 @@ export default {
     },
     data() {
         return {
+            Fill:false,
+            editPostId:"",
+            loadingPage:true,
             profilephoto: "",
             following: 0,
             followers: 0,
             user: {},
+            Editdia:false,
             CreatePost: false,
             idDelete: "",
             posts: {},
+            editload:false,
             lan: localStorage.getItem("lan"),
             err: false,
             image2: null,
@@ -378,15 +425,84 @@ export default {
         }
     },
     methods: {
+        EditPost: async function(){
+            this.$refs.form2.validate()
+                .then(async valid => {
+                    if (valid.valid == true) {
+            let token  = localStorage.getItem("token")
+            this.editload = true
+            try {
+                let response = await axios.patch(`${this.apiurl}/posts/${this.editPostId}`,
+                {
+                title: this.title,
+                description: this.postText,
+                },
+                {
+                  headers: {
+                     'Authorization': `Bearer ${token}`,
+                     'Content-Type': 'application/json'
+                  }
+               }
+               
+            )
+            if(this.image !=null){
+                try {
+                    let response2 = await axios.patch(`${this.apiurl}/posts/upload-image/${this.editPostId}`,
+                {
+                    image: this.image
+                },
+                {
+                  headers: {
+                     'Authorization': `Bearer ${token}`,
+                     'Content-Type': 'multipart/form-data'
+                  }
+               }
+               
+            )
+console.log(response2);
+
+                } catch (error) {
+                    console.log(error);
+                    
+                }
+              
+            }
+            console.log(response);
+            window.location.reload()
+            } catch (error) {
+                console.log();
+                
+            }
+           this.editload = false
+           this.Editdia = false
+
+        }})
+        },
+        edit: async function (id) {
+            this.editPostId = id
+            this.Editdia = true
+            console.log(id + "hghgh");
+            let response = await axios.get(`${this.apiurl}/posts/${id}`)
+            console.log("hhhhhh",response)
+            const post = response.data.post
+            console.log("poooost",post);
+            this.postText= post.description
+            this.title = post.title
+            this.imageurl = post.image.url
+            this.Editdia = true
+            this.image="AMMARHELLO"
+            this.Fill=true
+
+        },
         logout: function () {
             localStorage.removeItem("token");
             localStorage.removeItem("user");
             localStorage.removeItem("id");
+            localStorage.removeItem("islogin");
             window.location.reload();
         },
-        delete: function (id) {
-            console.log(id + "hghgh");
-
+        deleteUserPost: function (id) {
+            console.log("hghgh");
             this.idDelete = id;
             this.diaDelete = true
 
@@ -484,7 +600,7 @@ export default {
                     this.imageurl = objectURL;
                     console.log(this.imageurl)
                     this.t = true
-
+                    this.Fill=true
                 }
             }
         }, onFileSelected2: function () {
