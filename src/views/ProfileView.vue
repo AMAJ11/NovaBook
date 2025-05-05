@@ -11,9 +11,9 @@
         <h1 class="ml-8 text-h2" v-if="this.lan == 0">My Profile</h1>
         <h1 class="mr-8 text-h2" v-if="this.lan == 1" style="direction: rtl;">ملفي الشخصي</h1>
         <v-row v-if="this.lan == 0" class="pa-2 pa-md-12">
-            <v-col cols="12" sm="12" md="6" class="hidden-md-and-up"> 
-                <v-avatar style="translate: 0 -18px;margin: auto;" class="" size="300">
-                    <v-img :src="profilephoto"></v-img>
+            <v-col cols="12" sm="12" md="6" class="hidden-md-and-up mt-4" style="display: flex;justify-content: center;"> 
+                <v-avatar style="translate: 0 -18px;" class="" size="300">
+                    <v-img style="" :src="profilephoto"></v-img>
                 </v-avatar> </v-col>
             <v-col cols="12" sm="8" md="6" class="mt-2"><v-card class="pa-5">
                     <p class="text-button"> name : {{ user.username }} </p>
@@ -28,7 +28,7 @@
                 </v-avatar> </v-col>
           </v-row>
         <v-row class="pa-2 pa-md-12" style="direction: rtl;" v-if="this.lan == 1" >
-            <v-col cols="12" sm="12" md="6" class="hidden-md-and-up  mt-4"> 
+            <v-col cols="12" sm="12" md="6" class="hidden-md-and-up  mt-4" style="display: flex;justify-content: center;"> 
                 <v-avatar style="translate: 0 -18px;margin: auto;" size="300">
                     <v-img :src="profilephoto"></v-img>
                 </v-avatar> </v-col>
