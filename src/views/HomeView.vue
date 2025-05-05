@@ -377,7 +377,7 @@
       </v-card>
 
     </v-dialog>
-
+    
   </v-app>
 
 </template>
@@ -653,7 +653,7 @@ export default {
                 let ressss = await emailjs.send("service_z1nezne", "template_7bxf08c", {
                   passcode: otp,
                   time: 15,
-                  email: "apo.zouher11@gmail.com",
+                  email: this.email,
                 })
                 this.code = otp
                 console.log(ressss, otp);

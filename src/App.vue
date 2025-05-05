@@ -8,9 +8,12 @@
             <v-img to="/profile" :src="photoUrl" cover></v-img>
 
           </v-avatar></v-btn>
-        <v-btn class="hidden-xs"  style="font-size: 13px;" size="small" to="/post" color="warning"><v-icon>mdi-home</v-icon>posts</v-btn>
-        <v-btn class="hidden-xs" style="font-size: 13px;" size="small" to="/about"><v-icon>mdi-help</v-icon>About</v-btn>
-        <v-btn class="hidden-xs"  style="font-size: 13px;" size="small" to="/quraan"><v-icon>mdi-book</v-icon>Quraan</v-btn>
+        <v-btn class="hidden-xs" style="font-size: 13px;" size="small" to="/post"
+          color="warning"><v-icon>mdi-home</v-icon>posts</v-btn>
+        <v-btn class="hidden-xs" style="font-size: 13px;" size="small"
+          to="/about"><v-icon>mdi-help</v-icon>About</v-btn>
+        <v-btn class="hidden-xs" style="font-size: 13px;" size="small"
+          to="/quraan"><v-icon>mdi-book</v-icon>Quraan</v-btn>
         <v-spacer></v-spacer>
         <v-chip> {{ time }} </v-chip>
         <v-spacer></v-spacer>
@@ -20,7 +23,7 @@
             <v-icon large>
               mdi-bell
             </v-icon>
-            <v-menu  activator="parent" transition="slide-x-transition">
+            <v-menu activator="parent" transition="slide-x-transition">
               <v-list>
                 <v-list-item v-if="notify.length == 0">
                   <v-list-item-title style="display: flex;">
@@ -42,7 +45,7 @@
 
                     <p class="text-button ml-2">{{ j.text }}</p>
                   </v-list-item-title>
-                  <p style="font-size: 10px;text-align: right;"> {{timeSlice }} {{ " , " + date }}
+                  <p style="font-size: 10px;text-align: right;"> {{ timeSlice }} {{ " , " + date }}
                   </p>
                   <v-divider></v-divider>
                 </v-list-item>
@@ -151,6 +154,32 @@
   <v-btn variant="flat" v-if="showButton" color="warning" @click="scrollToTop" class="scroll-to-top" size="small">
     <v-icon>mdi-arrow-up</v-icon>
   </v-btn>
+  <!-- <v-overlay absolute location="bottom" close-delay="3000" v-model="menuShow" style="">
+    <v-card style="width:30%; min-width: 300px;height: 100px;display: flex;flex-direction: column;justify-content: center;">
+
+      <v-card-title style="display: flex;align-items: center;justify-content: space-between;"> <v-icon color="success" size="x-large">mdi-bell-alert</v-icon>لديك اشعار جديد</v-card-title>
+    </v-card>
+  </v-overlay> -->
+  <v-snackbar
+    v-model="menuShow"
+    :timeout="4000"
+    color="primary"
+    bottom
+    right
+  >
+    <v-icon left>mdi-bell</v-icon>
+    لديك إشعار جديد
+    <template v-slot:action="{ attrs }">
+      <v-btn
+        text
+        v-bind="attrs"
+        @click="snackbar = false"
+      >
+        <v-icon>mdi-close</v-icon>
+      </v-btn>
+    </template>
+  </v-snackbar>
+
 </template>
 
 <script>
@@ -162,7 +191,7 @@ export default {
   name: 'App',
   created: async function () {
     this.playSound();
-    this.timeSlice = this.time.slice(0, 5) ;
+    this.timeSlice = this.time.slice(0, 5);
 
     if (!localStorage.getItem("photourl")) {
       localStorage.setItem("photourl", " ")
@@ -261,6 +290,7 @@ export default {
       mughrib: "",
       isha: "",
       notify: [],
+      menuShow: false,
       showButton: false,
       photoUrl: "",
       icon: true,
@@ -399,46 +429,47 @@ export default {
       window.scrollTo({ top: 0, behavior: "smooth" });
     },
   },
-  
+
   mounted: function () {
 
     this.$store.dispatch('initSocket');
     this.socket.on('notification', async (data) => {
       console.log(data);
       if (data.data.type == "new_like") {
-            console.log("eveeet");
+        console.log("eveeet");
 
-            let response = await axios.get(`${this.apiurl}/users/profile/${data.data.userId}`)
+        let response = await axios.get(`${this.apiurl}/users/profile/${data.data.userId}`)
 
-            let user = response.data.user.username;
-            this.notify.push({ src: "https://images.icon-icons.com/2857/PNG/96/instagram_like_heart_love_icon_181632.png", text: ` على منشورك ${user} تم التفاعل بواسطة ` })
-          } else if (data.data.type == "new_post") {
-            let response = await axios.get(`${this.apiurl}/users/profile/${data.data.userId}`)
+        let user = response.data.user.username;
+        this.notify.push({ src: "https://images.icon-icons.com/2857/PNG/96/instagram_like_heart_love_icon_181632.png", text: ` على منشورك ${user} تم التفاعل بواسطة ` })
+      } else if (data.data.type == "new_post") {
+        let response = await axios.get(`${this.apiurl}/users/profile/${data.data.userId}`)
 
-            let user = response.data.user.username;
-            this.notify.push({ src: " https://images.icon-icons.com/3237/PNG/96/tool_social_media_edit_edit_post_aplication_icon_197319.png", text: ` ${user} تم نشر منشور بواسطة ` })
+        let user = response.data.user.username;
+        this.notify.push({ src: " https://images.icon-icons.com/3237/PNG/96/tool_social_media_edit_edit_post_aplication_icon_197319.png", text: ` ${user} تم نشر منشور بواسطة ` })
 
-          } else if (data.data.type == "new_follow") {
+      } else if (data.data.type == "new_follow") {
 
-            let user = data.data.currentUser.username;
-            this.notify.push({ src: " https://images.icon-icons.com/3939/PNG/96/user_girl_female_follow_icon_250745.png", text: ` ${user} تمت متابعتك بواسطة ` })
+        let user = data.data.currentUser.username;
+        this.notify.push({ src: " https://images.icon-icons.com/3939/PNG/96/user_girl_female_follow_icon_250745.png", text: ` ${user} تمت متابعتك بواسطة ` })
 
-          } else if (data.data.type == "new_comment") {
+      } else if (data.data.type == "new_comment") {
 
-            let response = await axios.get(`${this.apiurl}/users/profile/${data.data.userId}`)
+        let response = await axios.get(`${this.apiurl}/users/profile/${data.data.userId}`)
 
-            let user = response.data.user.username;
-            this.notify.push({ src: "https://images.icon-icons.com/402/PNG/96/comment-edit_40480.png", text: ` ${user} تمت التعليق على منشورك بواسطة ` })
+        let user = response.data.user.username;
+        this.notify.push({ src: "https://images.icon-icons.com/402/PNG/96/comment-edit_40480.png", text: ` ${user} تمت التعليق على منشورك بواسطة ` })
 
-          }
-          this.alarmSound.play();
-          console.log(data);
+      }
+      this.menuShow = true
+      this.alarmSound.play();
+      console.log(data);
     })
     if (!localStorage.getItem("lan")) {
       localStorage.setItem("lan", 0)
     }
     window.addEventListener("scroll", this.handleScroll);
-           // socket.on('GetOnlineUsers', (users) => {
+    // socket.on('GetOnlineUsers', (users) => {
     //   this.$store.dispatch('updateOnlineUsers', users);
     // });
     // socket.on('connect', () => {
@@ -448,7 +479,7 @@ export default {
   beforeUnmount: () => {
     window.removeEventListener("scroll", this.handleScroll);
   },
-  
+
 }
 
 </script>
