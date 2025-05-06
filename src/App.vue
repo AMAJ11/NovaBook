@@ -266,7 +266,6 @@ export default {
         console.log(randomNumber);
         this.notify.push(this.SecNotify[randomNumber]);
         this.alarmSound.play();
-        this.menuShow = true
       }
     }, 600000);
   },

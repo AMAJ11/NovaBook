@@ -1,17 +1,12 @@
 <template>
-        <v-progress-linear
-        class="mt-16"
-      color="primary"
-      :height="9"
-      v-if="loadingPage"
-      indeterminate
-    ></v-progress-linear>
-<div class="home" v-if="!loadingPage">
+    <v-progress-linear class="mt-16" color="primary" :height="9" v-if="loadingPage" indeterminate></v-progress-linear>
+    <div class="home" v-if="!loadingPage">
 
         <h1 class="ml-8 text-h2" v-if="this.lan == 0">My Profile</h1>
         <h1 class="mr-8 text-h2" v-if="this.lan == 1" style="direction: rtl;">ملفي الشخصي</h1>
         <v-row v-if="this.lan == 0" class="pa-2 pa-md-12">
-            <v-col cols="12" sm="12" md="6" class="hidden-md-and-up mt-4" style="display: flex;justify-content: center;"> 
+            <v-col cols="12" sm="12" md="6" class="hidden-md-and-up mt-4"
+                style="display: flex;justify-content: center;">
                 <v-avatar style="translate: 0 -18px;" class="" size="300">
                     <v-img style="" :src="profilephoto"></v-img>
                 </v-avatar> </v-col>
@@ -19,27 +14,30 @@
                     <p class="text-button"> name : {{ user.username }} </p>
                     <p class="text-button"> from : {{ user.Country + '/' + user.City }} </p>
                     <p class="text-button"> birthday : {{ user.birthdate }} </p>
+                    <p class="text-button"> bio : {{ user.bio }} </p>
                     <p class="text-button"> Folowers : {{ followers }} </p>
                     <p class="text-button"> Following : {{ following }} </p>
                 </v-card></v-col>
-                <v-col cols="12" sm="12" md="6" class="hidden-sm-and-down  mt-4"> 
+            <v-col cols="12" sm="12" md="6" class="hidden-sm-and-down  mt-4">
                 <v-avatar style="translate: 0 -18px;margin: auto;" size="300">
                     <v-img :src="profilephoto"></v-img>
                 </v-avatar> </v-col>
-          </v-row>
-        <v-row class="pa-2 pa-md-12" style="direction: rtl;" v-if="this.lan == 1" >
-            <v-col cols="12" sm="12" md="6" class="hidden-md-and-up  mt-4" style="display: flex;justify-content: center;"> 
+        </v-row>
+        <v-row class="pa-2 pa-md-12" style="direction: rtl;" v-if="this.lan == 1">
+            <v-col cols="12" sm="12" md="6" class="hidden-md-and-up  mt-4"
+                style="display: flex;justify-content: center;">
                 <v-avatar style="translate: 0 -18px;margin: auto;" size="300">
                     <v-img :src="profilephoto"></v-img>
                 </v-avatar> </v-col>
-            <v-col cols="12" sm="8" md="6" ><v-card class="pa-5">
+            <v-col cols="12" sm="8" md="6"><v-card class="pa-5">
                     <p class="text-button"> الاسم : {{ user.username }} </p>
                     <p class="text-button"> من : {{ user.Country + '/' + user.City }} </p>
                     <p class="text-button"> ميلاد : {{ user.birthdate }} </p>
+                    <p class="text-button"> النبذة : {{ user.bio }} </p>
                     <p class="text-button"> يتابعني : {{ followers }} </p>
                     <p class="text-button"> اتابع : {{ following }} </p>
                 </v-card></v-col>
-            <v-col cols="12" sm="12" md="6" class="hidden-sm-and-down"> 
+            <v-col cols="12" sm="12" md="6" class="hidden-sm-and-down">
                 <v-avatar style="translate: 0 -18px;margin: auto;" class="" size="300">
                     <v-img :src="profilephoto"></v-img>
                 </v-avatar> </v-col>
@@ -72,7 +70,7 @@
                     <div style="display:flex;justify-content: space-between">
                         <v-card-title>
 
-                         
+
 
                         </v-card-title>
 
@@ -89,7 +87,7 @@
                                         </v-list-item-title>
                                     </v-list-item>
                                     <v-list-item>
-                                        <v-list-item-title> <v-btn @click="deleteUserPost(i.id)" color="red" >Delete
+                                        <v-list-item-title> <v-btn @click="deleteUserPost(i.id)" color="red">Delete
                                                 post</v-btn> </v-list-item-title>
                                     </v-list-item>
                                 </v-list>
@@ -104,7 +102,7 @@
                     <v-card-text class="text-button">
                         {{ i.description }}
                     </v-card-text>
-                  
+
                     <v-divider></v-divider>
                     <v-card-actions calss="" style="height:15px;display:flex;justify-content: space-between;">
                         <v-btn size="large" @click="this.comment = true" append-icon="mdi-arrow-right-bold-circle">
@@ -155,9 +153,9 @@
 
                     </v-textarea>
                     <v-file-input :rules="fileRules" style="border-radius: 12px !important;" class="mt-10 px-3 pt-1"
-                        v-model="image" @change="onFileSelected" label="Post image"  accept="image/*"
+                        v-model="image" @change="onFileSelected" label="Post image" accept="image/*"
                         append-icon="mdi-camera"></v-file-input>
-                  
+
                     <div style="display: flex;justify-content: center;"> <v-btn class="mt-4  mb-16" type="submit"
                             @click="" color="green"> post </v-btn></div>
                 </v-form>
@@ -175,14 +173,16 @@
                     <v-expansion-panel class="mb-3">
                         <v-expansion-panel-title collapse-icon="mdi-minus" expand-icon="mdi-plus">
                             Change Name of Account
-
-
                         </v-expansion-panel-title>
                         <v-expansion-panel-text>
-                            <VTextField label="name" prepend-icon="mdi-account"></VTextField>
-                            <v-btn>ok</v-btn>
+                            <VTextField v-model="nameChangeText" label="name" prepend-icon="mdi-account"></VTextField>
+                            <p class="text-red"> {{ errNameEnChange }} </p>
+                            <v-btn :loading="NameChangeLoad" @click="NameChange()">ok</v-btn>
                         </v-expansion-panel-text>
                     </v-expansion-panel>
+
+
+                  
 
                     <v-expansion-panel class="mb-3">
                         <v-expansion-panel-title collapse-icon="mdi-minus" expand-icon="mdi-plus">
@@ -191,30 +191,40 @@
 
                         </v-expansion-panel-title>
                         <v-expansion-panel-text>
-                            <VTextField label="Old password" prepend-icon="mdi-key"></VTextField>
-                            <VTextField label="New password" prepend-icon="mdi-key"></VTextField>
-                            <VTextField label="New password again" prepend-icon="mdi-key"></VTextField>
+                            <VTextField type="password" v-model="password1" label="New password" prepend-icon="mdi-key"></VTextField>
+                            <VTextField type="password" v-model="password2" label="New password again" prepend-icon="mdi-key"></VTextField>
 
-                            <v-btn>ok</v-btn>
+                            <v-btn @click="PasswordChange()" :loading="PasswordChangeLoad">ok</v-btn>
+                            <p class="text-red"> {{ PasswordChangeErrEn }} </p>
                         </v-expansion-panel-text>
                     </v-expansion-panel>
 
-                    <v-expansion-panel>
+                    <v-expansion-panel  class="mb-3">
                         <v-expansion-panel-title collapse-icon="mdi-minus" expand-icon="mdi-plus">
                             Change Profile image
                         </v-expansion-panel-title>
                         <v-expansion-panel-text>
                             <v-avatar color="grey" rounded="10" size="90">
-                                <v-img :src="this.image2" cover></v-img>
+                                <v-img :src="this.imageUrl2" cover></v-img>
                             </v-avatar>
                             <v-file-input style="" class="bg-orange  mt-10" v-model="this.image2"
                                 @change="onFileSelected2" label="profile image" type="file" accept="image/*"
                                 placeholder="Pick an avatar" append-icon="mdi-camera"></v-file-input>
-                            <v-btn class="mt-4">ok</v-btn>
+                                <p class="text-red">  {{ PhotoChangeEnErr }} </p>
+                            <v-btn class="mt-4" @click="PhotoChange()" :loading="PhotoChangeLoad">ok</v-btn>
 
                         </v-expansion-panel-text>
                     </v-expansion-panel>
-
+                    <v-expansion-panel>
+                        <v-expansion-panel-title collapse-icon="mdi-minus" expand-icon="mdi-plus">
+                            Change Bio of Account
+                        </v-expansion-panel-title>
+                        <v-expansion-panel-text>
+                            <v-textarea v-model="BioChangeText" label="Bio" prepend-icon="mdi-account"></v-textarea>
+                            <p class="text-red"> {{ BioChangeErrEn }} </p>
+                            <v-btn :loading="BioChangeload" @click="BioChange()">ok</v-btn>
+                        </v-expansion-panel-text>
+                    </v-expansion-panel>
 
                 </v-expansion-panels>
                 <v-btn class="mt-16" color="red" @click="logout">logout <v-icon>mdi-share</v-icon> </v-btn>
@@ -257,8 +267,9 @@
 
                         </v-expansion-panel-title>
                         <v-expansion-panel-text>
-                            <VTextField label="الاسم" prepend-icon="mdi-account"></VTextField>
-                            <v-btn>تغيير</v-btn>
+                            <VTextField v-model="nameChangeText" label="الاسم" prepend-icon="mdi-account"></VTextField>
+                            <p class="text-red"> {{ errNameChange }} </p>
+                            <v-btn @click="NameChange()" :loading="NameChangeLoad">تغيير</v-btn>
                         </v-expansion-panel-text>
                     </v-expansion-panel>
 
@@ -269,29 +280,38 @@
 
                         </v-expansion-panel-title>
                         <v-expansion-panel-text>
-                            <VTextField label="كلمة السر القديمة" prepend-icon="mdi-key"></VTextField>
-                            <VTextField label="كلمة السر الجديدة" prepend-icon="mdi-key"></VTextField>
-                            <VTextField label="كلمة السر الجديدة مرة اخرى" prepend-icon="mdi-key"></VTextField>
-
-                            <v-btn>تغيير</v-btn>
+                            <VTextField type="password" v-model="password1" label="كلمة السر الجديدة" prepend-icon="mdi-key"></VTextField>
+                            <VTextField type="password" v-model="password2" label="كلمة السر الجديدة مرة اخرى" prepend-icon="mdi-key"></VTextField>
+                            <v-btn @click="PasswordChange()" :loading="PasswordChangeLoad">تغيير</v-btn>
+                            <p class="text-red"> {{ PasswordChangeErr }} </p>
                         </v-expansion-panel-text>
                     </v-expansion-panel>
 
-                    <v-expansion-panel>
+                    <v-expansion-panel  class="mb-3">
                         <v-expansion-panel-title collapse-icon="mdi-minus" expand-icon="mdi-plus">
                             تغيير صورة الحساب
                         </v-expansion-panel-title>
                         <v-expansion-panel-text>
                             <v-avatar color="grey" rounded="10" size="90">
-                                <v-img :src="this.image2" cover></v-img>
+                                <v-img :src="imageUrl2" cover></v-img>
                             </v-avatar>
-                            <v-file-input style="" class="bg-orange  mt-10" v-model="this.image2"
+                            <v-file-input style="" class="bg-orange  mt-10" v-model="image2"
                                 @change="onFileSelected2" label="صورة الحساب" type="file" accept="image/*"
                                 placeholder="Pick an avatar" append-icon="mdi-camera"></v-file-input>
-                            <v-btn class="mt-4" @click="console.log(this.image2)">تغيير</v-btn>
+                              <p class="text-red">{{ PhotoChangeErr }}</p>  
+                            <v-btn class="mt-4" @click="PhotoChange" :loading="PhotoChangeLoad">تغيير</v-btn>
                         </v-expansion-panel-text>
                     </v-expansion-panel>
-
+                    <v-expansion-panel>
+                        <v-expansion-panel-title collapse-icon="mdi-minus" expand-icon="mdi-plus">
+                           تعديل النبذة الشخصية
+                        </v-expansion-panel-title>
+                        <v-expansion-panel-text>
+                            <v-textarea v-model="BioChangeText" label="النبذة" prepend-icon="mdi-account"></v-textarea>
+                            <p class="text-red"> {{ BioChangeErr }} </p>
+                            <v-btn :loading="BioChangeload" @click="BioChange()">ok</v-btn>
+                        </v-expansion-panel-text>
+                    </v-expansion-panel>
 
                 </v-expansion-panels>
                 <v-btn color="red" @click="logout" class="mt-4">تسجيل خروج <v-icon>mdi-share</v-icon> </v-btn>
@@ -299,7 +319,7 @@
 
 
         </v-row>
-        <v-dialog style="width:50%"  class="w-sm-75" v-model="this.dia">
+        <v-dialog style="width:50%" class="w-sm-75" v-model="this.dia">
             <v-card class="pa-10 pb-1">
                 <h2 class="mb-10"> loading </h2>
                 <v-btn color="red" @click="this.dia = false; this.$router.push('/post');"
@@ -336,7 +356,7 @@
             <v-icon @click="Editdia = false" variant="text" style="position: fixed; top:0;right:15px;z-index:12;"
                 class="cls" color="red">mdi-close</v-icon>
             <v-card style="border-radius: 30px;" class="pa-4">
-                <v-form class="mt-4" ref="form2"  @submit.prevent="EditPost">
+                <v-form class="mt-4" ref="form2" @submit.prevent="EditPost">
                     <p class="text-h4"> New Post</p>
                     <v-divider></v-divider>
                     <v-img v-if="Fill" width="100%" height="300px" :src="this.imageurl"></v-img>
@@ -345,10 +365,10 @@
                         v-model="postText">
 
                     </v-textarea>
-                    <v-file-input style="border-radius: 12px !important;" class="mt-10 px-3 pt-1"
-                        v-model="image" @change="onFileSelected" label="Post image"  accept="image/*"
+                    <v-file-input style="border-radius: 12px !important;" class="mt-10 px-3 pt-1" v-model="image"
+                        @change="onFileSelected" label="Post image" accept="image/*"
                         append-icon="mdi-camera"></v-file-input>
-                  
+
                     <div style="display: flex;justify-content: center;"> <v-btn class="mt-4  mb-16" type="submit"
                             @click="" color="green" :loading="editload"> Edit </v-btn></div>
                 </v-form>
@@ -372,7 +392,7 @@ export default {
         this.posts = MyPostRes.data.posts.filter(e => {
             return e.user.id == localStorage.getItem("id")
         })
-        this.loadingPage= true
+        this.loadingPage = true
         let resUser = await axios.get(`${this.apiurl}/users/profile/${localStorage.getItem("id")}`)
         this.user = resUser.data.user
         this.loadingPage = false
@@ -384,18 +404,34 @@ export default {
     },
     data() {
         return {
-            Fill:false,
-            editPostId:"",
-            loadingPage:true,
+            BioChangeload:false,
+            BioChangeErr:"",
+            BioChangeErrEn:"",
+            BioChangeText:"",
+            PasswordChangeErr:"",
+            PasswordChangeErrEn:"",
+            password1:"",
+            password2:"",
+            PasswordChangeLoad:false,
+            PhotoChangeEnErr:"",
+            PhotoChangeErr:"",
+            PhotoChangeLoad:false,
+            errNameEnChange:"",
+            errNameChange:"",
+            nameChangeText: "",
+            NameChangeLoad: false,
+            Fill: false,
+            editPostId: "",
+            loadingPage: true,
             profilephoto: "",
             following: 0,
             followers: 0,
             user: {},
-            Editdia:false,
+            Editdia: false,
             CreatePost: false,
             idDelete: "",
             posts: {},
-            editload:false,
+            editload: false,
             lan: localStorage.getItem("lan"),
             err: false,
             image2: null,
@@ -412,87 +448,218 @@ export default {
             errmessage: "",
             imageurl: "",
             diaDelete: false,
+            imageUrl2:"",
             usernamerule: [(userName) => {
                 if (userName) return true
                 return 'You must enter this Field.'
             }],
             fileRules: [() => {
-                if (this.image==null)  return 'You must enter this Field.'
-                else{return true}
-               
+                if (this.image == null) return 'You must enter this Field.'
+                else { return true }
+
             }],
-           
+
         }
     },
     methods: {
-        EditPost: async function(){
-            this.$refs.form2.validate()
-                .then(async valid => {
-                    if (valid.valid == true) {
-            let token  = localStorage.getItem("token")
-            this.editload = true
-            try {
-                let response = await axios.patch(`${this.apiurl}/posts/${this.editPostId}`,
-                {
-                title: this.title,
-                description: this.postText,
-                },
-                {
-                  headers: {
-                     'Authorization': `Bearer ${token}`,
-                     'Content-Type': 'application/json'
-                  }
-               }
-               
-            )
-            if(this.image !=null){
+        BioChange: async function(){
+            if (this.BioChangeText != "") {
+                this.BioChangeload = true;
                 try {
-                    let response2 = await axios.patch(`${this.apiurl}/posts/upload-image/${this.editPostId}`,
-                {
-                    image: this.image
-                },
-                {
-                  headers: {
-                     'Authorization': `Bearer ${token}`,
-                     'Content-Type': 'multipart/form-data'
-                  }
-               }
-               
-            )
-console.log(response2);
-
+                    let token = localStorage.getItem("token")
+                    let response = await axios.patch(`${this.apiurl}/users/profile/${localStorage.getItem("id")}`,
+                    {
+                        bio: this.BioChangeText,
+                    },
+                    {
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${token}`
+                        }
+                    })
+                   let save =  await this.saveuser();
+                    window.location.reload()
                 } catch (error) {
                     console.log(error);
                     
                 }
-              
+            }else{
+                this.BioChangeErr = 'املأ الحقل'
+                this.BioChangeErrEn="You must enter A Bio"
             }
-            console.log(response);
-            window.location.reload()
-            } catch (error) {
-                console.log();
-                
-            }
-           this.editload = false
-           this.Editdia = false
+        },
+        EditPost: async function () {
+            this.$refs.form2.validate()
+                .then(async valid => {
+                    if (valid.valid == true) {
+                        let token = localStorage.getItem("token")
+                        this.editload = true
+                        try {
+                            let response = await axios.patch(`${this.apiurl}/posts/${this.editPostId}`,
+                                {
+                                    title: this.title,
+                                    description: this.postText,
+                                },
+                                {
+                                    headers: {
+                                        'Authorization': `Bearer ${token}`,
+                                        'Content-Type': 'application/json'
+                                    }
+                                }
 
-        }})
+                            )
+                            if (this.image != null) {
+                                try {
+                                    let response2 = await axios.patch(`${this.apiurl}/posts/upload-image/${this.editPostId}`,
+                                        {
+                                            image: this.image
+                                        },
+                                        {
+                                            headers: {
+                                                'Authorization': `Bearer ${token}`,
+                                                'Content-Type': 'multipart/form-data'
+                                            }
+                                        }
+
+                                    )
+                                    console.log(response2);
+
+                                } catch (error) {
+                                    console.log(error);
+
+                                }
+
+                            }
+                            console.log(response);
+                            window.location.reload()
+                        } catch (error) {
+                            console.log();
+
+                        }
+                        this.editload = false
+                        this.Editdia = false
+
+                    }
+                })
         },
         edit: async function (id) {
             this.editPostId = id
             this.Editdia = true
             console.log(id + "hghgh");
             let response = await axios.get(`${this.apiurl}/posts/${id}`)
-            console.log("hhhhhh",response)
+            console.log("hhhhhh", response)
             const post = response.data.post
-            console.log("poooost",post);
-            this.postText= post.description
+            console.log("poooost", post);
+            this.postText = post.description
             this.title = post.title
             this.imageurl = post.image.url
             this.Editdia = true
-            this.image="AMMARHELLO"
-            this.Fill=true
+            this.image = "AMMARHELLO"
+            this.Fill = true
 
+        },
+        PasswordChange: async function(){
+             if(this.password1 !="" && this.password2 !=""){
+                     if(this.password1 == this.password2){
+                        this.PasswordChangeLoad=true
+                        try {
+
+                    let token = localStorage.getItem("token")
+                    let response = await axios.patch(`${this.apiurl}/users/profile/${localStorage.getItem("id")}`,
+                    {
+                        password: this.password1,
+                    },
+                    {
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${token}`
+                        }
+                    })
+                          this.PasswordChangeLoad =false
+                    window.location.reload()
+                } catch (error) {
+                    console.log(error);
+                    
+                }
+
+
+
+                     }else{
+                        this.PasswordChangeErrEn = "Passwords do not match"
+                        this.PasswordChangeErr= "كلمات السر غير متطابقة"
+                     }
+                  
+
+             }else{
+                this.PasswordChangeErrEn = "You Must enter the filed "
+                this.PasswordChangeErr= "يجب عليك ملئ الحقول"
+             }
+        },
+        PhotoChange: async function() {
+            if (this.image2 != null) {
+                
+                this.PhotoChangeLoad = true;
+                try {
+                    let token = localStorage.getItem("token")
+                    let response = await axios.post(`${this.apiurl}/users/profile/profile-photo-upload`,
+                    {
+                        image: this.image2,
+                    },
+                    {
+                        headers: {
+                            'Content-Type': 'multipart/form-data',
+                            'Authorization': `Bearer ${token}`
+                        }
+                    })
+                    let id = localStorage.getItem("id")
+                    let userres = await axios.get(`${this.apiurl}/users/profile/${id}`)
+                
+                localStorage.setItem("user", JSON.stringify(userres.data.user))
+                localStorage.setItem("photourl", userres.data.user.profilephoto.url)
+
+                    window.location.reload()
+                } catch (error) {
+                    console.log(error);
+                    
+                }
+                this.NameChangeLoad = false
+            }else{
+                this.PhotoChangeErr = 'اختر صورة'
+                this.PhotoChangeEnErr="You must choose a photo"
+            }
+            
+
+
+        },
+        NameChange: async function () {
+            if (this.nameChangeText != "") {
+                this.NameChangeLoad = true;
+                try {
+                    let token = localStorage.getItem("token")
+                    let response = await axios.patch(`${this.apiurl}/users/profile/${localStorage.getItem("id")}`,
+                    {
+                        username: this.nameChangeText,
+                    },
+                    {
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${token}`
+                        }
+                    })
+                    let save =  await this.saveuser();
+                    window.location.reload()
+                } catch (error) {
+                    console.log(error);
+                    
+                }
+                this.NameChangeLoad = false
+            }else{
+                this.errNameChange = 'اكتب الاسم'
+                this.errNameEnChange="You must enter A name"
+            }
+            
+
+            
         },
         logout: function () {
             localStorage.removeItem("token");
@@ -528,6 +695,20 @@ console.log(response2);
             }
 
 
+        },
+        saveuser: async function () {
+            try {
+                let id = localStorage.getItem("id")
+                let userres = await axios.get(`${this.apiurl}/users/profile/${id}`)
+                console.log(userres);
+                
+                localStorage.setItem("user", JSON.stringify(userres.data.user))
+                localStorage.setItem("photourl", userres.data.user.profilephoto.url)
+
+            } catch (error) {
+                console.log(error);
+
+            }
         },
         post: async function () {
             this.$refs.form1.validate()
@@ -600,7 +781,7 @@ console.log(response2);
                     this.imageurl = objectURL;
                     console.log(this.imageurl)
                     this.t = true
-                    this.Fill=true
+                    this.Fill = true
                 }
             }
         }, onFileSelected2: function () {
@@ -609,8 +790,8 @@ console.log(response2);
             if (this.image2) {
                 if (allowedTypes.includes(this.image2.type)) {
                     const objectURL = URL.createObjectURL(this.image2);
-                    this.image2 = objectURL;
-                } else { this.err = true; this.image2 = '' }
+                    this.imageUrl2 = objectURL;
+                } else { this.err = true; }
             }
         },
 

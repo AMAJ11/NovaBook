@@ -50,7 +50,7 @@
                 </v-col>
                 <v-col cols="12" md="9"><v-card class="px-3 py-1">
                         <p class="text-button text-primary"> Bio </p>
-                        <p> {{ `none` }} </p>
+                        <p> {{user.bio ? user.bio : "none"  }} </p>
                     </v-card>
                 </v-col>
                 <v-col cols="12" md="9">

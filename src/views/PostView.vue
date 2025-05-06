@@ -1,26 +1,21 @@
 <template>
-           <v-progress-linear
-        class="mt-16"
-      color="primary"
-      :height="9"
-      v-if="loadingPage"
-      indeterminate
-    ></v-progress-linear>
+   <v-progress-linear class="mt-16" color="primary" :height="9" v-if="loadingPage" indeterminate></v-progress-linear>
    <v-app class="pt-3" v-if="!loadingPage">
 
-      <v-row>
+      <v-row style="max-width: 100% !important;">
 
-         <v-col cols="12" class="bg-myCustomColor1 hidden-sm-and-up" style="display: flex;justify-content: space-between;">
+         <v-col cols="12" class="bg-myCustomColor1 hidden-sm-and-up"
+            style="display: flex;justify-content: space-between;">
 
-            <v-chip  style="font-size: 12px;" class="pa-4">الفجر <br> {{ this.fajr }}</v-chip>
-            <v-chip  style="font-size: 12px;" class="pa-4">الظهر <br>{{ this.zhr }}</v-chip>
-            <v-chip  style="font-size: 12px;" class="pa-4">العصر <br>{{ this.asr }}</v-chip>
-            <v-chip  style="font-size: 12px;" class="pa-4">المغرب <br>{{ this.mughrib }}</v-chip>
-            <v-chip  style="font-size: 12px;" class="pa-4">العشاء <br>{{ this.isha }}</v-chip>
+            <v-chip style="font-size: 12px;" class="pa-4">الفجر <br> {{ this.fajr }}</v-chip>
+            <v-chip style="font-size: 12px;" class="pa-4">الظهر <br>{{ this.zhr }}</v-chip>
+            <v-chip style="font-size: 12px;" class="pa-4">العصر <br>{{ this.asr }}</v-chip>
+            <v-chip style="font-size: 12px;" class="pa-4">المغرب <br>{{ this.mughrib }}</v-chip>
+            <v-chip style="font-size: 12px;" class="pa-4">العشاء <br>{{ this.isha }}</v-chip>
 
 
          </v-col>
-         <v-col  cols="12" class="hidden-xs mt-md-16 bg-myCustomColor1"
+         <v-col cols="12" class="hidden-xs mt-md-16 bg-myCustomColor1"
             style="flex-wrap: wrap;display: flex;justify-content: space-between ;">
             <v-chip>الفجر {{ this.fajr }}</v-chip>
             <v-chip>الظهر {{ this.zhr }}</v-chip>
@@ -28,16 +23,53 @@
             <v-chip>المغرب {{ this.mughrib }}</v-chip>
             <v-chip>العشاء {{ this.isha }}</v-chip>
 
-</v-col>
-        
+         </v-col>
+
       </v-row>
 
       <v-row class="mt-5" style="max-width:100%">
          <v-col cols="12" class="hidden-md-and-up  pl-2">
             <div class="w-100 w-sm-50 mx-auto">
-            <SearchComponent />
-         </div>
+               <SearchComponent />
+            </div>
+            <h3 style="direction: rtl;text-align: center;" v-if="lan==1">أصدقاؤك</h3>
+            <h3 style="text-align: center;" v-if="lan==0">Your Friends</h3>
+            <v-slide-group class="custom-slide-group">
+               <v-slide-group-item v-for="i in allUsers" :key="i.id">
+                  <v-card variant="text" height="140" width="110" @click="GoToProfile(i.id)"
+                  
+                     style=" overflow: hidden; cursor: pointer;">
+                     <div style="height: 100%; display: flex; flex-direction: column">
+                        <div style="position: relative;">
+                           <v-avatar size="80" style="margin: 0 auto; display: block">
+                              <v-img :src="i.image" v-if="i.image"></v-img>
+                           </v-avatar>
+
+                           <v-badge v-if="i.isonline && i.image" color="green" dot offset-x="-10" offset-y="10"
+                              style="position: absolute; bottom: 10px; right: 20px">
+                              <v-tooltip activator="parent">نشط الآن</v-tooltip>
+                           </v-badge>
+                        </div>
+
+   
+                        <v-card-text class="text-center pt-2 pb-0" style="height: 60px; overflow: hidden">
+                           <strong
+                              style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; line-height: 1.2;">
+                              {{ i.Name }}
+                           </strong>
+                        </v-card-text>
+                        
+                     </div>
+                     
+                  </v-card>
+               </v-slide-group-item>
+            </v-slide-group>
          </v-col>
+
+
+
+
+
          <v-col cols="12" sm="10" md="8">
             <v-row class="pa-2 pt-4 px-lg-16 px-md-16 px-sm-8 px-3  mb-6" style="">
                <v-col cols="12" v-for="i in this.posts">
@@ -60,7 +92,7 @@
                      <v-card-text class="text-button">
                         {{ i.description }}
                      </v-card-text>
-                    
+
                      <v-divider></v-divider>
                      <v-card-actions calss="" style="height:15px;display:flex;justify-content: space-between;">
 
@@ -92,12 +124,12 @@
                </v-col>
             </v-row></v-col>
          <v-spacer></v-spacer>
-         <v-col cols="12" md="3">
+         <v-col class="hidden-sm-and-down" cols="12" md="3">
             <v-row class="pt-10">
                <!-- <v-col cols="12" class="hidden-sm-and-down">
                   <v-text-field append-icon="mdi-magnify"></v-text-field>
                </v-col> -->
-               <SearchComponent class="hidden-sm-and-down"/>
+               <SearchComponent class="hidden-sm-and-down" />
                <v-col cols="12"
                   style="display: flex;justify-content: center;flex-direction: column;align-items: center;">
                   <div style="display: flex;justify-content: space-between;align-items: center;">
@@ -140,7 +172,7 @@
                      <span style="display: flex;align-items: center;"><v-avatar> <v-img :src="i.profilephoto"
                               width="150px"></v-img></v-avatar>
                         <v-btn :to="getUrl(i.user)" append-icon="mdi-account" variant="text" size="small"> {{ i.username
-                        }} </v-btn>
+                           }} </v-btn>
                      </span>
                      <p class="mt-1"> {{ i.text }} </p>
                      <v-divider thickness="2"></v-divider>
@@ -153,7 +185,8 @@
             <v-text-field style="border-radius: 20px;" class="mr-3" v-model="CommentText"
                :label="this.comments.length == 0 ? 'Be First one comment' : 'Comment with' + ' ' + username.toUpperCase() + ' ' + 'name'"
                variant="solo"></v-text-field>
-            <v-btn style="translate: 0 10px" color="warning" variant="flat" @click="CommentPost()" :loading="CommentLoad">Comment</v-btn>
+            <v-btn style="translate: 0 10px" color="warning" variant="flat" @click="CommentPost()"
+               :loading="CommentLoad">Comment</v-btn>
          </div>
       </V-dialog>
 
@@ -189,15 +222,16 @@
 import SearchComponent from '@/components/SearchComponent.vue';
 import { onActivated } from 'vue';
 import axios from 'axios';
+import { useGoTo } from 'vuetify/lib/framework.mjs';
 export default {
    name: "PostView",
    components: {
-    SearchComponent
-  },
+      SearchComponent
+   },
    data: function () {
       return {
-         CommentLoad:null,
-         loadingPage:true,
+         CommentLoad: null,
+         loadingPage: true,
          notify: false,
          CommentText: "",
          postid: "",
@@ -226,17 +260,17 @@ export default {
    },
    methods: {
       saveuser: async function () {
-            try {
-                let id = localStorage.getItem("id")
-                let userres = await axios.get(`${this.apiurl}/users/profile/${id}`)
-                localStorage.setItem("user", JSON.stringify(userres.data.user))
-                localStorage.setItem("photourl", userres.data.user.profilephoto.url)
+         try {
+            let id = localStorage.getItem("id")
+            let userres = await axios.get(`${this.apiurl}/users/profile/${id}`)
+            localStorage.setItem("user", JSON.stringify(userres.data.user))
+            localStorage.setItem("photourl", userres.data.user.profilephoto.url)
 
-            } catch (error) {
-                console.log(error);
+         } catch (error) {
+            console.log(error);
 
-            }
-        },
+         }
+      },
       getUrl: function (id) {
          if (id != localStorage.getItem("id")) {
             return `/Person-Profile/${id}`
@@ -246,7 +280,7 @@ export default {
       CommentPost: async function () {
          if (this.CommentText != "") {
             let token = localStorage.getItem("token")
-            this.CommentLoad =true
+            this.CommentLoad = true
             try {
                let response = await axios.post(`${this.apiurl}/comments`,
                   {
@@ -289,7 +323,7 @@ export default {
                this.comment = false
             }
          }
-         this.CommentLoad =false
+         this.CommentLoad = false
       },
       SocketConnect: function () {
          //    socket.on('connect', () => {
@@ -364,6 +398,9 @@ export default {
 
 
 
+      },
+      GoToProfile: function(id){
+         this.$router.push(`/Person-Profile/${id}`);
       },
       addLike: async function (id) {
          this.WillLike = true
@@ -487,12 +524,12 @@ export default {
       this.likedpost = JSON.parse(localStorage.getItem("user")).likeposts
       console.log(this.likedpost);
       this.username = JSON.parse(localStorage.getItem("user")).username
-this.loadingPage=false
+      this.loadingPage = false
 
 
    },
    computed: {
-      allUsers(){
+      allUsers() {
          const merged = [];
          const seenIds = new Set();
 
@@ -561,6 +598,22 @@ this.loadingPage=false
       min-height: 100vh;
       background-size: cover;
    }
+}
+.custom-slide-group {
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+.custom-slide-group .v-slide-group__content {
+  justify-content: center;
+  gap: 4px;
+}
+
+/* تعديلات للأجهزة الصغيرة */
+@media (max-width: 600px) {
+  .custom-slide-group .v-slide-group__content {
+    justify-content: flex-start;
+  }
 }
 </style>
 
