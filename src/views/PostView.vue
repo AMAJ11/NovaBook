@@ -72,7 +72,7 @@
 
          <v-col cols="12" sm="10" md="8">
             <v-row class="pa-2 pt-4 px-lg-16 px-md-16 px-sm-8 px-3  mb-6" style="">
-               <v-col cols="12" v-for="i in this.posts">
+               <v-col cols="12" v-for="i in posts">
                   <v-card elevation="0" variant="solo" class="pa-1 pa-sm-5 w-sm-75 " style="width: 100% !important;">
                      <div style="display:flex;justify-content: space-between;">
 
@@ -86,7 +86,7 @@
                      </div>
                      <p style="text-align: center;" class="text-button"> {{ i.title }} </p>
                      <div style="width: 100%;display: flex;justify-content: center;align-items: center;">
-                        <img class="w-100 w-md-75" :src="i.image.url"
+                        <img class="w-100 w-sm-75 w-md-75" :src="i.image.url"
                            style="margin:auto;height: 50vh;width: 80%;border-radius: 12px;">
                      </div>
                      <v-card-text class="text-button">
@@ -473,7 +473,6 @@ export default {
          }, 5000);
       }, 10000);
 
-      this.saveuser();
       try {
          let posts = await axios.get(`${this.apiurl}/posts`)
          console.log(posts.data.posts);
@@ -492,7 +491,7 @@ export default {
          const month = date.getMonth() + 1;
          const day = date.getDate();
          const lat = JSON.parse(localStorage.getItem("user")).lat;
-         const long = JSON.parse(localStorage.getItem("user")).lat;
+         const long = JSON.parse(localStorage.getItem("user")).long;
          console.log(lat, long);
 
 

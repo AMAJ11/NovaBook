@@ -160,21 +160,11 @@
       <v-card-title style="display: flex;align-items: center;justify-content: space-between;"> <v-icon color="success" size="x-large">mdi-bell-alert</v-icon>لديك اشعار جديد</v-card-title>
     </v-card>
   </v-overlay> -->
-  <v-snackbar
-    v-model="menuShow"
-    :timeout="4000"
-    color="primary"
-    bottom
-    right
-  >
+  <v-snackbar v-model="menuShow" :timeout="4000" color="primary" bottom right>
     <v-icon left>mdi-bell</v-icon>
     لديك إشعار جديد
     <template v-slot:action="{ attrs }">
-      <v-btn
-        text
-        v-bind="attrs"
-        @click="snackbar = false"
-      >
+      <v-btn text v-bind="attrs" @click="snackbar = false">
         <v-icon>mdi-close</v-icon>
       </v-btn>
     </template>
@@ -190,6 +180,8 @@ import { Howler } from 'howler';
 export default {
   name: 'App',
   created: async function () {
+
+   this.saveuser();
     this.playSound();
     this.timeSlice = this.time.slice(0, 5);
 
@@ -333,6 +325,18 @@ export default {
 
   },
   methods: {
+    saveuser: async function () {
+      try {
+        let id = localStorage.getItem("id")
+        let userres = await axios.get(`${this.apiurl}/users/profile/${id}`)
+        localStorage.setItem("user", JSON.stringify(userres.data.user))
+        localStorage.setItem("photourl", userres.data.user.profilephoto.url)
+
+      } catch (error) {
+        console.log(error);
+
+      }
+    },
     CheakTime: function () {
       if (localStorage.getItem("token")) {
         if (this.time == this.zhr + ":00") {

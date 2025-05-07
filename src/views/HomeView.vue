@@ -171,6 +171,7 @@
                     <div style="display: flex;width:50%;margin: auto;"><v-btn style="border-radius: 12px !important"
                         color="orange-darken-3" variant="flat" :loading=" loading" class="mt-2" text="Sign in"
                         type="submit" block></v-btn></div>
+                        <p class="text-red"> {{ errlogmessage }} </p>
                   </v-form>
                 </v-card>
               </v-window-item>
@@ -239,7 +240,7 @@
                 :rules=" passwordrulea" type=password></v-text-field>
               <v-btn color="warning" variant="outlined" :loading=" loading" class="mt-2" text="Sign in"
                 type="submit" block></v-btn>
-              <p class="text-red"> {{ errmessage }} </p>
+              <p class="text-red"> {{ errlogmessage }} </p>
             </v-form>
           </v-card>
         </v-col>
@@ -355,7 +356,7 @@
               <p class="text-success"> {{ sucmessage }} </p>
                     <v-text-field :disabled="!ok" class="mt-3" label="Activation code"
                       v-model=" verify"></v-text-field>
-                    <v-btn @click="submit" :disabled="!ok" text="verify"></v-btn>
+                    <v-btn @click="submit" :disabled="!ok" text="verify" :loading="verifyLoad"></v-btn>
             </v-form>
           </v-card>
 
@@ -413,6 +414,7 @@ export default {
   name: 'HomeView',
   data() {
     return {
+      verifyLoad:false,
       verify: "",
       apiurl: process.env.VUE_APP_API_URL,
       selectedCountry: null,
@@ -529,6 +531,18 @@ export default {
     }
   },
   methods: {
+    saveuser: async function () {
+      try {
+        let id = localStorage.getItem("id")
+        let userres = await axios.get(`${this.apiurl}/users/profile/${id}`)
+        localStorage.setItem("user", JSON.stringify(userres.data.user))
+        localStorage.setItem("photourl", userres.data.user.profilephoto.url)
+
+      } catch (error) {
+        console.log(error);
+
+      }
+    },
     async loadCountries() {
       // try {
       //   const response = await fetch('https://restcountries.com/v3.1/all');
@@ -562,6 +576,7 @@ export default {
     let date= ""+this.date;
 
       if (this.verify == this.code) {
+        this.verifyLoad = true
         try {
           let response = await axios.post(`${this.apiurl}/users/register`,
             {
@@ -580,6 +595,7 @@ export default {
           localStorage.setItem("token", response.data.user.token)
           console.log(response.data.user._id);
           localStorage.setItem("id", response.data.user._id)
+         let save = await this.saveuser();
           localStorage.setItem("lat",this.selectedCity.lat)
           localStorage.setItem("long",this.selectedCity.long)
           this.loading = false
@@ -723,6 +739,7 @@ export default {
                   localStorage.setItem("user", JSON.stringify(userres.data.user))
                   console.log(userres.data);
                   localStorage.setItem("photourl", userres.data.user.profilephoto.url)
+                  let save = await this.saveuser();
                   this.loading = false
                   this.$router.push("/post");
                 } catch (error) {

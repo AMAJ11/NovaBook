@@ -662,10 +662,7 @@ export default {
             
         },
         logout: function () {
-            localStorage.removeItem("token");
-            localStorage.removeItem("user");
-            localStorage.removeItem("id");
-            localStorage.removeItem("islogin");
+            localStorage.clear();
             window.location.reload();
         },
         deleteUserPost: function (id) {
