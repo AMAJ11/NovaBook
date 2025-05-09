@@ -178,7 +178,7 @@ const routes = [
     path: '/about',
     name: 'about',
     component: () => import('../views/AboutView.vue'),
-    meta: { requiresAuth: false }
+    meta: { requiresAuth: false, hideNavbar: true }
   }
 ]
 
