@@ -113,9 +113,9 @@
                                     <v-list-item class="mb-2" v-for="j in i.comments">
                                         <v-list-item-title style="display: flex;">
                                             <v-avatar>
-                                                <v-img :src="j.profilephoto"></v-img>
+                                                <v-img :src="j.user.profilephoto.url"></v-img>
                                             </v-avatar>
-                                            <p class="text-button ml-2">{{ j.username }}</p>
+                                            <p class="text-button ml-2">{{ j.user.username }}</p>
                                         </v-list-item-title>
 
                                     </v-list-item>

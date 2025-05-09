@@ -32,12 +32,11 @@
             <div class="w-100 w-sm-50 mx-auto">
                <SearchComponent />
             </div>
-            <h3 style="direction: rtl;text-align: center;" v-if="lan==1">أصدقاؤك</h3>
-            <h3 style="text-align: center;" v-if="lan==0">Your Friends</h3>
+            <h3 style="direction: rtl;text-align: center;" v-if="lan == 1">أصدقاؤك</h3>
+            <h3 style="text-align: center;" v-if="lan == 0">Your Friends</h3>
             <v-slide-group class="custom-slide-group">
                <v-slide-group-item v-for="i in allUsers" :key="i.id">
                   <v-card variant="text" height="140" width="110" @click="GoToProfile(i.id)"
-                  
                      style=" overflow: hidden; cursor: pointer;">
                      <div style="height: 100%; display: flex; flex-direction: column">
                         <div style="position: relative;">
@@ -51,16 +50,16 @@
                            </v-badge>
                         </div>
 
-   
+
                         <v-card-text class="text-center pt-2 pb-0" style="height: 60px; overflow: hidden">
                            <strong
                               style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; line-height: 1.2;">
                               {{ i.Name }}
                            </strong>
                         </v-card-text>
-                        
+
                      </div>
-                     
+
                   </v-card>
                </v-slide-group-item>
             </v-slide-group>
@@ -109,10 +108,10 @@
                         <v-btn size="md" class="hidden-md-and-up"
                            :v-ripple="{ class: 'ripple-blue' }"><v-icon>mdi-share</v-icon></v-btn>
                         <v-btn size="md" class="hidden-md-and-up"
-                           @click="this.comment = true; this.comments = i.comments; postid = i.id; console.log(comments)"><v-icon>mdi-message-alert-outline</v-icon>
+                           @click="comment = true; comments = i.comments; postid = i._id"><v-icon>mdi-message-alert-outline</v-icon>
                            {{ i.comments.length != 0 ? i.comments.length : '' }} </v-btn>
                         <v-btn size="md" class="hidden-md-and-up" @click="addLike(i.id)" :loading="this.WillLike"
-                           :color="islike(i.id) ? 'red' : ''"><v-icon> {{ islike(i.id) ? 'mdi-heart' :
+                           :color="islike(i._id) ? 'red' : ''"><v-icon> {{ islike(i.id) ? 'mdi-heart' :
                               'mdi-heart-outline'
                            }}</v-icon>
                            <p> {{ i.likes.length != 0 ? i.likes.length : null }} </p>
@@ -169,9 +168,10 @@
                <v-row class="pa-9 pb-16">
                   <v-col class="mb-5" style="display: flex;flex-direction: column;" cols="12" v-for="i in comments">
 
-                     <span style="display: flex;align-items: center;"><v-avatar> <v-img :src="i.profilephoto"
+                     <span style="display: flex;align-items: center;"><v-avatar> <v-img :src="i.user.profilephoto.url"
                               width="150px"></v-img></v-avatar>
-                        <v-btn :to="getUrl(i.user)" append-icon="mdi-account" variant="text" size="small"> {{ i.username
+                        <v-btn :to="getUrl(i.user.id)" append-icon="mdi-account" variant="text" size="small"> {{
+                           i.user.username
                            }} </v-btn>
                      </span>
                      <p class="mt-1"> {{ i.text }} </p>
@@ -275,7 +275,7 @@ export default {
          if (id != localStorage.getItem("id")) {
             return `/Person-Profile/${id}`
          }
-         else { return "profile-setting" }
+         else { return "/profile-setting" }
       },
       CommentPost: async function () {
          if (this.CommentText != "") {
@@ -312,7 +312,7 @@ export default {
                      j = i
                   }
                }
-               this.posts[j].comments.push({ text: this.CommentText, username: this.username })
+               this.posts[j].comments.push({ text: this.CommentText, user: { id: localStorage.getItem("id"), profilephoto: { url: localStorage.getItem("photourl") }, username: JSON.parse(localStorage.getItem("user")).username } })
                this.CommentText = ""
                this.comment = false
 
@@ -399,7 +399,7 @@ export default {
 
 
       },
-      GoToProfile: function(id){
+      GoToProfile: function (id) {
          this.$router.push(`/Person-Profile/${id}`);
       },
       addLike: async function (id) {
@@ -598,21 +598,22 @@ export default {
       background-size: cover;
    }
 }
+
 .custom-slide-group {
-  max-width: 100%;
-  margin: 0 auto;
+   max-width: 100%;
+   margin: 0 auto;
 }
 
 .custom-slide-group .v-slide-group__content {
-  justify-content: center;
-  gap: 4px;
+   justify-content: center;
+   gap: 4px;
 }
 
 /* تعديلات للأجهزة الصغيرة */
 @media (max-width: 600px) {
-  .custom-slide-group .v-slide-group__content {
-    justify-content: flex-start;
-  }
+   .custom-slide-group .v-slide-group__content {
+      justify-content: flex-start;
+   }
 }
 </style>
 
