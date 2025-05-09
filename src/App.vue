@@ -425,7 +425,7 @@ export default {
       localStorage.setItem("lan", JSON.stringify(this.lan));
       window.location.reload();
     },
-    handleScroll() {
+    handleScroll: function() {
       this.showButton = window.scrollY > 200;
     },
     scrollToTop: () => {
