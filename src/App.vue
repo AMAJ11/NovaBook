@@ -181,7 +181,7 @@ export default {
   name: 'App',
   created: async function () {
 
-   this.saveuser();
+   let load = await this.saveuser();
     this.playSound();
     this.timeSlice = this.time.slice(0, 5);
 
