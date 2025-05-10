@@ -32,12 +32,11 @@
             <div class="w-100 w-sm-50 mx-auto">
                <SearchComponent />
             </div>
-            <h3 style="direction: rtl;text-align: center;" v-if="lan==1">أصدقاؤك</h3>
-            <h3 style="text-align: center;" v-if="lan==0">Your Friends</h3>
+            <h3 style="direction: rtl;text-align: center;" v-if="lan == 1">أصدقاؤك</h3>
+            <h3 style="text-align: center;" v-if="lan == 0">Your Friends</h3>
             <v-slide-group class="custom-slide-group">
                <v-slide-group-item v-for="i in allUsers" :key="i.id">
                   <v-card variant="text" height="140" width="110" @click="GoToProfile(i.id)"
-                  
                      style=" overflow: hidden; cursor: pointer;">
                      <div style="height: 100%; display: flex; flex-direction: column">
                         <div style="position: relative;">
@@ -51,16 +50,16 @@
                            </v-badge>
                         </div>
 
-   
+
                         <v-card-text class="text-center pt-2 pb-0" style="height: 60px; overflow: hidden">
                            <strong
                               style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; line-height: 1.2;">
                               {{ i.Name }}
                            </strong>
                         </v-card-text>
-                        
+
                      </div>
-                     
+
                   </v-card>
                </v-slide-group-item>
             </v-slide-group>
@@ -126,9 +125,6 @@
          <v-spacer></v-spacer>
          <v-col class="hidden-sm-and-down" cols="12" md="3">
             <v-row class="pt-10">
-               <!-- <v-col cols="12" class="hidden-sm-and-down">
-                  <v-text-field append-icon="mdi-magnify"></v-text-field>
-               </v-col> -->
                <SearchComponent class="hidden-sm-and-down" />
                <v-col cols="12"
                   style="display: flex;justify-content: center;flex-direction: column;align-items: center;">
@@ -171,7 +167,8 @@
 
                      <span style="display: flex;align-items: center;"><v-avatar> <v-img :src="i.user.profilephoto.url"
                               width="150px"></v-img></v-avatar>
-                        <v-btn :to="getUrl(i.user._id)" append-icon="mdi-account" variant="text" size="small"> {{ i.user.username
+                        <v-btn :to="getUrl(i.user._id)" append-icon="mdi-account" variant="text" size="small"> {{
+                           i.user.username
                            }} </v-btn>
                      </span>
                      <p class="mt-1"> {{ i.text }} </p>
@@ -189,31 +186,6 @@
                :loading="CommentLoad">Comment</v-btn>
          </div>
       </V-dialog>
-
-      <!-- <v-card class="pa-2 pt-0" v-if="notify" style="position: fixed;top: 15%;left:1%;width:20%;height: 20vh;display: flex;align-items: center;justify-content: center;flex-direction: column;">
-      <div style="display: flex;align-items: center;">
-         <v-icon size="x-large" color="warning"variant="flat">mdi-help</v-icon>
-      <v-card-text>
-        Lorem ipsum dolor sit 
-      </v-card-text>
-      </div>
-      <v-progress-linear color="primary" style="" :indeterminate="true"></v-progress-linear>
-    </v-card> -->
-
-
-
-
-      <!-- 
-      <v-dialog location="top-left" v-model="notify" :persistent="false" style="width:30%;height: 30vh">
-    <v-card>
-      <v-card-title>notify</v-card-title>
-      <v-card-text>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Beatae accusantium quia soluta voluptas in, quibusdam
-        expedita ea minima, molestias omnis sint. Omnis eaque cum excepturi eos minima accusantium architecto
-        perferendis!
-      </v-card-text>
-    </v-card>
-  </v-dialog> -->
    </v-app>
 
 </template>
@@ -294,30 +266,21 @@ export default {
                      }
                   }
                )
-               console.log(response.data);
 
                let j = 0
                let o = this.posts.filter(e => {
                   return e.id == this.postid
                })
-               console.log(o);
-
-               console.log(o[0]);
-               console.log(o[0].id);
 
                for (let i = 0; i < this.posts.length; i++) {
-                  console.log(o.id, this.posts[i].id);
 
                   if (o[0].id == this.posts[i].id) {
                      j = i
                   }
                }
-               this.posts[j].comments.push({ text: this.CommentText, user:{id: localStorage.getItem("id"), profilephoto:{url:localStorage.getItem("photourl")}, username: JSON.parse(localStorage.getItem("user")).username } })
+               this.posts[j].comments.push({ text: this.CommentText, user: { id: localStorage.getItem("id"), profilephoto: { url: localStorage.getItem("photourl") }, username: JSON.parse(localStorage.getItem("user")).username } })
                this.CommentText = ""
                this.comment = false
-
-               console.log(j);
-
 
             } catch (error) {
                this.comment = false
@@ -325,49 +288,12 @@ export default {
          }
          this.CommentLoad = false
       },
-      SocketConnect: function () {
-         //    socket.on('connect', () => {
-         //    console.log('Connected to server');
-         // });
-         // socket.on('GetOnlineUsers', async (data) => {
-         //    console.log(this.freinds.length);
-         //    if (this.freinds.length > 1) {
-         //       for (let j = 0; j < data.length; j++) {
-         //          for (let i = 0; i < this.freinds.length; i++) {
-         //             if (data[j] != localStorage.getItem("id")) {
-         //                if (this.freinds[i].id == data[j]) {
-         //                   this.freinds[i].isonline = true
-         //                }
-         //             }
-         //          }
-         //       }
-         //    }
-         //    else {
-         //          console.log("length" , data.length);           
-         //       for (let i = 0; i < data.length; i++) {
-         //          if (data[i] != localStorage.getItem("id")) {
-         //             let response = await axios.get(`${this.apiurl}/users/profile/${data[i]}`)
-         //             this.FreindsOnline.push(data[i])
-         //             this.online = true
-         //             console.log(response);
-         //             this.freinds.push({ Name: response.data.user.username, isonline: true, id: data[i], image: response.data.user.profilephoto.url })
-         //          }
-         //       }
 
-         //       this.getFollower();
-
-         //    }
-
-         //    console.log(data);
-         //    // سيحدث الواجهة تلقائيًا
-         // });
-      },
       saveuser: async function () {
          try {
             let id = localStorage.getItem("id")
             let userres = await axios.get(`${this.apiurl}/users/profile/${id}`)
             localStorage.setItem("user", JSON.stringify(userres.data.user))
-            console.log(userres.data);
             localStorage.setItem("photourl", userres.data.user.profilephoto.url)
 
          } catch (error) {
@@ -389,17 +315,8 @@ export default {
 
 
          }
-
-
-
-         console.log("khara", this.following);
-         console.log("freind", this.freinds);
-
-
-
-
       },
-      GoToProfile: function(id){
+      GoToProfile: function (id) {
          this.$router.push(`/Person-Profile/${id}`);
       },
       addLike: async function (id) {
@@ -435,18 +352,12 @@ export default {
                   }
                }
             );
-            console.log(response.data);
 
          } catch (error) {
             console.log(error);
 
          }
-         this.saveuser()
-
-         console.log(this.islike(id));
-
-         console.log(this.likedpost);
-
+         let save = await this.saveuser()
       },
       notifyLoad: function () {
       },
@@ -458,12 +369,9 @@ export default {
             return false
          }
       },
-      btn: function () {
-         console.log(this.$refs.btn);
-      }
    },
    created: async function () {
-       let save = await this.saveuser()
+      let save = await this.saveuser()
       localStorage.setItem("islogin", "AMAJHELLO0937379312.omarDH")
       this.getFollower();
       setInterval(() => {
@@ -475,7 +383,6 @@ export default {
 
       try {
          let posts = await axios.get(`${this.apiurl}/posts`)
-         console.log(posts.data.posts);
          this.posts = posts.data.posts.reverse();
 
       } catch (error) {
@@ -492,7 +399,6 @@ export default {
          const day = date.getDate();
          const lat = JSON.parse(localStorage.getItem("user")).lat;
          const long = JSON.parse(localStorage.getItem("user")).long;
-         console.log(lat, long);
 
 
          const response = await axios.get(
@@ -517,11 +423,8 @@ export default {
       } finally {
          this.loading = false;
       }
-      console.log("freind", this.followers);
-      console.log("freind2", this.following);
 
       this.likedpost = JSON.parse(localStorage.getItem("user")).likeposts
-      console.log(this.likedpost);
       this.username = JSON.parse(localStorage.getItem("user")).username
       this.loadingPage = false
 
@@ -544,8 +447,6 @@ export default {
             merged.push(user);
             seenIds.add(friend.id);
          }
-
-         // ثانياً: أضف المتصلين غير الموجودين في friends
          for (const online of this.onlineUsers) {
             if (!seenIds.has(online.id)) {
                merged.push({ ...online, isonline: true });
@@ -598,27 +499,21 @@ export default {
       background-size: cover;
    }
 }
+
 .custom-slide-group {
-  max-width: 100%;
-  margin: 0 auto;
+   max-width: 100%;
+   margin: 0 auto;
 }
 
 .custom-slide-group .v-slide-group__content {
-  justify-content: center;
-  gap: 4px;
+   justify-content: center;
+   gap: 4px;
 }
 
 /* تعديلات للأجهزة الصغيرة */
 @media (max-width: 600px) {
-  .custom-slide-group .v-slide-group__content {
-    justify-content: flex-start;
-  }
+   .custom-slide-group .v-slide-group__content {
+      justify-content: flex-start;
+   }
 }
 </style>
-
-<!-- <script setup>
- for(let i =0;i< this.$refs.btn.length;i++){
-         console.log( hello);
-      }
-      
-</script> -->

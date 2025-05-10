@@ -388,7 +388,6 @@ import axios from 'axios';
 export default {
     created: async function () {
         let MyPostRes = await axios.get(`${this.apiurl}/posts`)
-        console.log(MyPostRes.data);
         this.posts = MyPostRes.data.posts.filter(e => {
             return e.user.id == localStorage.getItem("id")
         })
@@ -396,7 +395,6 @@ export default {
         let resUser = await axios.get(`${this.apiurl}/users/profile/${localStorage.getItem("id")}`)
         this.user = resUser.data.user
         this.loadingPage = false
-        console.log(this.user);
         this.followers = this.user.followers.length
         this.following = this.user.following.length
         this.profilephoto = this.user.profilephoto.url
@@ -522,7 +520,7 @@ export default {
                                         }
 
                                     )
-                                    console.log(response2);
+                            
 
                                 } catch (error) {
                                     console.log(error);
@@ -530,7 +528,7 @@ export default {
                                 }
 
                             }
-                            console.log(response);
+                  
                             window.location.reload()
                         } catch (error) {
                             console.log();
@@ -545,11 +543,8 @@ export default {
         edit: async function (id) {
             this.editPostId = id
             this.Editdia = true
-            console.log(id + "hghgh");
             let response = await axios.get(`${this.apiurl}/posts/${id}`)
-            console.log("hhhhhh", response)
             const post = response.data.post
-            console.log("poooost", post);
             this.postText = post.description
             this.title = post.title
             this.imageurl = post.image.url
@@ -666,7 +661,6 @@ export default {
             window.location.reload();
         },
         deleteUserPost: function (id) {
-            console.log("hghgh");
             this.idDelete = id;
             this.diaDelete = true
 
@@ -674,7 +668,6 @@ export default {
         DletePost: async function () {
             this.deleteLoad = true
             let token = localStorage.getItem("token")
-            console.log(token);
 
             try {
                 let response = await axios.delete(`${this.apiurl}/posts/${this.idDelete}`, {
@@ -683,7 +676,6 @@ export default {
                     }
                 }
                 )
-                console.log(response);
                 this.deleteLoad = false
                 window.location.reload()
             } catch (error) {
@@ -697,7 +689,6 @@ export default {
             try {
                 let id = localStorage.getItem("id")
                 let userres = await axios.get(`${this.apiurl}/users/profile/${id}`)
-                console.log(userres);
                 
                 localStorage.setItem("user", JSON.stringify(userres.data.user))
                 localStorage.setItem("photourl", userres.data.user.profilephoto.url)
@@ -713,20 +704,9 @@ export default {
                     if (valid.valid == true) {
 
                         this.dia = true
-                        // let ruy = new FormData();
-                        // ruy.append("image",this.image)
-                        // console.log(ruy);
 
 
                         const token = localStorage.getItem("token")
-                        // console.log(ruy);
-                        console.log(this.image);
-                        console.log({
-                            title: this.title,
-                            description: this.postText
-                        });
-
-                        console.log(token);
 
 
                         try {
@@ -745,10 +725,7 @@ export default {
                                     }
                                 }
                             )
-                            console.log(response.data);
-
                             this.succmessage = "Your post successfully"
-                            console.log(this.succmessage);
                             this.load = false
 
 
@@ -776,7 +753,6 @@ export default {
                 if (allowedTypes.includes(this.image.type)) {
                     const objectURL = URL.createObjectURL(this.image);
                     this.imageurl = objectURL;
-                    console.log(this.imageurl)
                     this.t = true
                     this.Fill = true
                 }

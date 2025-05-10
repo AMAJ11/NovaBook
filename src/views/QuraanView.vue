@@ -533,7 +533,6 @@
             this.i = res.data.data.ayahs[0].page
           })
         }
-        console.log(newValue)
       }
     }
   }

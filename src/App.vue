@@ -199,8 +199,7 @@ export default {
       const lat = JSON.parse(localStorage.getItem("user")).lat;
       const long = JSON.parse(localStorage.getItem("user")).lat;
       this.date = `${year}/${month}/${day}`
-      console.log(lat, long);
-      console.log(this.date);
+   
 
 
 
@@ -220,16 +219,7 @@ export default {
       this.mughrib = response.data.data.timings.Maghrib
       this.isha = response.data.data.timings.Isha
 
-      console.log(this.fajr);
-
-      console.log(this.zhr);
-
-      console.log(this.asr);
-
-      console.log(this.mughrib);
-
-      console.log(this.isha);
-
+   
 
 
     } catch (error) {
@@ -255,7 +245,6 @@ export default {
     setInterval(() => {
       if (localStorage.getItem("token")) {
         const randomNumber = Math.floor(Math.random() * 5);
-        console.log(randomNumber);
         this.notify.push(this.SecNotify[randomNumber]);
         this.alarmSound.play();
       }
@@ -301,11 +290,9 @@ export default {
   },
   watch: {
     icon(newvalue, oldvalue) {
-      console.log(newvalue);
       this.icon = newvalue;
     },
     lan(newvalue, oldvalue) {
-      console.log(this.lan);
       localStorage.setItem("lan", newvalue);
       window.location.reload();
     },
@@ -393,7 +380,7 @@ export default {
           this.alarmSound.play();
           this.menuShow = true
         }
-        console.log(this.CutTime(this.mughrib));
+    
       }
 
     },
@@ -421,7 +408,7 @@ export default {
       return time < 10 ? `0${time}` : time;
     },
     ch: function () {
-      console.log(this.lan)
+ 
       localStorage.setItem("lan", JSON.stringify(this.lan));
       window.location.reload();
     },
@@ -437,9 +424,9 @@ export default {
 
     this.$store.dispatch('initSocket');
     this.socket.on('notification', async (data) => {
-      console.log(data);
+
       if (data.data.type == "new_like") {
-        console.log("eveeet");
+    
 
         let response = await axios.get(`${this.apiurl}/users/profile/${data.data.userId}`)
 
@@ -466,18 +453,12 @@ export default {
       }
       this.menuShow = true
       this.alarmSound.play();
-      console.log(data);
+  
     })
     if (!localStorage.getItem("lan")) {
       localStorage.setItem("lan", 0)
     }
     window.addEventListener("scroll", this.handleScroll);
-    // socket.on('GetOnlineUsers', (users) => {
-    //   this.$store.dispatch('updateOnlineUsers', users);
-    // });
-    // socket.on('connect', () => {
-    //   console.log('Connected to server');
-    // }); 
   },
   beforeUnmount: () => {
     window.removeEventListener("scroll", this.handleScroll);

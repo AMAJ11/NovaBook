@@ -417,8 +417,8 @@ export default {
       apiurl: process.env.VUE_APP_API_URL,
       selectedCountry: null,
       selectedCity: null,
-      countries: [], // قائمة الدول
-      cities: [], // قائمة المدن
+      countries: [],
+      cities: [],
       im: null,
       window: 1,
       loading: false,
@@ -542,33 +542,10 @@ export default {
       }
     },
     async loadCountries() {
-      // try {
-      //   const response = await fetch('https://restcountries.com/v3.1/all');
-      //   const data = await response.json();
-      //   console.log(data);
-
-      //   this.countries = data.map(country => ({
-      //     title: country.name.common,
-      //     value: country.cca2
-      //   }));
-
-
-      // for (let i = 0; i < data.length; i++) {
-      //   this.countries.push(data[i])
-
-      // }
-
       this.countries = Country.getAllCountries().map(country => ({
         value: { name: country.name, code: country.isoCode },
         title: country.translations?.ar || country.name,
       })).sort((a, b) => a.title.localeCompare(b.name));
-
-
-      console.log(this.countries);
-
-      // } catch (error) {
-      //   console.error('Error loading countries:', error);
-      // }
     },
     submit: async function () {
       let date = "" + this.date;
@@ -589,9 +566,7 @@ export default {
               birthdate: date.slice(4, 16)
             }
           )
-          console.log(response.data.user.token);
           localStorage.setItem("token", response.data.user.token)
-          console.log(response.data.user._id);
           localStorage.setItem("id", response.data.user._id)
           let save = await this.saveuser();
           localStorage.setItem("lat", this.selectedCity.lat)
@@ -599,8 +574,6 @@ export default {
           this.loading = false
 
           this.$router.push("/post");
-          console.log(obj)
-
 
 
 
@@ -609,7 +582,6 @@ export default {
           this.window = 0;
           this.ff = false
           this.t = true;
-          console.log(this.l)
         }
         catch (error) {
           if (error) {
@@ -626,9 +598,6 @@ export default {
 
     },
     loadCities: async function () {
-      console.log("hellllo");
-      console.log(City.getCitiesOfCountry(this.selectedCountry.code));
-
       this.cities = City.getCitiesOfCountry(this.selectedCountry.code).map(city => ({
         title: city.name,
         value: { name: city.name, long: city.longitude, lat: city.latitude }
@@ -637,9 +606,6 @@ export default {
 
     verifycheck: async function () {
       let date = "" + this.date;
-      console.log(date);
-
-      console.log(date.slice(4, 16));
 
       let res
       this.$refs.form.validate()
@@ -653,7 +619,6 @@ export default {
                     email: this.email,
                   }
                 })
-                console.log(res);
 
               } catch (error) {
                 console.log(error);
@@ -670,7 +635,6 @@ export default {
                   email: this.email,
                 })
                 this.code = otp
-                console.log(ressss, otp);
                 this.sucmessage = "Enter a code which send you on email"
                 this.errmessage = ""
                 this.loading = false
@@ -689,8 +653,6 @@ export default {
     },
 
     submitph: function () {
-      console.log(this.gender);
-      console.log(this.date);
       this.$refs.form.validate()
         .then(valid => {
           if (valid.valid == true) {
@@ -703,15 +665,11 @@ export default {
                 "date": this.date,
                 "password": this.Password,
               };
-              console.log(obj)
               this.loading = false
             }, 2000);
 
           };
 
-
-
-          console.log(this.image);
 
         })
 
@@ -729,13 +687,11 @@ export default {
                     password: this.passlog
                   }
                 )
-                console.log(response);
                 localStorage.setItem("token", response.data.token)
                 localStorage.setItem("id", response.data.userId)
                 try {
                   let userres = await axios.get(`${this.apiurl}/users/profile/${response.data.userId}`)
                   localStorage.setItem("user", JSON.stringify(userres.data.user))
-                  console.log(userres.data);
                   localStorage.setItem("photourl", userres.data.user.profilephoto.url)
                   let save = await this.saveuser();
                   this.loading = false
@@ -771,7 +727,6 @@ export default {
             this.image = objectURL;
             let im = objectURL;
             this.show = true
-            console.log(im);
 
           } else { this.err = true; this.image = '' }
         }
@@ -788,21 +743,18 @@ export default {
   watch: {
     selectedCountry(newvalue, old) {
       this.loadCities()
-      console.log(newvalue);
 
     },
     selectedCity(newvalue, old) {
-      console.log(newvalue);
+
       localStorage.setItem("long", JSON.stringify(newvalue.long));
       localStorage.setItem("lat", JSON.stringify(newvalue.lat));
     }
   },
   icon(newvalue, oldvalue) {
-    console.log(newvalue);
     this.icon = newvalue;
   },
   lan(newvalue, oldvalue) {
-    console.log(this.lan);
     localStorage.setItem("lan", newvalue);
     window.location.reload();
   }
