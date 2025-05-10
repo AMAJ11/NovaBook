@@ -177,11 +177,12 @@
 import io from 'socket.io-client';
 import axios from 'axios';
 import { Howler } from 'howler';
+import { onMounted } from 'vue';
 export default {
   name: 'App',
   created: async function () {
 
-   let load = await this.saveuser();
+    let load = await this.saveuser();
     this.playSound();
     this.timeSlice = this.time.slice(0, 5);
 
@@ -199,7 +200,7 @@ export default {
       const lat = JSON.parse(localStorage.getItem("user")).lat;
       const long = JSON.parse(localStorage.getItem("user")).lat;
       this.date = `${year}/${month}/${day}`
-   
+
 
 
 
@@ -219,7 +220,7 @@ export default {
       this.mughrib = response.data.data.timings.Maghrib
       this.isha = response.data.data.timings.Isha
 
-   
+
 
 
     } catch (error) {
@@ -279,6 +280,7 @@ export default {
       sw: false,
       path: false,
       alarmSound: null,
+      theme: "",
       apiurl: process.env.VUE_APP_API_URL,
       item: [
         { title: "EN", value: 0 },
@@ -380,7 +382,7 @@ export default {
           this.alarmSound.play();
           this.menuShow = true
         }
-    
+
       }
 
     },
@@ -408,11 +410,11 @@ export default {
       return time < 10 ? `0${time}` : time;
     },
     ch: function () {
- 
+
       localStorage.setItem("lan", JSON.stringify(this.lan));
       window.location.reload();
     },
-    handleScroll: function() {
+    handleScroll: function () {
       this.showButton = window.scrollY > 200;
     },
     scrollToTop: () => {
@@ -426,7 +428,7 @@ export default {
     this.socket.on('notification', async (data) => {
 
       if (data.data.type == "new_like") {
-    
+
 
         let response = await axios.get(`${this.apiurl}/users/profile/${data.data.userId}`)
 
@@ -453,11 +455,12 @@ export default {
       }
       this.menuShow = true
       this.alarmSound.play();
-  
+
     })
     if (!localStorage.getItem("lan")) {
       localStorage.setItem("lan", 0)
     }
+
     window.addEventListener("scroll", this.handleScroll);
   },
   beforeUnmount: () => {
@@ -470,12 +473,32 @@ export default {
 
 <script setup>
 import { useTheme } from 'vuetify'
+import { onMounted } from 'vue';
 const theme = useTheme()
 let icon = true
 function toggleTheme() {
   icon = !icon;
-  theme.global.name.value = theme.global.current.value.dark ? 'myCustomLightTheme' : 'dark'
+  if (theme.global.current.value.dark) {
+    theme.global.name.value = "myCustomLightTheme"
+    localStorage.setItem("theme", "light")
+  } else {
+    theme.global.name.value = "dark"
+    localStorage.setItem("theme", "dark")
+  }
+
 }
+onMounted(() => {
+  if (!localStorage.getItem("theme")) {
+    localStorage.setItem("theme", "light")
+    theme.global.name.value = "myCustomLightTheme"
+  } else {
+    if (localStorage.getItem("theme") == "light") {
+    theme.global.name.value = "myCustomLightTheme"
+    } else {
+      theme.global.name.value = "dark"
+    }
+  }
+})
 </script>
 
 <style scoped>
