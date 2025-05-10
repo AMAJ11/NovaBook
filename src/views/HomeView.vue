@@ -573,7 +573,7 @@ export default {
           localStorage.setItem("long", this.selectedCity.long)
           this.loading = false
 
-          this.$router.push("/post");
+          window.location.reload();
 
 
 
@@ -695,7 +695,7 @@ export default {
                   localStorage.setItem("photourl", userres.data.user.profilephoto.url)
                   let save = await this.saveuser();
                   this.loading = false
-                  this.$router.push("/post");
+                  window.location.reload();
                 } catch (error) {
                   console.log(error);
 

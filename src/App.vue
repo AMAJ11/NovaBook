@@ -282,6 +282,7 @@ export default {
       alarmSound: null,
       theme: "",
       apiurl: process.env.VUE_APP_API_URL,
+      
       item: [
         { title: "EN", value: 0 },
         { title: "AR", value: 1 },
@@ -301,6 +302,7 @@ export default {
 
   },
   computed: {
+
     socket() {
       return this.$store.getters.getSocket;
     },

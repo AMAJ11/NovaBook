@@ -142,7 +142,6 @@
 
                               <v-img v-if="i.image" :src="i.image" width="150px"></v-img>
                            </v-avatar></v-badge>
-
                         <v-avatar class="mr-3" v-if="!i.isonline">
 
                            <v-img v-if="i.image" :src="i.image" width="150px"></v-img>
@@ -169,7 +168,7 @@
                               width="150px"></v-img></v-avatar>
                         <v-btn :to="getUrl(i.user._id)" append-icon="mdi-account" variant="text" size="small"> {{
                            i.user.username
-                           }} </v-btn>
+                        }} </v-btn>
                      </span>
                      <p class="mt-1"> {{ i.text }} </p>
                      <v-divider thickness="2"></v-divider>
@@ -371,7 +370,15 @@ export default {
       },
    },
    created: async function () {
-      let save = await this.saveuser()
+      try {
+         let save = await this.saveuser()
+         console.log(save);
+
+      } catch (error) {
+         console.log(error);
+
+      }
+
       localStorage.setItem("islogin", "AMAJHELLO0937379312.omarDH")
       this.getFollower();
       setInterval(() => {
